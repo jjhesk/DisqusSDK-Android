@@ -9,7 +9,16 @@ This library implements the Disqus API for use in Android applications. This lib
 ### Gradle
 
 Add the following to your `build.gradle`:
-    compile 'com.hkm:disqus:0.1.1'
+[ ![Download](https://api.bintray.com/packages/jjhesk/maven/disqus/images/download.svg) ](https://bintray.com/jjhesk/maven/disqus/_latestVersion)
+```gradle
+repositories {
+    maven { url 'https://dl.bintray.com/jjhesk/maven' }
+}
+dependencies {
+ compile 'DisqusSDK-Android:disqus:0.1.0'
+}
+```
+
 ## Authentication
 
 ### Using AuthorizeActivity

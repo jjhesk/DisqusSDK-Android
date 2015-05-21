@@ -1,7 +1,6 @@
 package com.hkm.dis;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -20,9 +19,9 @@ import retrofit.client.Response;
 /**
  * Created by hesk on 21/5/15.
  */
-public class ahoy extends AppCompatActivity {
+public class mainactivity extends AppCompatActivity {
     private applicationbase base;
-    public static String TAG = ahoy.class.getName();
+    public static String TAG = mainactivity.class.getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

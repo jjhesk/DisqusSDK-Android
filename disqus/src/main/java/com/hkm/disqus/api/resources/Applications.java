@@ -34,7 +34,7 @@ public interface Applications {
      * Returns the API usage per day for this application
      *
      * @return Usage data for the application
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/applications/listUsage/">Documentation</a>
      */
     @GET("/applications/listUsage.json")
@@ -44,7 +44,7 @@ public interface Applications {
      * Returns the API usage per day for this application
      *
      * @param callback Callback for async result
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/applications/listUsage/">Documentation</a>
      */
     @GET("/applications/listUsage.json")
@@ -55,7 +55,7 @@ public interface Applications {
      *
      * @param days Number of days
      * @return Usage data for the application
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/applications/listUsage/">Documentation</a>
      */
     @GET("/applications/listUsage.json")
@@ -66,7 +66,7 @@ public interface Applications {
      *
      * @param days     Number of days
      * @param callback Callback for async result
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/applications/listUsage/">Documentation</a>
      */
     @GET("/applications/listUsage.json")
@@ -79,7 +79,7 @@ public interface Applications {
      * @param application Application id
      * @param days        Number of days
      * @return Usage data for the application
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/applications/listUsage/">Documentation</a>
      */
     @GET("/applications/listUsage.json")
@@ -92,7 +92,7 @@ public interface Applications {
      * @param application Application id
      * @param days        Number of days
      * @param callback    Callback for async result
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/applications/listUsage/">Documentation</a>
      */
     @GET("/applications/listUsage.json")

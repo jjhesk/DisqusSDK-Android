@@ -35,10 +35,10 @@ public interface Imports {
      * Get import details
      *
      * @see <a href="https://disqus.com/api/docs/imports/">Documentation</a>
-     * @param forum
-     * @param group
-     * @return
-     * @throws ApiException
+     * @param forum forum name
+     * @param group the group ID or name the group ID or name
+     * @return return the result object schema
+     * @throws ApiException any errors during the http transaction
      */
     @GET("/imports/details.json")
     public Response<Import> details(@Query("forum") String forum,
@@ -48,9 +48,9 @@ public interface Imports {
      * Get list of imports
      *
      * @see <a href="https://disqus.com/api/docs/imports/">Documentation</a>
-     * @param forum
-     * @return
-     * @throws ApiException
+     * @param forum forum name
+     * @return return the result object schema
+     * @throws ApiException any errors during the http transaction
      */
     @GET("/imports/list.json")
     public Response<List<Import>> list(@Query("forum") String forum) throws ApiException;

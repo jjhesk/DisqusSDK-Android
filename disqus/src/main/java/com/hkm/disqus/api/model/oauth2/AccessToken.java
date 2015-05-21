@@ -25,7 +25,7 @@ import com.google.gson.annotations.SerializedName;
  * Model representing an access token response
  *
  * This model implements the {@link Parcelable} interface to simplify passing it between activities,
- * for example when using {@link AuthorizeActivity} in an application.
+ * for example when using Authorize in an application.
  */
 public class AccessToken implements Parcelable {
 
@@ -79,7 +79,7 @@ public class AccessToken implements Parcelable {
     /**
      * Constructor with parcel
      *
-     * @param source
+     * @param source  x
      */
     public AccessToken(Parcel source) {
         username = source.readString();

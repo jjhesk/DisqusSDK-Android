@@ -41,8 +41,9 @@ public interface Threads {
     /**
      * Closes a thread
      *
-     * @param thread
-     * @return
+     * @param thread as is
+     * @return as is
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/threads/close/">Documentation</a>
      */
     @POST("/threads/close.json")
@@ -51,8 +52,9 @@ public interface Threads {
     /**
      * Closes a thread
      *
-     * @param thread
-     * @return
+     * @param thread as is
+     * @return as is
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/threads/close/">Documentation</a>
      */
     @POST("/threads/close.json")
@@ -61,10 +63,10 @@ public interface Threads {
     /**
      * Creates a new thread
      *
-     * @param forum
-     * @param title
-     * @return
-     * @throws ApiException
+     * @param forum the name of the forum
+     * @param title the title of the topic
+     * @return as is
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/threads/create/">Documentation</a>
      */
     @POST("/threads/create.json")
@@ -74,11 +76,11 @@ public interface Threads {
     /**
      * Creates a new thread
      *
-     * @param forum
-     * @param title
-     * @param optionalParams
-     * @return
-     * @throws ApiException
+     * @param forum          string
+     * @param title          string
+     * @param optionalParams extra things
+     * @return as is
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/threads/create/">Documentation</a>
      */
     @POST("/threads/create.json")
@@ -90,9 +92,9 @@ public interface Threads {
     /**
      * Returns thread details
      *
-     * @param thread
-     * @return
-     * @throws ApiException
+     * @param thread as is
+     * @return as is
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/threads/details/">Documentation</a>
      */
     @GET("/threads/details.json")
@@ -101,10 +103,10 @@ public interface Threads {
     /**
      * Returns thread details
      *
-     * @param thread
-     * @param forum
-     * @return
-     * @throws ApiException
+     * @param thread as is
+     * @param forum  as is
+     * @return as is
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/threads/details/">Documentation</a>
      */
     @GET("/threads/details.json")
@@ -114,11 +116,11 @@ public interface Threads {
     /**
      * Returns thread details
      *
-     * @param thread
-     * @param forum
-     * @param related
-     * @return
-     * @throws ApiException
+     * @param thread  as is
+     * @param forum   as is
+     * @param related as is
+     * @return as is
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/threads/details/">Documentation</a>
      */
     @GET("/threads/details.json")
@@ -128,22 +130,25 @@ public interface Threads {
 
 
     /**
-     * Return the list of the post from a specific thread ID
+     * * Return the list of the post from a specific thread ID
      * ex.
-     * thread:ident -> 1008680 http://hypebeast.com/?p=1008680
-     * forum   ->  hypebeast
+     * thread:ident  1008680 http://hypebeast.com/?p=1008680
+     * forum     hypebeast
      *
      * @param identifer  Looks up a thread by ID
-     *                   You may pass us the 'ident' or 'link' query types instead of an ID by including 'forum'.
-     * @param forum_name Defaults to null
-     *                   <p/>
-     *                   Looks up a forum by ID (aka short name)
+     * @param forum_name Defaults to null  looks up a forum by ID (aka short name)
      * @return the result
-     * @throws ApiException
+     * @throws ApiException any errors
      */
     @GET("/threads/listPosts.json")
     public Response<List<Post>> listPostByID(@Query("thread:ident") String identifer, @Query("forum") String forum_name) throws ApiException;
 
+    /**
+     * @param identifer  the id in string
+     * @param forum_name name
+     * @param cb         callback object
+     * @throws ApiException any errors
+     */
     @GET("/threads/listPosts.json")
     public void listPostByIDAsync(
             @Query("thread:ident") String identifer,

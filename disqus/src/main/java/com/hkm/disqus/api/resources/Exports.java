@@ -36,7 +36,7 @@ public interface Exports {
      *
      * @param forum The forum short name
      * @return A response object, data can be ignored
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/exports/exportForum/">Documentation</a>
      */
     @FormUrlEncoded

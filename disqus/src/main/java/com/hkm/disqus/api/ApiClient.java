@@ -70,7 +70,7 @@ public class ApiClient {
     /**
      * Set config and set up the {@link RestAdapter}
      *
-     * @param config
+     * @param config the collection of configuration
      */
     public ApiClient(final ApiConfig config) {
         // Build Gson with Disqus date format and type adapters
@@ -136,7 +136,7 @@ public class ApiClient {
     /**
      * Create applications resource
      *
-     * @return
+     * @return the object
      */
     public Applications createApplications() {
         return mAdapter.create(Applications.class);
@@ -145,7 +145,7 @@ public class ApiClient {
     /**
      * Create blacklists resource
      *
-     * @return
+     * @return the object
      */
     public Blacklists createBlacklists() {
         return mAdapter.create(Blacklists.class);
@@ -154,7 +154,7 @@ public class ApiClient {
     /**
      * Create categories resource
      *
-     * @return
+     * @return the object
      */
     public Categories createCategories() {
         return mAdapter.create(Categories.class);
@@ -163,7 +163,7 @@ public class ApiClient {
     /**
      * Create exports resource
      *
-     * @return
+     * @return the object
      */
     public Exports createExports() {
         return mAdapter.create(Exports.class);
@@ -172,7 +172,7 @@ public class ApiClient {
     /**
      * Create feeds resource
      *
-     * @return
+     * @return the object
      */
     public Feeds createFeeds() {
         return mAdapter.create(Feeds.class);
@@ -181,7 +181,7 @@ public class ApiClient {
     /**
      * Create forums resource
      *
-     * @return
+     * @return the object
      */
     public Forums createForums() {
         return mAdapter.create(Forums.class);
@@ -190,7 +190,7 @@ public class ApiClient {
     /**
      * Create imports resource
      *
-     * @return
+     * @return the object
      */
     public Imports createImports() {
         return mAdapter.create(Imports.class);
@@ -199,7 +199,7 @@ public class ApiClient {
     /**
      * Create media resource
      *
-     * @return
+     * @return the object
      */
     public Media createMedia() {
         return mAdapter.create(Media.class);
@@ -208,7 +208,7 @@ public class ApiClient {
     /**
      * Create notes resource
      *
-     * @return
+     * @return the object
      */
     public Notes createNotes() {
         return mAdapter.create(Notes.class);
@@ -217,7 +217,7 @@ public class ApiClient {
     /**
      * Create notes/templates resource
      *
-     * @return
+     * @return the object
      */
     public Templates createNotesTemplates() {
         return mAdapter.create(Templates.class);
@@ -226,7 +226,7 @@ public class ApiClient {
     /**
      * Create posts resource
      *
-     * @return
+     * @return the object
      */
     public Posts createPosts() {
         return mAdapter.create(Posts.class);
@@ -235,7 +235,7 @@ public class ApiClient {
     /**
      * Create threads resource
      *
-     * @return
+     * @return Threads
      */
     public Threads createThreads() {
         return mAdapter.create(Threads.class);
@@ -244,7 +244,7 @@ public class ApiClient {
     /**
      * Create users resource
      *
-     * @return
+     * @return users
      */
     public Users createUsers() {
         return mAdapter.create(Users.class);

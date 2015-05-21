@@ -46,7 +46,7 @@ public interface Blacklists {
      * @param retroactive Apply to dates in the past
      * @param notes       Note to add to the entry
      * @return A list of the entries added
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/blacklists/add/">Documentation</a>
      */
     @FormUrlEncoded
@@ -65,7 +65,7 @@ public interface Blacklists {
      * @param retroactive Apply to dates in the past
      * @param notes       Note to add to the entry
      * @param callback    Callback for async result
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/blacklists/add/">Documentation</a>
      */
     @FormUrlEncoded
@@ -84,7 +84,7 @@ public interface Blacklists {
      * @param retroactive Apply to dates in the past
      * @param notes       Note to add to the entry
      * @return A list of the entries added
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/blacklists/add/">Documentation</a>
      */
     @FormUrlEncoded
@@ -103,7 +103,7 @@ public interface Blacklists {
      * @param retroactive Apply to dates in the past
      * @param notes       Note to add to the entry
      * @param callback    Callback for async result
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/blacklists/add/">Documentation</a>
      */
     @FormUrlEncoded
@@ -122,7 +122,7 @@ public interface Blacklists {
      * @param retroactive Apply to dates in the past
      * @param notes       Note to add to the entry
      * @return A list of the entries added
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/blacklists/add/">Documentation</a>
      */
     @FormUrlEncoded
@@ -140,7 +140,7 @@ public interface Blacklists {
      * @param retroactive Apply to dates in the past
      * @param notes       Note to add to the entry
      * @param callback    Callback for async result
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/blacklists/add/">Documentation</a>
      */
     @FormUrlEncoded
@@ -159,7 +159,7 @@ public interface Blacklists {
      * @param retroactive Apply to dates in the past
      * @param notes       Note to add to the entry
      * @return A list of the entries added
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/blacklists/add/">Documentation</a>
      */
     @FormUrlEncoded
@@ -178,7 +178,7 @@ public interface Blacklists {
      * @param retroactive Apply to dates in the past
      * @param notes       Note to add to the entry
      * @param callback    Callback for async result
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/blacklists/add/">Documentation</a>
      */
     @FormUrlEncoded
@@ -197,7 +197,7 @@ public interface Blacklists {
      * @param retroactive Apply to dates in the past
      * @param notes       Note to add to the entry
      * @return A list of the entries added
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/blacklists/add/">Documentation</a>
      */
     @FormUrlEncoded
@@ -216,7 +216,7 @@ public interface Blacklists {
      * @param retroactive Apply to dates in the past
      * @param notes       Note to add to the entry
      * @param callback    Callback for async result
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/blacklists/add/">Documentation</a>
      */
     @FormUrlEncoded
@@ -232,7 +232,7 @@ public interface Blacklists {
      *
      * @param forum The forum short name
      * @return A list of the entries
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/blacklists/list/">Documentation</a>
      */
     @GET("/blacklists/list.json")
@@ -243,7 +243,7 @@ public interface Blacklists {
      *
      * @param forum    The forum short name
      * @param callback Callback for async result
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/blacklists/list/">Documentation</a>
      */
     @GET("/blacklists/list.json")
@@ -256,7 +256,7 @@ public interface Blacklists {
      * @param forum          The forum short name
      * @param optionalParams A map of optional parameters
      * @return A list of the entries
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/blacklists/list/">Documentation</a>
      */
     @GET("/blacklists/list.json")
@@ -270,7 +270,7 @@ public interface Blacklists {
      * @param forum          The forum short name
      * @param optionalParams A map of optional parameters
      * @param callback       Callback for async result
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/blacklists/list/">Documentation</a>
      */
     @GET("/blacklists/list.json")
@@ -285,7 +285,7 @@ public interface Blacklists {
      * @param related        Get relations in response
      * @param optionalParams A map of optional parameters
      * @return A list of the entries
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/blacklists/list/">Documentation</a>
      */
     @GET("/blacklists/list.json")
@@ -301,7 +301,7 @@ public interface Blacklists {
      * @param related        Get relations in response
      * @param optionalParams A map of optional parameters
      * @param callback       Callback for async result
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/blacklists/list/">Documentation</a>
      */
     @GET("/blacklists/list.json")
@@ -316,7 +316,7 @@ public interface Blacklists {
      * @param forum   The forum short name
      * @param domains An array of domains to remove
      * @return A list of the entries removed
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/blacklists/remove/">Documentation</a>
      */
     @FormUrlEncoded
@@ -331,7 +331,7 @@ public interface Blacklists {
      * @param forum    The forum short name
      * @param domains  An array of domains to remove
      * @param callback Callback for async result
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/blacklists/remove/">Documentation</a>
      */
     @FormUrlEncoded
@@ -346,7 +346,7 @@ public interface Blacklists {
      * @param forum The forum short name
      * @param words An array of words to remove
      * @return A list of the entries removed
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/blacklists/remove/">Documentation</a>
      */
     @FormUrlEncoded
@@ -361,7 +361,7 @@ public interface Blacklists {
      * @param forum    The forum short name
      * @param words    An array of words to remove
      * @param callback Callback for async result
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/blacklists/remove/">Documentation</a>
      */
     @FormUrlEncoded
@@ -376,7 +376,7 @@ public interface Blacklists {
      * @param forum The forum short name
      * @param ips   An array of ips to remove
      * @return A list of the entries removed
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/blacklists/remove/">Documentation</a>
      */
     @FormUrlEncoded
@@ -390,7 +390,7 @@ public interface Blacklists {
      * @param forum    The forum short name
      * @param ips      An array of ips to remove
      * @param callback Callback for async result
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/blacklists/remove/">Documentation</a>
      */
     @FormUrlEncoded
@@ -405,7 +405,7 @@ public interface Blacklists {
      * @param forum The forum short name
      * @param users An array of user ids to remove
      * @return A list of the entries removed
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/blacklists/remove/">Documentation</a>
      */
     @FormUrlEncoded
@@ -420,7 +420,7 @@ public interface Blacklists {
      * @param forum    The forum short name
      * @param users    An array of user ids to remove
      * @param callback Callback for async result
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/blacklists/remove/">Documentation</a>
      */
     @FormUrlEncoded
@@ -435,7 +435,7 @@ public interface Blacklists {
      * @param forum  The forum short name
      * @param emails An array of emails to remove
      * @return A list of the entries removed
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/blacklists/remove/">Documentation</a>
      */
     @FormUrlEncoded
@@ -450,7 +450,7 @@ public interface Blacklists {
      * @param forum    The forum short name
      * @param emails   An array of emails to remove
      * @param callback Callback for async result
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/blacklists/remove/">Documentation</a>
      */
     @FormUrlEncoded

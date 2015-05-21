@@ -57,12 +57,14 @@ public abstract class AuthorizeFragment extends Fragment {
      */
     private WebView mWebView;
 
+
     /**
-     * Get a new instance of this fragment
+     * * Get a new instance of this fragment
      *
-     * @param apiKey
-     * @param redirectUri
-     * @return
+     * @param apiKey      as is
+     * @param scopes      as is
+     * @param redirectUri as is
+     * @return AuthorizeFragment
      */
     public static AuthorizeFragment newInstance(String apiKey, String[] scopes, String redirectUri) {
       /*  AuthorizeFragment fragment = new AuthorizeFragment();
@@ -147,7 +149,6 @@ public abstract class AuthorizeFragment extends Fragment {
 
     /**
      * Listener interface, must be implemented by calling activity
-     * <p/>
      * TODO Should handle failures too but at time of writing the cancel button on the Disqus site
      * TODO is broken so only way to cancel is via back button which can be handled in the activity
      */

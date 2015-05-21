@@ -44,7 +44,7 @@ public interface Categories {
      * @param forum The forum short name
      * @param title The category title
      * @return The added category
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/categories/create/">Documentation</a>
      */
     @FormUrlEncoded
@@ -59,7 +59,7 @@ public interface Categories {
      * @param title     The category title
      * @param isDefault Is this the default category
      * @return The added category
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/categories/create/">Documentation</a>
      */
     @FormUrlEncoded
@@ -73,7 +73,7 @@ public interface Categories {
      *
      * @param category The category id
      * @return The category details
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/categories/details/">Documentation</a>
      */
     @GET("/categories/details.json")
@@ -84,7 +84,7 @@ public interface Categories {
      *
      * @param forum The forum short name
      * @return A list of categories
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/categories/list/">Documentation</a>
      */
     @GET("/categories/list.json")
@@ -96,7 +96,7 @@ public interface Categories {
      * @param forum          The forum short name
      * @param optionalParams A map of optional parameters
      * @return A list of categories
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/categories/list/">Documentation</a>
      */
     @GET("/categories/list.json")
@@ -109,7 +109,7 @@ public interface Categories {
      *
      * @param forums The forum short names
      * @return A list of categories
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/categories/list/">Documentation</a>
      */
     @GET("/categories/list.json")
@@ -122,7 +122,7 @@ public interface Categories {
      * @param forums         The forum short names
      * @param optionalParams A map of optional parameters
      * @return A list of categories
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/categories/list/">Documentation</a>
      */
     @GET("/categories/list.json")
@@ -135,7 +135,7 @@ public interface Categories {
      *
      * @param category The category id
      * @return A list of posts
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/categories/listPosts/">Documentation</a>
      */
     @GET("/categories/listPosts.json")
@@ -147,7 +147,7 @@ public interface Categories {
      * @param category       The category id
      * @param optionalParams A map of optional parameters
      * @return A list of posts
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/categories/listPosts/">Documentation</a>
      */
     @GET("/categories/listPosts.json")
@@ -164,7 +164,7 @@ public interface Categories {
      *                       flagged, highlighted
      * @param optionalParams A map of optional parameters
      * @return A list of posts
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/categories/listPosts/">Documentation</a>
      */
     @GET("/categories/listPosts.json")
@@ -179,7 +179,7 @@ public interface Categories {
      *
      * @param category The category id
      * @return A list of threads
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/categories/listThreads/">Documentation</a>
      */
     @GET("/categories/listThreads.json")
@@ -192,7 +192,7 @@ public interface Categories {
      * @param category       The category id
      * @param optionalParams A map of optional parameters
      * @return A list of threads
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/categories/listThreads/">Documentation</a>
      */
     @GET("/categories/listThreads.json")
@@ -207,7 +207,7 @@ public interface Categories {
      * @param related        Specify relations to include with the response. Allows: forum, author
      * @param optionalParams A map of optional parameters
      * @return A list of threads
-     * @throws ApiException
+     * @throws ApiException any errors
      * @see <a href="https://disqus.com/api/docs/categories/listThreads/">Documentation</a>
      */
     @GET("/categories/listThreads.json")

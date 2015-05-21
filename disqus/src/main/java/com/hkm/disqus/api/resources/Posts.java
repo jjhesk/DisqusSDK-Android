@@ -39,10 +39,10 @@ public interface Posts {
     /**
      * Approves the requested post
      *
+     * @param post as is
+     * @return as is
+     * @throws ApiException any error incurred during the api transaction in http
      * @see <a href="https://disqus.com/api/docs/posts/approve/">Documentation</a>
-     * @param post
-     * @return
-     * @throws ApiException
      */
     @POST("/posts/approve.json")
     public Response<List<Post>> approve(@Query("post") long post) throws ApiException;
@@ -50,10 +50,10 @@ public interface Posts {
     /**
      * Approves the requested posts
      *
+     * @param posts as is
+     * @return as is
+     * @throws ApiException any error incurred during the api transaction in http
      * @see <a href="https://disqus.com/api/docs/posts/approve/">Documentation</a>
-     * @param posts
-     * @return
-     * @throws ApiException
      */
     @POST("/posts/approve.json")
     public Response<List<Post>> approve(@Query("post") long[] posts) throws ApiException;
@@ -61,10 +61,10 @@ public interface Posts {
     /**
      * Creates a new post
      *
+     * @param message as is
+     * @return as is
+     * @throws ApiException any error incurred during the api transaction in http
      * @see <a href="https://disqus.com/api/docs/posts/create/">Documentation</a>
-     * @param message
-     * @return
-     * @throws ApiException
      */
     @POST("/posts/create.json")
     public Response<Post> create(@Query("message") String message) throws ApiException;
@@ -72,11 +72,11 @@ public interface Posts {
     /**
      * Creates a new post
      *
+     * @param message        as is
+     * @param optionalParams as is
+     * @return as is
+     * @throws ApiException any error incurred during the api transaction in http
      * @see <a href="https://disqus.com/api/docs/posts/create/">Documentation</a>
-     * @param message
-     * @param optionalParams
-     * @return
-     * @throws ApiException
      */
     @POST("/posts/create.json")
     public Response<Post> create(@Query("message") String message,
@@ -85,10 +85,10 @@ public interface Posts {
     /**
      * Returns information about a post
      *
+     * @param post as is
+     * @return as is
+     * @throws ApiException any error incurred during the api transaction in http
      * @see <a href="https://disqus.com/api/docs/posts/details/">Documentation</a>
-     * @param post
-     * @return
-     * @throws ApiException
      */
     @GET("/posts/details.json")
     public Response<Post> details(@Query("post") long post) throws ApiException;
@@ -96,11 +96,11 @@ public interface Posts {
     /**
      * Returns information about a post
      *
+     * @param post    as is
+     * @param related as is
+     * @return as is
+     * @throws ApiException any error incurred during the api transaction in http
      * @see <a href="https://disqus.com/api/docs/posts/details/">Documentation</a>
-     * @param post
-     * @param related
-     * @return
-     * @throws ApiException
      */
     @GET("/posts/details.json")
     public Response<Post> details(@Query("post") long post,
@@ -109,21 +109,22 @@ public interface Posts {
     /**
      * Returns the hierarchal tree of a post (all parents)
      *
+     * @param post as is
+     * @return as is
+     * @throws ApiException any error incurred during the api transaction in http
      * @see <a href="https://disqus.com/api/docs/posts/getContext/">Documentation</a>
-     * @param post
-     * @return
-     * @throws ApiException
      */
     @GET("/posts/getContext.json")
     public Response<List<Post>> getContext(@Query("post") long post) throws ApiException;
 
+
     /**
-     * Returns the hierarchal tree of a post (all parents)
-     *
+     * @param post    as is
+     * @param depth   as is
+     * @param related as is
+     * @return Response object schema
+     * @throws ApiException any error incurred during the api transaction in http
      * @see <a href="https://disqus.com/api/docs/posts/getContext/">Documentation</a>
-     * @param post
-     * @return
-     * @throws ApiException
      */
     @GET("/posts/getContext.json")
     public Response<List<Post>> getContext(@Query("post") long post,
@@ -133,9 +134,9 @@ public interface Posts {
     /**
      * Returns a list of posts ordered by the date created
      *
+     * @return as is
+     * @throws ApiException any error incurred during the api transaction in http
      * @see <a href="https://disqus.com/api/docs/posts/list/">Documentation</a>
-     * @return
-     * @throws ApiException
      */
     @GET("/posts/list.json")
     public Response<List<Post>> list() throws ApiException;
@@ -143,10 +144,10 @@ public interface Posts {
     /**
      * Returns a list of posts ordered by the date created
      *
+     * @param optionalParams as is
+     * @return as is
+     * @throws ApiException any error incurred during the api transaction in http
      * @see <a href="https://disqus.com/api/docs/posts/list/">Documentation</a>
-     * @param optionalParams
-     * @return
-     * @throws ApiException
      */
     @GET("/posts/list.json")
     public Response<List<Post>> list(@QueryMap Map<String, String> optionalParams)
@@ -155,9 +156,9 @@ public interface Posts {
     /**
      * Returns a list of posts ordered by the number of likes recently
      *
+     * @return as is
+     * @throws ApiException any error incurred during the api transaction in http
      * @see <a href="https://disqus.com/api/docs/posts/listPopular/">Documentation</a>
-     * @return
-     * @throws ApiException
      */
     @GET("/posts/listPopular.json")
     public Response<List<Post>> listPopular() throws ApiException;
@@ -165,10 +166,10 @@ public interface Posts {
     /**
      * Returns a list of posts ordered by the number of likes recently
      *
+     * @param optionalParams as is
+     * @return as is
+     * @throws ApiException any error incurred during the api transaction in http
      * @see <a href="https://disqus.com/api/docs/posts/listPopular/">Documentation</a>
-     * @param optionalParams
-     * @return
-     * @throws ApiException
      */
     @GET("/posts/listPopular.json")
     public Response<List<Post>> listPopular(@QueryMap Map<String, String> optionalParams)
@@ -177,10 +178,10 @@ public interface Posts {
     /**
      * Deletes the requested post
      *
+     * @param post as is
+     * @return as is
+     * @throws ApiException any error incurred during the api transaction in http
      * @see <a href="https://disqus.com/api/docs/posts/remove/">Documentation</a>
-     * @param post
-     * @return
-     * @throws ApiException
      */
     @POST("/posts/remove.json")
     public Response<List<Post>> remove(@Query("post") long post) throws ApiException;
@@ -188,10 +189,10 @@ public interface Posts {
     /**
      * Deletes the requested posts
      *
+     * @param posts as is
+     * @return as is
+     * @throws ApiException any error incurred during the api transaction in http
      * @see <a href="https://disqus.com/api/docs/posts/remove/">Documentation</a>
-     * @param posts
-     * @return
-     * @throws ApiException
      */
     @POST("/posts/remove.json")
     public Response<List<Post>> remove(@Query("post") long[] posts) throws ApiException;
@@ -199,10 +200,10 @@ public interface Posts {
     /**
      * Reports a post
      *
+     * @param post as is
+     * @return as is
+     * @throws ApiException any error incurred during the api transaction in http
      * @see <a href="https://disqus.com/api/docs/posts/report/">Documentation</a>
-     * @param post
-     * @return
-     * @throws ApiException
      */
     @POST("/posts/report.json")
     public Response<Post> report(@Query("post") long post) throws ApiException;
@@ -210,10 +211,10 @@ public interface Posts {
     /**
      * Undeletes the requested post
      *
+     * @param post as is
+     * @return as is
+     * @throws ApiException any error incurred during the api transaction in http
      * @see <a href="https://disqus.com/api/docs/posts/restore/">Documentation</a>
-     * @param post
-     * @return
-     * @throws ApiException
      */
     @POST("/posts/restore.json")
     public Response<List<Post>> restore(@Query("post") long post) throws ApiException;
@@ -221,10 +222,10 @@ public interface Posts {
     /**
      * Undeletes the requested posts
      *
+     * @param posts as is
+     * @return as is
+     * @throws ApiException any error incurred during the api transaction in http
      * @see <a href="https://disqus.com/api/docs/posts/restore/">Documentation</a>
-     * @param posts
-     * @return
-     * @throws ApiException
      */
     @POST("/posts/restore.json")
     public Response<List<Post>> restore(@Query("post") long[] posts) throws ApiException;
@@ -232,10 +233,10 @@ public interface Posts {
     /**
      * Marks the requested post as spam
      *
+     * @param post as is
+     * @return as is
+     * @throws ApiException any error incurred during the api transaction in http
      * @see <a href="https://disqus.com/api/docs/posts/spam/">Documentation</a>
-     * @param post
-     * @return
-     * @throws ApiException
      */
     @POST("/posts/spam.json")
     public Response<List<Post>> spam(@Query("post") long post) throws ApiException;
@@ -243,10 +244,10 @@ public interface Posts {
     /**
      * Marks the requested posts as spam
      *
+     * @param posts as is
+     * @return as is
+     * @throws ApiException any error incurred during the api transaction in http
      * @see <a href="https://disqus.com/api/docs/posts/spam/">Documentation</a>
-     * @param posts
-     * @return
-     * @throws ApiException
      */
     @POST("/posts/spam.json")
     public Response<List<Post>> spam(@Query("post") long[] posts) throws ApiException;
@@ -254,11 +255,11 @@ public interface Posts {
     /**
      * Updates information on a post
      *
+     * @param post    as is
+     * @param message as is
+     * @return as is
+     * @throws ApiException any error incurred during the api transaction in http
      * @see <a href="https://disqus.com/api/docs/posts/update/">Documentation</a>
-     * @param post
-     * @param message
-     * @return
-     * @throws ApiException
      */
     @POST("/posts/update.json")
     public Response<Post> update(@Query("post") long post,
@@ -267,11 +268,11 @@ public interface Posts {
     /**
      * Register a vote on a post
      *
+     * @param post as is
+     * @param vote as is
+     * @return as is
+     * @throws ApiException any error incurred during the api transaction in http
      * @see <a href="https://disqus.com/api/docs/posts/vote/">Documentation</a>
-     * @param post
-     * @param vote
-     * @return
-     * @throws ApiException
      */
     @POST("/posts/vote.json")
     public Response<Vote> vote(@Query("post") long post,

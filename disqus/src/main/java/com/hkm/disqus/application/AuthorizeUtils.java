@@ -15,11 +15,11 @@ public class AuthorizeUtils {
     /**
      * Create authorize intent
      *
-     * @param context
-     * @param apiKey
-     * @param scopes
-     * @param redirectUri
-     * @return
+     * @param context     as is
+     * @param apiKey      as is
+     * @param scopes      as is
+     * @param redirectUri as is
+     * @return as is
      */
     public static Intent createIntent(Context context, String apiKey, String[] scopes,
                                       String redirectUri) {
@@ -35,8 +35,8 @@ public class AuthorizeUtils {
     /**
      * Build a scope string from an array of scopes
      *
-     * @param scopes
-     * @return
+     * @param scopes as is
+     * @return as is
      */
     public static String buildScope(String[] scopes) {
         StringBuilder builder = new StringBuilder();
@@ -52,10 +52,10 @@ public class AuthorizeUtils {
     /**
      * Build uri for authorize requests
      *
-     * @param clientId
-     * @param scope
-     * @param redirectUri
-     * @return
+     * @param clientId    as is
+     * @param scope       as is
+     * @param redirectUri as is
+     * @return as is
      */
     public static Uri buildAuthorizeUri(String clientId, String scope, String redirectUri) {
         Uri.Builder builder = Uri.parse(DisqusConstants.AUTHORIZE_URL).buildUpon();

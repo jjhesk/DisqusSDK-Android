@@ -47,7 +47,7 @@ public interface Forums {
      * @param user  The user id of the moderator
      * @param forum The forum short name
      * @return The moderator id
-     * @throws ApiException
+     * @throws ApiException any error inccured
      * @see <a href="https://disqus.com/api/docs/forums/addModerator/">Documentation</a>
      */
     @FormUrlEncoded
@@ -62,7 +62,7 @@ public interface Forums {
      * @param name      The name of the forum
      * @param shortName The forum short name
      * @return The created forum
-     * @throws ApiException
+     * @throws ApiException any error inccured
      * @see <a href="https://disqus.com/api/docs/forums/create/">Documentation</a>
      */
     @FormUrlEncoded
@@ -79,7 +79,7 @@ public interface Forums {
      * @param shortName  The forum short name
      * @param guidelines Forum guidelines
      * @return The created forum
-     * @throws ApiException
+     * @throws ApiException any error inccured
      * @see <a href="https://disqus.com/api/docs/forums/create/">Documentation</a>
      */
     @FormUrlEncoded
@@ -94,7 +94,7 @@ public interface Forums {
      *
      * @param forum The forum short name
      * @return Details of the forum
-     * @throws ApiException
+     * @throws ApiException any error inccured
      * @see <a href="https://disqus.com/api/docs/forums/details/">Documentation</a>
      */
     @GET("/forums/details.json")
@@ -106,7 +106,7 @@ public interface Forums {
      * @param forum   The forum short name
      * @param related Specify relations to include with the response. Allows: author
      * @return Details of the forum
-     * @throws ApiException
+     * @throws ApiException any error inccured
      * @see <a href="https://disqus.com/api/docs/forums/details/">Documentation</a>
      */
     @GET("/forums/details.json")
@@ -118,7 +118,7 @@ public interface Forums {
      *
      * @param target The forum short name
      * @return A response object, data can be ignored
-     * @throws ApiException
+     * @throws ApiException any error inccured
      * @see <a href="https://disqus.com/api/docs/forums/follow/">Documentation</a>
      */
     @FormUrlEncoded
@@ -130,7 +130,7 @@ public interface Forums {
      *
      * @param forum The forum short name
      * @return A list of categories
-     * @throws ApiException
+     * @throws ApiException any error inccured
      * @see <a href="https://disqus.com/api/docs/forums/listCategories/">Documentation</a>
      */
     @GET("/forums/listCategories.json")
@@ -143,7 +143,7 @@ public interface Forums {
      * @param forum          The forum short name
      * @param optionalParams A map of optional parameters
      * @return A list of categories
-     * @throws ApiException
+     * @throws ApiException any error inccured
      * @see <a href="https://disqus.com/api/docs/forums/listCategories/">Documentation</a>
      */
     @GET("/forums/listCategories.json")
@@ -156,7 +156,7 @@ public interface Forums {
      *
      * @param forum The forum short name
      * @return A list of users
-     * @throws ApiException
+     * @throws ApiException any error inccured
      * @see <a href="https://disqus.com/api/docs/forums/listFollowers/">Documentation</a>
      */
     @GET("/forums/listFollowers.json")
@@ -169,7 +169,7 @@ public interface Forums {
      * @param forum          The forum short name
      * @param optionalParams A map of optional parameters
      * @return A list of users
-     * @throws ApiException
+     * @throws ApiException any error inccured
      * @see <a href="https://disqus.com/api/docs/forums/listFollowers/">Documentation</a>
      */
     @GET("/forums/listFollowers.json")
@@ -182,7 +182,7 @@ public interface Forums {
      *
      * @param forum The forum short name
      * @return A list of moderators
-     * @throws ApiException
+     * @throws ApiException any error inccured
      * @see <a href="https://disqus.com/api/docs/forums/listModerators/">Documentation</a>
      */
     @GET("/forums/listModerators.json")
@@ -194,7 +194,7 @@ public interface Forums {
      *
      * @param forum The forum short name
      * @return A list of users
-     * @throws ApiException
+     * @throws ApiException any error inccured
      * @see <a href="https://disqus.com/api/docs/forums/listMostActiveUsers/">Documentation</a>
      */
     @GET("/forums/listMostActiveUsers.json")
@@ -207,7 +207,7 @@ public interface Forums {
      * @param forum          The forum short name
      * @param optionalParams A map of optional parameters
      * @return A list of users
-     * @throws ApiException
+     * @throws ApiException any error inccured
      * @see <a href="https://disqus.com/api/docs/forums/listMostActiveUsers/">Documentation</a>
      */
     @GET("/forums/listMostActiveUsers.json")
@@ -220,7 +220,7 @@ public interface Forums {
      *
      * @param forum The forum short name
      * @return A list of users
-     * @throws ApiException
+     * @throws ApiException any error inccured
      * @see <a href="https://disqus.com/api/docs/forums/listMostLikedUsers/">Documentation</a>
      */
     @GET("/forums/listMostLikedUsers.json")
@@ -233,7 +233,7 @@ public interface Forums {
      * @param forum          The forum short name
      * @param optionalParams A map of optional parameters
      * @return A list of users
-     * @throws ApiException
+     * @throws ApiException any error inccured
      * @see <a href="https://disqus.com/api/docs/forums/listMostLikedUsers/">Documentation</a>
      */
     @GET("/forums/listMostLikedUsers.json")
@@ -246,7 +246,7 @@ public interface Forums {
      *
      * @param forum The forum short name
      * @return A list if posts
-     * @throws ApiException
+     * @throws ApiException any error inccured
      * @see <a href="https://disqus.com/api/docs/forums/listPosts/">Documentation</a>
      */
     @GET("/forums/listPosts.json")
@@ -258,7 +258,7 @@ public interface Forums {
      * @param forum          The forum short name
      * @param optionalParams A map of optional parameters
      * @return A list of posts
-     * @throws ApiException
+     * @throws ApiException any error inccured
      * @see <a href="https://disqus.com/api/docs/forums/listPosts/">Documentation</a>
      */
     @GET("/forums/listPosts.json")
@@ -275,7 +275,7 @@ public interface Forums {
      *                       flagged, highlighted
      * @param optionalParams A map of optional parameters
      * @return A list of posts
-     * @throws ApiException
+     * @throws ApiException any error inccured
      * @see <a href="https://disqus.com/api/docs/forums/listPosts/">Documentation</a>
      */
     @GET("/forums/listPosts.json")
@@ -290,7 +290,7 @@ public interface Forums {
      *
      * @param forum The forum short name
      * @return A list of threads
-     * @throws ApiException
+     * @throws ApiException any error inccured
      * @see <a href="https://disqus.com/api/docs/forums/listThreads/">Documentation</a>
      */
     @GET("/forums/listThreads.json")
@@ -302,7 +302,7 @@ public interface Forums {
      * @param forum          The forum short name
      * @param optionalParams A map of optional parameters
      * @return A list of threads
-     * @throws ApiException
+     * @throws ApiException any error inccured
      * @see <a href="https://disqus.com/api/docs/forums/listThreads/">Documentation</a>
      */
     @GET("/forums/listThreads.json")
@@ -318,7 +318,7 @@ public interface Forums {
      * @param include        Filter threads by status. Allows: open, closed, killed
      * @param optionalParams A map of optional parameters
      * @return A list of threads
-     * @throws ApiException
+     * @throws ApiException any error inccured
      * @see <a href="https://disqus.com/api/docs/forums/listThreads/">Documentation</a>
      */
     @GET("/forums/listThreads.json")
@@ -333,7 +333,7 @@ public interface Forums {
      *
      * @param forum The forum short name
      * @return A list of users
-     * @throws ApiException
+     * @throws ApiException any error inccured
      * @see <a href="https://disqus.com/api/docs/forums/listUsers/">Documentation</a>
      */
     @GET("/forums/listUsers.json")
@@ -345,7 +345,7 @@ public interface Forums {
      * @param forum          The forum short name
      * @param optionalParams A map of optional parameters
      * @return A List of users
-     * @throws ApiException
+     * @throws ApiException any error inccured
      * @see <a href="https://disqus.com/api/docs/forums/listUsers/">Documentation</a>
      */
     @GET("/forums/listUsers.json")
@@ -358,7 +358,7 @@ public interface Forums {
      *
      * @param moderator The moderator id
      * @return The removed moderator
-     * @throws ApiException
+     * @throws ApiException any error inccured
      * @see <a href="https://disqus.com/api/docs/forums/removeModerator/">Documentation</a>
      */
     @FormUrlEncoded
@@ -371,7 +371,7 @@ public interface Forums {
      *
      * @param target The forum short name
      * @return A response object, data can be ignored
-     * @throws ApiException
+     * @throws ApiException any error inccured
      * @see <a href="https://disqus.com/api/docs/forums/unfollow/">Documentation</a>
      */
     @FormUrlEncoded
@@ -386,7 +386,7 @@ public interface Forums {
      * @param name       The name of the forum
      * @param guidelines Forum guidelines
      * @return The updated forum
-     * @throws ApiException
+     * @throws ApiException any error inccured
      * @see <a href="https://disqus.com/api/docs/forums/update/">Documentation</a>
      */
     @FormUrlEncoded

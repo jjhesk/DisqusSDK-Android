@@ -57,7 +57,7 @@ public class ApiConfig {
     /**
      * Set api key
      *
-     * @param apiKey
+     * @param apiKey the API key obtained from the console
      */
     public ApiConfig(String apiKey) {
         mApiKey = apiKey;
@@ -66,7 +66,8 @@ public class ApiConfig {
     /**
      * Set api key and log level
      *
-     * @param apiKey
+     * @param apiKey   the API key obtained from the console
+     * @param logLevel level log
      */
     public ApiConfig(String apiKey, LogLevel logLevel) {
         this(apiKey);
@@ -76,8 +77,8 @@ public class ApiConfig {
     /**
      * Set api key and access token
      *
-     * @param apiKey
-     * @param accessToken
+     * @param apiKey      the API key obtained from the console
+     * @param accessToken the access token from the console
      */
     public ApiConfig(String apiKey, String accessToken) {
         this(apiKey);
@@ -87,8 +88,9 @@ public class ApiConfig {
     /**
      * Set api key, access token and log level
      *
-     * @param apiKey
-     * @param accessToken
+     * @param apiKey      the API key obtained from the console
+     * @param accessToken the access token from the console
+     * @param logLevel    log level
      */
     public ApiConfig(String apiKey, String accessToken, LogLevel logLevel) {
         this(apiKey, accessToken);
@@ -98,9 +100,9 @@ public class ApiConfig {
     /**
      * Set api key, access token and referrer
      *
-     * @param apiKey
-     * @param accessToken
-     * @param referrer
+     * @param apiKey      the API key obtained from the console
+     * @param accessToken the access token from the console
+     * @param referrer    the parameter from retorfit as LogLevel
      */
     public ApiConfig(String apiKey, String accessToken, String referrer) {
         this(apiKey, accessToken);
@@ -110,9 +112,10 @@ public class ApiConfig {
     /**
      * Set api key, access token and referrer
      *
-     * @param apiKey
-     * @param accessToken
-     * @param referrer
+     * @param apiKey      the API key obtained from the console
+     * @param accessToken the access token from the console
+     * @param referrer    the parameter from retorfit as LogLevel
+     * @param logLevel    log level
      */
     public ApiConfig(String apiKey, String accessToken, String referrer, LogLevel logLevel) {
         this(apiKey, accessToken, referrer);
@@ -122,7 +125,7 @@ public class ApiConfig {
     /**
      * Get api key
      *
-     * @return
+     * @return the self object
      */
     public String getApiKey() {
         return mApiKey;
@@ -131,8 +134,8 @@ public class ApiConfig {
     /**
      * Set api key
      *
-     * @param apiKey
-     * @return
+     * @param apiKey the API key obtained from the console
+     * @return the self object
      */
     public ApiConfig setApiKey(String apiKey) {
         this.mApiKey = apiKey;
@@ -142,7 +145,7 @@ public class ApiConfig {
     /**
      * Get api secret
      *
-     * @return
+     * @return the self object
      */
     public String getApiSecret() {
         return mApiSecret;
@@ -151,8 +154,8 @@ public class ApiConfig {
     /**
      * Set api secret. Avoid using api secret as it's a security risk
      *
-     * @param apiSecret
-     * @return
+     * @param apiSecret api secret
+     * @return the self object
      */
     public ApiConfig setApiSecret(String apiSecret) {
         this.mApiSecret = apiSecret;
@@ -162,7 +165,7 @@ public class ApiConfig {
     /**
      * Get access token
      *
-     * @return
+     * @return the self object
      */
     public String getAccessToken() {
         return mAccessToken;
@@ -171,8 +174,8 @@ public class ApiConfig {
     /**
      * Set access token
      *
-     * @param accessToken
-     * @return
+     * @param accessToken the access token from the console
+     * @return the self object
      */
     public ApiConfig setAccessToken(String accessToken) {
         this.mAccessToken = accessToken;
@@ -182,7 +185,7 @@ public class ApiConfig {
     /**
      * Get referrer
      *
-     * @return
+     * @return the self object
      */
     public String getReferrer() {
         return mReferrer;
@@ -191,8 +194,8 @@ public class ApiConfig {
     /**
      * Set referrer
      *
-     * @param referrer
-     * @return
+     * @param referrer the parameter from retorfit as LogLevel
+     * @return the self object
      */
     public ApiConfig setReferrer(String referrer) {
         this.mReferrer = referrer;
@@ -202,7 +205,7 @@ public class ApiConfig {
     /**
      * Get log level
      *
-     * @return
+     * @return the self object
      */
     public LogLevel getLogLevel() {
         return mLogLevel;
@@ -211,8 +214,8 @@ public class ApiConfig {
     /**
      * Set log level
      *
-     * @param logLevel
-     * @return
+     * @param logLevel log level object
+     * @return the self object
      */
     public ApiConfig setLogLevel(LogLevel logLevel) {
         mLogLevel = logLevel;

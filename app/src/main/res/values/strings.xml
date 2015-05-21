@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Dis</string>
+    <string name="new_game">new game</string>
+    <string name="help">help</string>
 </resources>

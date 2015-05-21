@@ -17,11 +17,15 @@ package com.hkm.disqus.api.resources;
 
 import com.hkm.disqus.api.exception.ApiException;
 import com.hkm.disqus.api.model.Response;
+import com.hkm.disqus.api.model.posts.Post;
+import com.hkm.disqus.api.model.threads.Thread;
+import com.squareup.okhttp.Call;
 
 import java.util.List;
 import java.util.Map;
 
 
+import retrofit.Callback;
 import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.Query;
@@ -37,9 +41,9 @@ public interface Threads {
     /**
      * Closes a thread
      *
-     * @see <a href="https://disqus.com/api/docs/threads/close/">Documentation</a>
      * @param thread
      * @return
+     * @see <a href="https://disqus.com/api/docs/threads/close/">Documentation</a>
      */
     @POST("/threads/close.json")
     public Response<List<Thread>> close(@Query("thread") long thread) throws ApiException;
@@ -47,9 +51,9 @@ public interface Threads {
     /**
      * Closes a thread
      *
-     * @see <a href="https://disqus.com/api/docs/threads/close/">Documentation</a>
      * @param thread
      * @return
+     * @see <a href="https://disqus.com/api/docs/threads/close/">Documentation</a>
      */
     @POST("/threads/close.json")
     public Response<List<Thread>> close(@Query("thread") long[] thread) throws ApiException;
@@ -57,11 +61,11 @@ public interface Threads {
     /**
      * Creates a new thread
      *
-     * @see <a href="https://disqus.com/api/docs/threads/create/">Documentation</a>
      * @param forum
      * @param title
      * @return
      * @throws ApiException
+     * @see <a href="https://disqus.com/api/docs/threads/create/">Documentation</a>
      */
     @POST("/threads/create.json")
     public Response<Thread> create(@Query("forum") String forum,
@@ -70,12 +74,12 @@ public interface Threads {
     /**
      * Creates a new thread
      *
-     * @see <a href="https://disqus.com/api/docs/threads/create/">Documentation</a>
      * @param forum
      * @param title
      * @param optionalParams
      * @return
      * @throws ApiException
+     * @see <a href="https://disqus.com/api/docs/threads/create/">Documentation</a>
      */
     @POST("/threads/create.json")
     public Response<Thread> create(@Query("forum") String forum,
@@ -86,10 +90,10 @@ public interface Threads {
     /**
      * Returns thread details
      *
-     * @see <a href="https://disqus.com/api/docs/threads/details/">Documentation</a>
      * @param thread
      * @return
      * @throws ApiException
+     * @see <a href="https://disqus.com/api/docs/threads/details/">Documentation</a>
      */
     @GET("/threads/details.json")
     public Response<Thread> details(@Query("thread") long thread) throws ApiException;
@@ -97,11 +101,11 @@ public interface Threads {
     /**
      * Returns thread details
      *
-     * @see <a href="https://disqus.com/api/docs/threads/details/">Documentation</a>
      * @param thread
      * @param forum
      * @return
      * @throws ApiException
+     * @see <a href="https://disqus.com/api/docs/threads/details/">Documentation</a>
      */
     @GET("/threads/details.json")
     public Response<Thread> details(@Query("thread") long thread,
@@ -110,16 +114,40 @@ public interface Threads {
     /**
      * Returns thread details
      *
-     * @see <a href="https://disqus.com/api/docs/threads/details/">Documentation</a>
      * @param thread
      * @param forum
      * @param related
      * @return
      * @throws ApiException
+     * @see <a href="https://disqus.com/api/docs/threads/details/">Documentation</a>
      */
     @GET("/threads/details.json")
     public Response<Thread> details(@Query("thread") long thread,
                                     @Query("forum") String forum,
                                     @Query("related") String[] related) throws ApiException;
 
+
+    /**
+     * Return the list of the post from a specific thread ID
+     * ex.
+     * thread:ident -> 1008680 http://hypebeast.com/?p=1008680
+     * forum   ->  hypebeast
+     *
+     * @param identifer  Looks up a thread by ID
+     *                   You may pass us the 'ident' or 'link' query types instead of an ID by including 'forum'.
+     * @param forum_name Defaults to null
+     *                   <p/>
+     *                   Looks up a forum by ID (aka short name)
+     * @return the result
+     * @throws ApiException
+     */
+    @GET("/threads/listPosts.json")
+    public Response<List<Post>> listPostByID(@Query("thread:ident") String identifer, @Query("forum") String forum_name) throws ApiException;
+
+    @GET("/threads/listPosts.json")
+    public void listPostByIDAsync(
+            @Query("thread:ident") String identifer,
+            @Query("forum") String forum_name,
+            Callback<Response<List<Post>>> cb
+    ) throws ApiException;
 }

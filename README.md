@@ -28,7 +28,7 @@ dependencies {
 2. Start the activity with `startActivityForResult`.
 
 3. Implement 'onActivityResult' to get the access token object:
-
+```java
         @Override
         protected void onActivityResult(int requestCode, int resultCode, Intent data) {
             if (resultCode == RESULT_OK) {
@@ -40,7 +40,7 @@ dependencies {
 
             super.onActivityResult(requestCode, resultCode, data);
         }
-
+```
 ### Using AuthorizeFragment
 
 1. Add the fragment to your activity via `AuthorizeFragment.newInstance`.
@@ -59,9 +59,9 @@ Third party logins are not supported at this time.
 ### Create configuration
 
 Use the `ApiConfig` class to set your app configuration
-
+```java
     ApiConfig apiConfig = new ApiConfig("__API_KEY__", "__AccessToken__", LogLevel.BASIC);
-
+```
 Use the `ApiConfig` class to setup your configuration with api secret
 ```java
     ApiConfig apiConfig = new ApiConfig("__API_KEY__", RestAdapter.LogLevel.BASIC);
@@ -89,9 +89,9 @@ As of version 0.0.5 the library is using [Retrofit](http://square.github.io/retr
 The `ApiClient` can be used to create Disqus resource objects based on the Retrofit interfaces
 defined in the `me.philio.disqus.api.resources` package. It works as a wrapper to the Retrofit
 `RestAdapter` and configures the adapter and deserialisation options for Gson.
-
+```java
     ApiClient apiClient = new ApiClient(apiConfig);
-
+```
 ### Create resource and make requests
 ```java
     Applications applications = apiClient.createApplications();

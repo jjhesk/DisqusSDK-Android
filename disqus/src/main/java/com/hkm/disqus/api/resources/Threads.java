@@ -19,11 +19,9 @@ import com.hkm.disqus.api.exception.ApiException;
 import com.hkm.disqus.api.model.Response;
 import com.hkm.disqus.api.model.posts.Post;
 import com.hkm.disqus.api.model.threads.Thread;
-import com.squareup.okhttp.Call;
 
 import java.util.List;
 import java.util.Map;
-
 
 import retrofit.Callback;
 import retrofit.http.GET;
@@ -86,8 +84,7 @@ public interface Threads {
     @POST("/threads/create.json")
     public Response<Thread> create(@Query("forum") String forum,
                                    @Query("title") String title,
-                                   @QueryMap Map<String, String> optionalParams)
-            throws ApiException;
+                                   @QueryMap Map<String, String> optionalParams) throws ApiException;
 
     /**
      * Returns thread details

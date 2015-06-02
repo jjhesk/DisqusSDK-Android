@@ -79,7 +79,7 @@ public class AccessToken implements Parcelable {
     /**
      * Constructor with parcel
      *
-     * @param source  x
+     * @param source the original code for the properties
      */
     public AccessToken(Parcel source) {
         username = source.readString();

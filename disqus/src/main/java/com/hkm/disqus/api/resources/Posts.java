@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 
+import retrofit.Callback;
 import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.Query;
@@ -79,8 +80,57 @@ public interface Posts {
      * @see <a href="https://disqus.com/api/docs/posts/create/">Documentation</a>
      */
     @POST("/posts/create.json")
-    public Response<Post> create(@Query("message") String message,
-                                 @QueryMap Map<String, String> optionalParams) throws ApiException;
+    public Response<Post> create(
+            @Query("message") String message,
+            @QueryMap Map<String, String> optionalParams)
+            throws ApiException;
+
+
+    /**
+     * create a post with call back
+     *
+     * @param messagek the message to send
+     * @param state    Choices: unapproved, approved, spam, killed
+     * @param thread   the thread ID
+     * @param cbpost   the call back data type
+     * @throws ApiException the error from transactions
+     */
+
+    @POST("/posts/create.json")
+    void create(
+            @Query("message") String messagek,
+            @Query("state") String state,
+            @Query("thread") String thread,
+            Callback<Response<Post>> cbpost)
+            throws ApiException;
+
+    /**
+     * create a post with call back
+     *
+     * @param messagek the message to send
+     * @param thread   the thread ID
+     * @param cbpost   the call back data type
+     * @throws ApiException the error from transactions
+     */
+    @POST("/posts/create.json")
+    void create(
+            @Query("message") String messagek,
+            @Query("thread") String thread,
+            Callback<Response<Post>> cbpost)
+            throws ApiException;
+
+    /**
+     * create a post with call back
+     *
+     * @param messagek the message to send
+     * @param cbpost   the call back data type
+     * @throws ApiException the error from transactions
+     */
+    @POST("/posts/create.json")
+    void create(
+            @Query("message") String messagek,
+            Callback<Response<Post>> cbpost)
+            throws ApiException;
 
     /**
      * Returns information about a post
@@ -103,8 +153,10 @@ public interface Posts {
      * @see <a href="https://disqus.com/api/docs/posts/details/">Documentation</a>
      */
     @GET("/posts/details.json")
-    public Response<Post> details(@Query("post") long post,
-                                  @Query("related") String[] related) throws ApiException;
+    public Response<Post> details(
+            @Query("post") long post,
+            @Query("related") String[] related)
+            throws ApiException;
 
     /**
      * Returns the hierarchal tree of a post (all parents)
@@ -127,9 +179,11 @@ public interface Posts {
      * @see <a href="https://disqus.com/api/docs/posts/getContext/">Documentation</a>
      */
     @GET("/posts/getContext.json")
-    public Response<List<Post>> getContext(@Query("post") long post,
-                                           @Query("depth") Integer depth,
-                                           @Query("related") String[] related) throws ApiException;
+    public Response<List<Post>> getContext(
+            @Query("post") long post,
+            @Query("depth") Integer depth,
+            @Query("related") String[] related)
+            throws ApiException;
 
     /**
      * Returns a list of posts ordered by the date created

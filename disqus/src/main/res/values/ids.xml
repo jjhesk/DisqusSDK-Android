@@ -1,5 +1,3 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="fragment_id_authorize" type="id" />
-    <item name="disqus_authorize_webview" type="id" />
 </resources>

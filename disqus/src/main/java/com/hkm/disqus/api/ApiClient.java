@@ -102,7 +102,6 @@ public class ApiClient {
                     }
                 })
                 .setRequestInterceptor(new RequestInterceptor() {
-
                     @Override
                     public void intercept(RequestFacade request) {
                         request.addHeader("User-Agent", USER_AGENT);

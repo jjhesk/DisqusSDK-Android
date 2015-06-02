@@ -3,6 +3,7 @@ package com.hkm.disqus.application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.hkm.disqus.R;
 import com.hkm.disqus.api.model.oauth2.AccessToken;
@@ -16,7 +17,7 @@ public abstract class AuthorizeActivity extends AppCompatActivity implements Aut
      * Extras that should be passed in the {@link Intent}
      */
     public static final String EXTRA_API_KEY = "api_key";
-    public static final String EXTRA_SCOPES = "scopes";
+    public static final String EXTRA_SCOPES = "scope";
     public static final String EXTRA_REDIRECT_URI = "redirect_uri";
 
     /**
@@ -27,7 +28,7 @@ public abstract class AuthorizeActivity extends AppCompatActivity implements Aut
     protected abstract int authorize_layout();
 
 
-    protected abstract void statFragmentLogin(int framelayoutID, AuthorizeFragment fragment);
+    protected abstract void statFragmentLogin(Bundle fragmentextras);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +41,7 @@ public abstract class AuthorizeActivity extends AppCompatActivity implements Aut
             String apiKey = extras.getString(EXTRA_API_KEY);
             String[] scopes = extras.getStringArray(EXTRA_SCOPES);
             String redirectUri = extras.getString(EXTRA_REDIRECT_URI);
-            statFragmentLogin(R.id.fragment_id_authorize, AuthorizeFragment.newInstance(apiKey, scopes, redirectUri));
-
+            statFragmentLogin(extras);
         } else {
             // Can't do anything without the right extras so finish
             // TODO Add some sort of error handling?
@@ -49,12 +49,16 @@ public abstract class AuthorizeActivity extends AppCompatActivity implements Aut
         }
     }
 
+    protected abstract void saveToken(AccessToken accessToken);
+
     @Override
     public void onSuccess(AccessToken accessToken) {
         // Create a result intent
         Intent data = new Intent();
         data.putExtra(EXTRA_ACCESS_TOKEN, accessToken);
         setResult(RESULT_OK, data);
+        Toast.makeText(this, "login success", Toast.LENGTH_LONG);
+        saveToken(accessToken);
         finish();
     }
 

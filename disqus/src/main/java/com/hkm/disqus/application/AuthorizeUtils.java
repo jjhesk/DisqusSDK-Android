@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import com.hkm.disqus.DisqusConstants;
+import com.hkm.disqus.api.model.oauth2.AccessToken;
 
 /**
  * Created by hesk on 21/5/15.
@@ -69,4 +70,36 @@ public class AuthorizeUtils {
         return builder.build();
     }
 
+
+    public static String buildCodeUri(String code, String clientId, String secret, String redirect) {
+        Uri.Builder builder = Uri.parse(DisqusConstants.AUTHORIZE_ACCESS_TOKEN).buildUpon();
+
+        builder.appendQueryParameter(
+                DisqusConstants.PARAM_GRANTTYPE, "authorization_code");
+        builder.appendQueryParameter(DisqusConstants.PARAM_CLIENT_ID, clientId);
+        builder.appendQueryParameter(DisqusConstants.PARAM_ACCESS_TOKEN, secret);
+        builder.appendQueryParameter(DisqusConstants.PARAM_REDIRECT_URI, redirect);
+        builder.appendQueryParameter(DisqusConstants.PARAM_CODE, code);
+
+
+        return builder.build().toString();
+    }
+
+    public static AccessToken getDataToken(String url) {
+        Uri uri = Uri.parse(url);
+        String uriFragment = uri.getFragment();
+        // Extract data from fragment and pass to callback
+        Uri queryUri = new Uri.Builder().encodedQuery(uriFragment).build();
+
+        AccessToken accessToken = new AccessToken();
+        accessToken.username = queryUri.getQueryParameter(DisqusConstants.PARAM_USERNAME);
+        accessToken.userId = Long.parseLong(queryUri.getQueryParameter(DisqusConstants.PARAM_USER_ID));
+        accessToken.accessToken = queryUri.getQueryParameter(DisqusConstants.PARAM_ACCESS_TOKEN);
+        accessToken.expiresIn = Long.parseLong(queryUri.getQueryParameter(DisqusConstants.PARAM_EXPIRES_IN));
+        accessToken.tokenType = queryUri.getQueryParameter(DisqusConstants.PARAM_TOKEN_TYPE);
+        accessToken.state = queryUri.getQueryParameter(DisqusConstants.PARAM_STATE);
+        accessToken.scope = queryUri.getQueryParameter(DisqusConstants.PARAM_SCOPE);
+
+        return accessToken;
+    }
 }

@@ -9,6 +9,7 @@ public class DisqusConstants {
      * Authorize URL
      */
     public static final String AUTHORIZE_URL = "https://disqus.com/api/oauth/2.0/authorize/";
+    public static final String AUTHORIZE_ACCESS_TOKEN = "https://disqus.com/api/oauth/2.0/access_token/";
 
     /**
      * Currently available scopes
@@ -31,14 +32,19 @@ public class DisqusConstants {
     public static final String PARAM_EXPIRES_IN = "expires_in";
     public static final String PARAM_TOKEN_TYPE = "token_type";
     public static final String PARAM_STATE = "state";
+    public static final String PARAM_GRANTTYPE = "grant_type";
+    public static final String PARAM_CODE = "code";
 
     /**
      * Authorization response types
      */
     public static final String RESPONSE_TYPE_TOKEN = "token";
-
+    public static final String RESPONSE_TYPE_CODE = "code";
     /**
      * Date format
      */
     public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
+
+
+    public static final String authorizeCode = "/?code=";
 }

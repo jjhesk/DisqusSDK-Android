@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 import com.hkm.disqus.DisqusConstants;
 import com.hkm.disqus.R;
@@ -23,19 +24,29 @@ public abstract class AuthorizeFragment extends Fragment {
     /**
      * Logging tag
      */
-    private static final String TAG = AuthorizeFragment.class.getName();
+    protected static final String TAG = AuthorizeFragment.class.getName();
 
     /**
      * Arguments
      */
-    private static final String ARG_API_KEY = "api_key";
-    private static final String ARG_SCOPES = "scope";
-    private static final String ARG_REDIRECT_URI = "redirect_uri";
+    protected static final String ARG_API_KEY = "api_key";
+    protected static final String ARG_SCOPES = "scope";
+    protected static final String ARG_REDIRECT_URI = "redirect_uri";
+
+    protected ACTION maction;
+
+    enum ACTION {
+        REFRESH_TOKEN, STEP1, STEP2
+    }
 
     /**
      * The Disqus API key
      */
     private String mApiKey;
+    /**
+     * The Disqus secret id
+     */
+    private String mSecret;
 
     /**
      * Scopes
@@ -57,24 +68,6 @@ public abstract class AuthorizeFragment extends Fragment {
      */
     private WebView mWebView;
 
-
-    /**
-     * * Get a new instance of this fragment
-     *
-     * @param apiKey      as is
-     * @param scopes      as is
-     * @param redirectUri as is
-     * @return AuthorizeFragment
-     */
-    public static AuthorizeFragment newInstance(String apiKey, String[] scopes, String redirectUri) {
-      /*  AuthorizeFragment fragment = new AuthorizeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_API_KEY, apiKey);
-        args.putStringArray(ARG_SCOPES, scopes);
-        args.putString(ARG_REDIRECT_URI, redirectUri);
-        fragment.setArguments(args);*/
-        return null;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -102,6 +95,8 @@ public abstract class AuthorizeFragment extends Fragment {
 
     protected abstract int disqus_fragment_authorize();
 
+    protected abstract int get_web_view_id();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -109,43 +104,60 @@ public abstract class AuthorizeFragment extends Fragment {
         return inflater.inflate(disqus_fragment_authorize(), container, false);
     }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        mWebView = (WebView) view.findViewById(R.id.disqus_authorize_webview);
+    private void setup2() {
 
         // Setup custom client to catch the redirect
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                if (url.startsWith(mRedirectUri)) {
-                    // Get fragment from url
-                    Log.d(TAG, "Processing redirect: " + url);
-                    Uri uri = Uri.parse(url);
-                    String uriFragment = uri.getFragment();
+                if (url.startsWith(mRedirectUri + DisqusConstants.authorizeCode)) {
+                    String code = url.substring(mRedirectUri.length(), url.length());
+                    Log.d(TAG, "Acquiring Code: " + code);
 
-                    // Extract data from fragment and pass to callback
-                    Uri queryUri = new Uri.Builder().encodedQuery(uriFragment).build();
-                    AccessToken accessToken = new AccessToken();
-                    accessToken.username = queryUri.getQueryParameter(DisqusConstants.PARAM_USERNAME);
-                    accessToken.userId = Long.parseLong(queryUri.getQueryParameter(DisqusConstants.PARAM_USER_ID));
-                    accessToken.accessToken = queryUri.getQueryParameter(DisqusConstants.PARAM_ACCESS_TOKEN);
-                    accessToken.expiresIn = Long.parseLong(queryUri.getQueryParameter(DisqusConstants.PARAM_EXPIRES_IN));
-                    accessToken.tokenType = queryUri.getQueryParameter(DisqusConstants.PARAM_TOKEN_TYPE);
-                    accessToken.state = queryUri.getQueryParameter(DisqusConstants.PARAM_STATE);
-                    accessToken.scope = queryUri.getQueryParameter(DisqusConstants.PARAM_SCOPE);
-                    mListener.onSuccess(accessToken);
+                    mWebView.loadUrl(AuthorizeUtils.buildCodeUri(code, mApiKey, mSecret, mRedirectUri));
+
+
+                } else if (url.startsWith(mRedirectUri)) {
+                    // Get fragment from url
+                    Log.d(TAG, "Acquiring Processing redirect: " + url);
+                    mListener.onSuccess(AuthorizeUtils.getDataToken(url));
                     return true;
                 }
                 return super.shouldOverrideUrlLoading(view, url);
             }
         });
 
-        // Load authorize url
-        String scope = AuthorizeUtils.buildScope(mScopes);
-        Uri uri = AuthorizeUtils.buildAuthorizeUri(mApiKey, scope, mRedirectUri);
-        Log.d(TAG, "Loading authorize url: " + uri.toString());
+
+        Uri uri = AuthorizeUtils.buildAuthorizeUri(mApiKey, getScopes(), mRedirectUri);
+        String fftoken = "Loading authorize url: " + uri.toString();
+        Log.d(TAG, fftoken);
         mWebView.loadUrl(uri.toString());
     }
+
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        mWebView = (WebView) view.findViewById(get_web_view_id());
+
+
+        setup2();
+    }
+
+    /**
+     * Load authorize url
+     *
+     * @return the string
+     */
+    private String getScopes() {
+        String scope;
+        try {
+            scope = AuthorizeUtils.buildScope(mScopes);
+        } catch (Exception e) {
+            scope = "read,write";
+        }
+        return scope;
+    }
+    // abstract protected void posttextview(String something);
 
     /**
      * Listener interface, must be implemented by calling activity
@@ -154,8 +166,9 @@ public abstract class AuthorizeFragment extends Fragment {
      */
     public interface AuthorizeListener {
 
-        public void onSuccess(AccessToken accessToken);
+        void onSuccess(AccessToken accessToken);
 
+        void onFailure();
     }
 
 }

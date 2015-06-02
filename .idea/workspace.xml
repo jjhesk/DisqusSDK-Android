@@ -17,31 +17,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="947d48f7-1b4d-4dbb-bc7b-a1f8f2857749" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragmentdisquewv.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/layoutlogin.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/hkm/dis/login.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/hkm/dis/mainTesting.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/com/hkm/dis/mainactivity.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/disqus/src/main/java/com/hkm/disqus/api/model/oauth2/AccessToken.java" afterPath="$PROJECT_DIR$/disqus/src/main/java/com/hkm/disqus/api/model/oauth2/AccessToken.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/disqus/src/main/java/com/hkm/disqus/api/ApiClient.java" afterPath="$PROJECT_DIR$/disqus/src/main/java/com/hkm/disqus/api/ApiClient.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/disqus/src/main/java/com/hkm/disqus/application/AuthorizeActivity.java" afterPath="$PROJECT_DIR$/disqus/src/main/java/com/hkm/disqus/application/AuthorizeActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/disqus/src/main/java/com/hkm/disqus/application/AuthorizeFragment.java" afterPath="$PROJECT_DIR$/disqus/src/main/java/com/hkm/disqus/application/AuthorizeFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/disqus/src/main/java/com/hkm/disqus/application/AuthorizeUtils.java" afterPath="$PROJECT_DIR$/disqus/src/main/java/com/hkm/disqus/application/AuthorizeUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/disqus/src/main/java/com/hkm/disqus/DisqusConstants.java" afterPath="$PROJECT_DIR$/disqus/src/main/java/com/hkm/disqus/DisqusConstants.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DisqusSDK-Android.iml" afterPath="$PROJECT_DIR$/DisqusSDK-Android.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/disqus/src/main/java/com/hkm/disqus/api/resources/Posts.java" afterPath="$PROJECT_DIR$/disqus/src/main/java/com/hkm/disqus/api/resources/Posts.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/disqus/src/main/java/com/hkm/disqus/api/resources/Threads.java" afterPath="$PROJECT_DIR$/disqus/src/main/java/com/hkm/disqus/api/resources/Threads.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/hkm/dis/applicationbase.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/hkm/dis/applicationbase.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/disqus/disqus.iml" afterPath="$PROJECT_DIR$/disqus/disqus.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/disqus/src/main/res/values/ids.xml" afterPath="$PROJECT_DIR$/disqus/src/main/res/values/ids.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/listlayout.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/listlayout.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/disqus/.idea/misc.xml" afterPath="$PROJECT_DIR$/disqus/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/disqus/.idea/workspace.xml" afterPath="$PROJECT_DIR$/disqus/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
     </list>
     <ignored path="DisqusSDK-Android.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -131,14 +107,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="applicationbase.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="applicationbase.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hkm/dis/applicationbase.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5823389">
+            <state vertical-scroll-proportion="0.0">
               <caret line="31" column="47" selection-start-line="31" selection-start-column="47" selection-end-line="31" selection-end-column="47" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.095177665">
+              <caret line="6" column="68" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -2406,7 +2392,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/disqus/build/generated/source/r/debug/com/hkm/disqus/model/posts/Post.java" />
         <option value="$PROJECT_DIR$/disqus/src/main/java/com/hkm/disqus/asyclient.java" />
         <option value="$PROJECT_DIR$/disqus/src/main/java/com/hkm/disqus/api/gson/BlacklistsEntryTypeAdapterFactory.java" />
         <option value="$PROJECT_DIR$/disqus/src/main/java/com/hkm/disqus/api/gson/ApplicationsUsageDeserializer.java" />
@@ -2450,13 +2435,14 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/hkm/dis/loginf.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/hkm/dis/login.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/hkm/dis/mainactivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/hkm/dis/applicationbase.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/hkm/dis/testing.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/hkm/dis/mainTesting.java" />
         <option value="$PROJECT_DIR$/disqus/src/main/java/com/hkm/disqus/api/resources/Posts.java" />
         <option value="$PROJECT_DIR$/disqus/src/main/java/com/hkm/disqus/DisqusConstants.java" />
         <option value="$PROJECT_DIR$/disqus/src/main/java/com/hkm/disqus/application/AuthorizeUtils.java" />
         <option value="$PROJECT_DIR$/disqus/src/main/java/com/hkm/disqus/application/AuthorizeFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/hkm/dis/applicationbase.java" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
@@ -3253,13 +3239,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/disqus/src/main/java/com/hkm/disqus/api/model/applications/Usage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.32552084">
-          <caret line="25" column="18" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/disqus/src/main/java/com/hkm/disqus/api/model/category/Category.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.3815104">
@@ -3672,11 +3651,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/hkm/dis/applicationbase.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5823389">
+        <state vertical-scroll-proportion="0.0">
           <caret line="31" column="47" selection-start-line="31" selection-start-column="47" selection-end-line="31" selection-end-column="47" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.095177665">
+          <caret line="6" column="68" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

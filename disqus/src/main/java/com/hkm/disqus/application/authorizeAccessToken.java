@@ -23,14 +23,19 @@ public class authorizeAccessToken extends asyclient {
             = MediaType.parse("text/x-markdown; charset=utf-8");
     private static final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-    private final String _code;
-    private final ApiConfig _config;
+    private final RequestBody _requestBody;
+    private final gsonCallBack mgsonCallBack;
 
-    public authorizeAccessToken(Context ccc, callback cb, String code, ApiConfig cfg) {
+    interface gsonCallBack {
+        void gparser(String data);
+    }
+
+    public authorizeAccessToken(Context ccc, RequestBody postRequestBody, callback cb, gsonCallBack gb) {
         super(ccc, cb);
-        _code = code;
-        _config = cfg;
+        mgsonCallBack = gb;
+        _requestBody = postRequestBody;
         try {
+
             setURL(DisqusConstants.AUTHORIZE_ACCESS_TOKEN);
         } catch (Exception e) {
             e.printStackTrace();
@@ -40,6 +45,7 @@ public class authorizeAccessToken extends asyclient {
     @Override
     protected void GSONParser(String data) throws JSONException, JsonSyntaxException, JsonIOException, JsonParseException {
         Log.d(TAG, data);
+        mgsonCallBack.gparser(data);
     }
 
     @Override
@@ -50,7 +56,6 @@ public class authorizeAccessToken extends asyclient {
 
     @Override
     protected void addHeaderParam(Request.Builder request) {
-
-        request.post(AuthorizeUtils.buildRequest(_code, _config.getApiKey(), _config.getApiSecret(), _config.getReferrer()));
+        request.post(_requestBody);
     }
 }

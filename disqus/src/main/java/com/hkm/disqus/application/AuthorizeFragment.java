@@ -16,6 +16,7 @@ import com.hkm.disqus.DisqusConstants;
 import com.hkm.disqus.R;
 import com.hkm.disqus.api.ApiConfig;
 import com.hkm.disqus.api.model.oauth2.AccessToken;
+import com.squareup.okhttp.RequestBody;
 
 import org.apache.http.util.EncodingUtils;
 
@@ -126,11 +127,31 @@ public abstract class AuthorizeFragment extends Fragment {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 final String coderequeststart = mRedirectUri + DisqusConstants.authorizeCode;
                 if (url.startsWith(coderequeststart)) {
-                    String code = url.substring(coderequeststart.length(), url.length());
+                    final String code = url.substring(coderequeststart.length(), url.length());
                     Log.d(TAG, "Acquiring Code: " + code);
-                    mWebView.postUrl(DisqusConstants.AUTHORIZE_ACCESS_TOKEN, EncodingUtils.getBytes(AuthorizeUtils.buildCodeRequestJustBody(code, mApiKey, mSecret, mRedirectUri), "BASE64"));
+                    //  mWebView.postUrl(DisqusConstants.AUTHORIZE_ACCESS_TOKEN, EncodingUtils.getBytes(AuthorizeUtils.buildCodeRequestJustBody(code, mApiKey, mSecret, mRedirectUri), "BASE64"));
+                    RequestBody rb = AuthorizeUtils.buildRequest(code, mApiKey, mSecret, mRedirectUri);
+                    new authorizeAccessToken(getActivity(), rb, new asyclient.callback() {
+                        @Override
+                        public void onSuccess(String data) {
+                            Log.d(TAG, "Acquiring Code Success final: " + data);
+                        }
 
+                        @Override
+                        public void onFailure(String message, int code, boolean systematic) {
+                            Log.d(TAG, "Acquire token failure: " + message);
+                        }
 
+                        @Override
+                        public void beforeStart(asyclient task) {
+                            Log.d(TAG, "Code request Start: " + code);
+                        }
+                    }, new authorizeAccessToken.gsonCallBack() {
+                        @Override
+                        public void gparser(String data) {
+                            Log.d(TAG, "authorizeAccessToken.gsonCallBack Start: " + data);
+                        }
+                    }).execute();
                     return true;
                 } else if (url.startsWith(mRedirectUri)) {
                     // Get fragment from url

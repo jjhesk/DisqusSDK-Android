@@ -99,7 +99,6 @@ public class AuthorizeUtils {
                 .add(DisqusConstants.PARAM_CLIENT_SECRET, secret)
                 .add(DisqusConstants.PARAM_REDIRECT_URI, redirect)
                 .build();
-
         return fmbody;
     }
 

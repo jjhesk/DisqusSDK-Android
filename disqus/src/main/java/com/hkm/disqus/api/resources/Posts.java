@@ -46,7 +46,7 @@ public interface Posts {
      * @see <a href="https://disqus.com/api/docs/posts/approve/">Documentation</a>
      */
     @POST("/posts/approve.json")
-    public Response<List<Post>> approve(@Query("post") long post) throws ApiException;
+    Response<List<Post>> approve(@Query("post") long post) throws ApiException;
 
     /**
      * Approves the requested posts
@@ -57,7 +57,7 @@ public interface Posts {
      * @see <a href="https://disqus.com/api/docs/posts/approve/">Documentation</a>
      */
     @POST("/posts/approve.json")
-    public Response<List<Post>> approve(@Query("post") long[] posts) throws ApiException;
+    Response<List<Post>> approve(@Query("post") long[] posts) throws ApiException;
 
     /**
      * Creates a new post
@@ -68,7 +68,7 @@ public interface Posts {
      * @see <a href="https://disqus.com/api/docs/posts/create/">Documentation</a>
      */
     @POST("/posts/create.json")
-    public Response<Post> create(@Query("message") String message) throws ApiException;
+    Response<Post> create(@Query("message") String message) throws ApiException;
 
     /**
      * Creates a new post
@@ -80,7 +80,7 @@ public interface Posts {
      * @see <a href="https://disqus.com/api/docs/posts/create/">Documentation</a>
      */
     @POST("/posts/create.json")
-    public Response<Post> create(
+    Response<Post> create(
             @Query("message") String message,
             @QueryMap Map<String, String> optionalParams)
             throws ApiException;

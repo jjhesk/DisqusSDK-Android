@@ -8,10 +8,7 @@
         app:showAsAction="never" />
     <item
         android:id="@+id/login_page"
-        android:title="@string/help"
+        android:title="@string/loginintent"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/webviewComments"
-        android:title="web view implementation"
-        app:showAsAction="never" />
+
 </menu>

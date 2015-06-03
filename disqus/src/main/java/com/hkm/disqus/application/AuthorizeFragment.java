@@ -1,16 +1,21 @@
 package com.hkm.disqus.application;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.app.Fragment;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Toast;
 
 import com.hkm.disqus.DisqusConstants;
 import com.hkm.disqus.R;
@@ -20,14 +25,14 @@ import com.squareup.okhttp.RequestBody;
 
 import org.apache.http.util.EncodingUtils;
 
-import retrofit.http.POST;
-import retrofit.http.Path;
-
 /**
  * Created by hesk on 21/5/15.
  */
 public abstract class AuthorizeFragment extends Fragment {
-
+    /**
+     * on press
+     */
+    private static final String allowBUttonPressUrl = "https://disqus.com/api/oauth/2.0/grant/";
     /**
      * Logging tag
      */
@@ -75,6 +80,20 @@ public abstract class AuthorizeFragment extends Fragment {
      * A {@link WebView} to display the Disqus login
      */
     private WebView mWebView;
+    private boolean isDialogShown = false;
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        mWebView = (WebView) view.findViewById(R.id.disqus_login_webview);
+        routeAuth();
+        isDialogShown = false;
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.loginwebview, container, false);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -104,61 +123,72 @@ public abstract class AuthorizeFragment extends Fragment {
         }
     }
 
-    protected abstract int disqus_fragment_authorize();
-
-    protected abstract int get_web_view_id();
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(disqus_fragment_authorize(), container, false);
-    }
-
     protected abstract String getNativeCallBack();
 
     protected abstract ApiConfig getConf();
 
-    private void routeAuth() {
+    private void dislogProcessNotice() {
+        if (!isDialogShown) {
+            ProgressDialog.show(getActivity(), "one moment", "progressing");
+            isDialogShown = true;
+        }
+    }
 
+    private boolean usewebview = false;
+
+    private void routeAuth() {
         // Setup custom client to catch the redirect
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 final String coderequeststart = mRedirectUri + DisqusConstants.authorizeCode;
+                Log.d(TAG, "base change: " + url);
                 if (url.startsWith(coderequeststart)) {
                     final String code = url.substring(coderequeststart.length(), url.length());
                     Log.d(TAG, "Acquiring Code: " + code);
-                    //  mWebView.postUrl(DisqusConstants.AUTHORIZE_ACCESS_TOKEN, EncodingUtils.getBytes(AuthorizeUtils.buildCodeRequestJustBody(code, mApiKey, mSecret, mRedirectUri), "BASE64"));
-                    RequestBody rb = AuthorizeUtils.buildRequest(code, mApiKey, mSecret, mRedirectUri);
-                    new authorizeAccessToken(getActivity(), rb, new asyclient.callback() {
-                        @Override
-                        public void onSuccess(String data) {
-                            Log.d(TAG, "Acquiring Code Success final: " + data);
-                        }
+                    /**
+                     * using the webview as post
+                     */
+                    if (usewebview) {
+                        mWebView.postUrl(DisqusConstants.AUTHORIZE_ACCESS_TOKEN, EncodingUtils.getBytes(AuthorizeUtils.buildCodeRequestJustBody(code, mApiKey, mSecret, mRedirectUri), "BASE64"));
+                    } else {
+                        RequestBody rb = AuthorizeUtils.buildRequest(code, mApiKey, mSecret, mRedirectUri);
+                        new authorizeAccessToken(getActivity(), rb, new capclient.callback() {
+                            @Override
+                            public void onSuccess(String data) {
+                                Log.d(TAG, "Acquiring Code Success final: " + data);
+                            }
 
-                        @Override
-                        public void onFailure(String message, int code, boolean systematic) {
-                            Log.d(TAG, "Acquire token failure: " + message);
-                        }
+                            @Override
+                            public void onFailure(String message, int code, boolean systematic) {
+                                final String failure = "Acquire token failure:" + message;
+                                final MessageD m = new MessageD(failure);
+                                Log.d(TAG, failure);
+                                m.show(getChildFragmentManager(), "NoticeDialogFragment");
+                            }
 
-                        @Override
-                        public void beforeStart(asyclient task) {
-                            Log.d(TAG, "Code request Start: " + code);
-                        }
-                    }, new authorizeAccessToken.gsonCallBack() {
-                        @Override
-                        public void gparser(String data) {
-                            Log.d(TAG, "authorizeAccessToken.gsonCallBack Start: " + data);
-                        }
-                    }).execute();
+                            @Override
+                            public void beforeStart(capclient task) {
+                                Log.d(TAG, "Code request Start: " + code);
+                                dislogProcessNotice();
+                            }
+                        }, new authorizeAccessToken.gsonCallBack() {
+                            @Override
+                            public void gparser(AccessToken data) {
+                                Log.d(TAG, "authorizeAccessToken.gsonCallBack Start token: " + data.accessToken);
+                                mListener.onSuccess(data);
+                            }
+                        }).execute();
+                    }
                     return true;
+                } else if (url.startsWith(allowBUttonPressUrl)) {
+                    dislogProcessNotice();
+                    //continue
                 } else if (url.startsWith(mRedirectUri)) {
                     // Get fragment from url
                     Log.d(TAG, "Acquiring Processing redirect: " + url);
                     mListener.onSuccess(AuthorizeUtils.getDataToken(url));
                     return true;
-
                 }
                 return super.shouldOverrideUrlLoading(view, url);
             }
@@ -170,14 +200,6 @@ public abstract class AuthorizeFragment extends Fragment {
         mWebView.loadUrl(uri.toString());
     }
 
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        mWebView = (WebView) view.findViewById(get_web_view_id());
-
-
-        routeAuth();
-    }
 
     /**
      * Load authorize url
@@ -197,8 +219,6 @@ public abstract class AuthorizeFragment extends Fragment {
 
     /**
      * Listener interface, must be implemented by calling activity
-     * TODO Should handle failures too but at time of writing the cancel button on the Disqus site
-     * TODO is broken so only way to cancel is via back button which can be handled in the activity
      */
     public interface AuthorizeListener {
 
@@ -207,9 +227,25 @@ public abstract class AuthorizeFragment extends Fragment {
         void onFailure();
     }
 
-   /* public interface DisqusGetAccessTokenFromCode {
-        @POST("https://disqus.com/api/oauth/2.0/access_token/")
-        List<Repo> applyCode(@Path("user") String user);
-    }*/
+    @SuppressLint("ValidFragment")
+    public class MessageD extends DialogFragment {
+        private final String m;
 
+        public MessageD(String message) {
+            m = message;
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the Builder class for convenient dialog construction
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage(this.m)
+                    .setPositiveButton(R.string.donesuccess, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            mListener.onFailure();
+                        }
+                    });
+            return builder.create();
+        }
+    }
 }

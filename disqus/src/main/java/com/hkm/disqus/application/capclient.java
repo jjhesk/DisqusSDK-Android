@@ -3,7 +3,6 @@ package com.hkm.disqus.application;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.View;
 
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
@@ -30,7 +29,7 @@ import io.realm.exceptions.RealmException;
 /**
  * Created by hesk on 2/3/15.
  */
-public abstract class asyclient extends AsyncTask<Void, Void, String> {
+public abstract class capclient extends AsyncTask<Void, Void, String> {
     private String text_mc;
     protected boolean isError = false, isSystemicError = false;
     protected String errorMessage, submission_body_json, url;
@@ -64,7 +63,7 @@ public abstract class asyclient extends AsyncTask<Void, Void, String> {
 
         public void onFailure(final String message, final int code, final boolean systematic);
 
-        public void beforeStart(final asyclient task);
+        public void beforeStart(final capclient task);
     }
 
     protected void configOkClient(OkHttpClient client) {
@@ -84,7 +83,7 @@ public abstract class asyclient extends AsyncTask<Void, Void, String> {
         }
     }*/
 
-    public asyclient(Context ccc, callback cb) {
+    public capclient(Context ccc, callback cb) {
         httpParams = new BasicHttpParams();
         HttpConnectionParams.setConnectionTimeout(httpParams, 3000);
         HttpConnectionParams.setSoTimeout(httpParams, 5000);
@@ -121,7 +120,7 @@ public abstract class asyclient extends AsyncTask<Void, Void, String> {
         return b;
     }
 
-    public asyclient setURL(String e) throws Exception {
+    public capclient setURL(String e) throws Exception {
         if (e == null) return this;
         url = e;
         return this;

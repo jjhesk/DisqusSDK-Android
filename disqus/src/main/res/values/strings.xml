@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Disqus</string>
+    <string name="workingprogress">Authorization Checking ...</string>
+    <string name="donesuccess">Finish</string>
+    <string name="understand">understood</string>
+    <string name="failurelogin">Login Unsuccessful</string>
 </resources>

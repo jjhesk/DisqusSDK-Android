@@ -29,7 +29,6 @@ public abstract class AuthorizeActivity extends AppCompatActivity implements Aut
 
     protected abstract int authorize_layout();
 
-
     protected abstract void statFragmentLogin(Bundle fragmentextras);
 
     @Override
@@ -53,11 +52,18 @@ public abstract class AuthorizeActivity extends AppCompatActivity implements Aut
     @Override
     public void onSuccess(AccessToken accessToken) {
         // Create a result intent
+        // Toast.makeText(this, "login success", Toast.LENGTH_LONG);
         Intent data = new Intent();
         data.putExtra(EXTRA_ACCESS_TOKEN, accessToken);
         setResult(RESULT_OK, data);
-        Toast.makeText(this, "login success", Toast.LENGTH_LONG);
         saveToken(accessToken);
+        finish();
+    }
+
+    @Override
+    public void onFailure() {
+        Toast.makeText(this, getResources().getString(R.string.failurelogin), Toast.LENGTH_LONG);
+        setResult(RESULT_CANCELED);
         finish();
     }
 
@@ -66,7 +72,6 @@ public abstract class AuthorizeActivity extends AppCompatActivity implements Aut
         setResult(RESULT_CANCELED);
         super.onBackPressed();
     }
-
 
 
 }

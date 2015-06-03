@@ -7,7 +7,7 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
 import com.hkm.disqus.DisqusConstants;
-import com.hkm.disqus.api.ApiConfig;
+import com.hkm.disqus.api.model.oauth2.AccessToken;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -18,7 +18,7 @@ import org.json.JSONException;
 /**
  * Created by hesk on 2/6/15.
  */
-public class authorizeAccessToken extends asyclient {
+public class authorizeAccessToken extends capclient {
     public static final MediaType MEDIA_TYPE_MARKDOWN
             = MediaType.parse("text/x-markdown; charset=utf-8");
     private static final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
@@ -27,7 +27,7 @@ public class authorizeAccessToken extends asyclient {
     private final gsonCallBack mgsonCallBack;
 
     interface gsonCallBack {
-        void gparser(String data);
+        void gparser(AccessToken data);
     }
 
     public authorizeAccessToken(Context ccc, RequestBody postRequestBody, callback cb, gsonCallBack gb) {
@@ -35,7 +35,6 @@ public class authorizeAccessToken extends asyclient {
         mgsonCallBack = gb;
         _requestBody = postRequestBody;
         try {
-
             setURL(DisqusConstants.AUTHORIZE_ACCESS_TOKEN);
         } catch (Exception e) {
             e.printStackTrace();
@@ -45,12 +44,12 @@ public class authorizeAccessToken extends asyclient {
     @Override
     protected void GSONParser(String data) throws JSONException, JsonSyntaxException, JsonIOException, JsonParseException {
         Log.d(TAG, data);
-        mgsonCallBack.gparser(data);
+        final AccessToken tk = getGson().fromJson(data, AccessToken.class);
+        mgsonCallBack.gparser(tk);
     }
 
     @Override
     protected void configOkClient(OkHttpClient client) {
-
 
     }
 

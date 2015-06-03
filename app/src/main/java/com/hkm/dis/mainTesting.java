@@ -11,8 +11,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hkm.disqus.api.exception.ApiException;
+import com.hkm.disqus.api.model.oauth2.AccessToken;
 import com.hkm.disqus.api.model.posts.Post;
 import com.hkm.disqus.application.AuthorizeActivity;
 import com.hkm.disqus.application.AuthorizeActivity.*;
@@ -27,9 +29,10 @@ import retrofit.client.Response;
  * Created by hesk on 21/5/15.
  */
 public class mainTesting extends AppCompatActivity {
-    private applicationbase base;
+
     public static String TAG = "gamestarthere";
     private TextView tvv;
+    public static final int Authotization = 992;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,44 +62,47 @@ public class mainTesting extends AppCompatActivity {
                 public void success(com.hkm.disqus.api.model.Response<List<Post>> posts, Response response) {
                     com.hkm.disqus.api.model.Response<List<Post>> d = posts;
                     Log.d(TAG, "now its working now");
-                    tvv.setText(tvv.getText() +
-                            "\n" +
-                            response.getBody() + " and the " + d.data.size() + " items were found");
+                    addLine(response.getBody() + " and the " + d.data.size() + " items were found");
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
                     Log.d(TAG, error.getMessage());
-                    tvv.setText(tvv.getText() + "\n" + error.getBody());
+                    addLine(error.getBody().toString());
                 }
 
 
             });
         } catch (RetrofitError e) {
-            tvv.setText(tvv.getText() + "\n" + e.getMessage());
+            addLine(e.getMessage());
         } catch (ApiException e) {
-            tvv.setText(tvv.getText() + "\n" + e.getMessage());
+            addLine(e.getMessage());
         }
     }
 
     // "1008680",
+    //  "1008680 http://hypebeast.com/?p=1008680",
     private void postPost(String post) {
         try {
-            getBase().beginPostTransaction().create(post, new Callback<com.hkm.disqus.api.model.Response<Post>>() {
-                @Override
-                public void success(com.hkm.disqus.api.model.Response<Post> postResponse, Response response) {
-                    tvv.setText(tvv.getText() + "\n" + response.getBody());
-                }
+            getBase().beginPostTransaction().create(
+                    post,
+                    "1008680",
+                    new Callback<com.hkm.disqus.api.model.Response<Post>>() {
+                        @Override
+                        public void success(com.hkm.disqus.api.model.Response<Post> postResponse, Response response) {
+                            addLine(response.getBody().toString());
+                        }
 
-                @Override
-                public void failure(RetrofitError error) {
-                    tvv.setText(tvv.getText() + "\n" + error.getMessage());
-                }
-            });
+                        @Override
+                        public void failure(RetrofitError error) {
+                            addLine(error.getUrl().toString() + "\n" + error.getMessage());
+                            addLine("======================");
+                        }
+                    });
         } catch (RetrofitError e) {
-            tvv.setText(tvv.getText() + "\n" + e.getMessage() + " -- retrofit error");
+            addLine(e.getMessage() + " -- retrofit error");
         } catch (ApiException e) {
-            tvv.setText(tvv.getText() + "\n" + e.getMessage());
+            addLine(e.getMessage());
         }
     }
 
@@ -105,6 +111,29 @@ public class mainTesting extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main, menu);
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == Authotization) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_CANCELED) {
+                Toast.makeText(this, getResources().getString(com.hkm.disqus.R.string.failurelogin), Toast.LENGTH_LONG);
+            }
+            if (resultCode == RESULT_OK) {
+                AccessToken token = (AccessToken) data.getExtras().getParcelable(AuthorizeActivity.EXTRA_ACCESS_TOKEN);
+                getBase().afterLogin(token);
+                addLine(token.accessToken);
+            }
+        }
+
+    }
+
+    protected void addLine(String newline) {
+        if (tvv != null) {
+            tvv.setText(tvv.getText() + "\n" + newline);
+        }
     }
 
     @Override
@@ -125,20 +154,9 @@ public class mainTesting extends AppCompatActivity {
                         "write"
                 });
                 in.putExtras(b);
-                startActivity(in);
+                startActivityForResult(in, Authotization);
                 return true;
-            case R.id.webviewComments:
-                Intent gh = new Intent(this, webviewdisqus.class);
-          /*      Bundle bh = new Bundle();
-                bh.putString(AuthorizeActivity.EXTRA_API_KEY, applicationbase.login_api_key);
-                bh.putString(AuthorizeActivity.EXTRA_REDIRECT_URI, applicationbase.redirecturi);
-                bh.putStringArray(AuthorizeActivity.EXTRA_SCOPES, new String[]{
-                        "read",
-                        "write"
-                });
-                gh.putExtras(bh);*/
-                startActivity(gh);
-                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }

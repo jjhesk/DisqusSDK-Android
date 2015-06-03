@@ -31,7 +31,7 @@ public class login extends AuthorizeActivity {
 
     @Override
     public void onFailure() {
-
+        super.onFailure();
     }
 
 
@@ -61,15 +61,6 @@ public class login extends AuthorizeActivity {
             return fragment;
         }
 
-        @Override
-        protected int disqus_fragment_authorize() {
-            return R.layout.fragmentdisquewv;
-        }
-
-        @Override
-        protected int get_web_view_id() {
-            return R.id.disqus_authorize_webview;
-        }
 
         @Override
         protected String getNativeCallBack() {

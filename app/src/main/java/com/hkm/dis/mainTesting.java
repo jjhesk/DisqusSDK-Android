@@ -46,7 +46,7 @@ public class mainTesting extends AppCompatActivity {
         tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                postPost(ed.getText().toString());
+                postPost(ed.getText().toString(), "1008680");
             }
         });
     }
@@ -82,11 +82,9 @@ public class mainTesting extends AppCompatActivity {
 
     // "1008680",
     //  "1008680 http://hypebeast.com/?p=1008680",
-    private void postPost(String post) {
+    private void postPost(String postmessage, String thread_id) {
         try {
-            getBase().beginPostTransaction().create(
-                    post,
-                    "1008680",
+            getBase().beginPostTransaction().create(postmessage, thread_id,
                     new Callback<com.hkm.disqus.api.model.Response<Post>>() {
                         @Override
                         public void success(com.hkm.disqus.api.model.Response<Post> postResponse, Response response) {
@@ -96,7 +94,7 @@ public class mainTesting extends AppCompatActivity {
                         @Override
                         public void failure(RetrofitError error) {
                             addLine(error.getUrl().toString() + "\n" + error.getMessage());
-                            addLine("======================");
+                            addLine("===============================================");
                         }
                     });
         } catch (RetrofitError e) {

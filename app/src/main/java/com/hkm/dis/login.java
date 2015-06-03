@@ -37,23 +37,13 @@ public class login extends AuthorizeActivity {
 
     public static class loginInstance extends AuthorizeFragment {
 
+
         /**
-         * * Get a new instance of this fragment
+         * Get a new instance of this fragment
          *
-         * @param apiKey      as is
-         * @param scopes      as is
-         * @param redirectUri as is
-         * @return AuthorizeFragment
+         * @param b the data bundle
+         * @return the object in return
          */
-        public static loginInstance newInstance(String apiKey, String[] scopes, String redirectUri) {
-            loginInstance fragment = new loginInstance();
-            Bundle args = new Bundle();
-            args.putString(ARG_API_KEY, apiKey);
-            args.putStringArray(ARG_SCOPES, scopes);
-            args.putString(ARG_REDIRECT_URI, redirectUri);
-            fragment.setArguments(args);
-            return fragment;
-        }
 
         public static loginInstance newInstance(Bundle b) {
             loginInstance fragment = new loginInstance();

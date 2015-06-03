@@ -23,8 +23,9 @@ repositories {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.1.1'
-    // compile project(':disqus')
-    compile 'DisqusSDK-Android:disqus:0.1.2'
+    compile 'com.android.support:support-v13:22.1.1'
+    //compile project(':disqus')
+    compile 'DisqusSDK-Android:disqus:0.1.2@aar'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.2.0'
     compile 'com.squareup.retrofit:retrofit:1.7.1'
     compile 'com.squareup.picasso:picasso:2.5.0'

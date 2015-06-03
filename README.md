@@ -9,8 +9,9 @@ This library implements the Disqus API for use in Android applications. This lib
 
 ## API RoadMap Support
 - [x] Post comments
-- [ ] Post Comments more flexible
-- [ ] Get more ..
+- [x] Post Comments more flexible
+- [x] Updated authentication OAuth2.0 standard
+- [x] Additional support for the CacheUrl mechanism
 
 ### Gradle
 
@@ -21,7 +22,11 @@ repositories {
     maven { url 'https://dl.bintray.com/jjhesk/maven' }
 }
 dependencies {
- compile 'DisqusSDK-Android:disqus:0.1.0'
+ compile 'DisqusSDK-Android:disqus:0.1.2'
+ compile 'com.squareup.retrofit:retrofit:1.7.1'
+ compile 'com.squareup.okhttp:okhttp-urlconnection:2.2.0'
+ compile 'com.squareup.picasso:picasso:2.5.0'
+ compile 'io.realm:realm-android:0.80.0'
 }
 ```
 

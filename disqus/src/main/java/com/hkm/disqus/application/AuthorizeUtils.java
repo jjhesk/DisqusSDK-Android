@@ -7,6 +7,8 @@ import android.os.Bundle;
 
 import com.hkm.disqus.DisqusConstants;
 import com.hkm.disqus.api.model.oauth2.AccessToken;
+import com.squareup.okhttp.FormEncodingBuilder;
+import com.squareup.okhttp.RequestBody;
 
 /**
  * Created by hesk on 21/5/15.
@@ -64,25 +66,41 @@ public class AuthorizeUtils {
         if (scope != null) {
             builder.appendQueryParameter(DisqusConstants.PARAM_SCOPE, scope);
         }
-        builder.appendQueryParameter(DisqusConstants.PARAM_RESPONSE_TYPE,
-                DisqusConstants.RESPONSE_TYPE_TOKEN);
+        builder.appendQueryParameter(DisqusConstants.PARAM_RESPONSE_TYPE, DisqusConstants.RESPONSE_TYPE_CODE);
         builder.appendQueryParameter(DisqusConstants.PARAM_REDIRECT_URI, redirectUri);
         return builder.build();
     }
 
 
     public static String buildCodeUri(String code, String clientId, String secret, String redirect) {
-        Uri.Builder builder = Uri.parse(DisqusConstants.AUTHORIZE_ACCESS_TOKEN).buildUpon();
+        Uri.Builder bu = Uri.parse(DisqusConstants.AUTHORIZE_ACCESS_TOKEN).buildUpon();
 
-        builder.appendQueryParameter(
-                DisqusConstants.PARAM_GRANTTYPE, "authorization_code");
-        builder.appendQueryParameter(DisqusConstants.PARAM_CLIENT_ID, clientId);
-        builder.appendQueryParameter(DisqusConstants.PARAM_ACCESS_TOKEN, secret);
-        builder.appendQueryParameter(DisqusConstants.PARAM_REDIRECT_URI, redirect);
-        builder.appendQueryParameter(DisqusConstants.PARAM_CODE, code);
+        bu.appendQueryParameter(DisqusConstants.PARAM_GRANTTYPE, DisqusConstants.auth_code);
+        bu.appendQueryParameter(DisqusConstants.PARAM_CLIENT_ID, clientId);
+        bu.appendQueryParameter(DisqusConstants.PARAM_CLIENT_SECRET, secret);
+        bu.appendQueryParameter(DisqusConstants.PARAM_REDIRECT_URI, redirect);
+        bu.appendQueryParameter(DisqusConstants.PARAM_CODE, code);
 
+        return bu.build().toString();
+    }
 
-        return builder.build().toString();
+    public static String buildCodeRequestJustBody(String code, String clientId, String secret, String redirect) {
+        String t = buildCodeUri(code, clientId, secret, redirect);
+        String replacetarget = DisqusConstants.AUTHORIZE_ACCESS_TOKEN + "?";
+        String glongthat = t.replace(replacetarget, "");
+        return glongthat;
+    }
+
+    public static RequestBody buildRequest(String code, String clientId, String secret, String redirect) {
+        final RequestBody fmbody = new FormEncodingBuilder()
+                .add(DisqusConstants.PARAM_CODE, code)
+                .add(DisqusConstants.PARAM_GRANTTYPE, DisqusConstants.auth_code)
+                .add(DisqusConstants.PARAM_CLIENT_ID, clientId)
+                .add(DisqusConstants.PARAM_CLIENT_SECRET, secret)
+                .add(DisqusConstants.PARAM_REDIRECT_URI, redirect)
+                .build();
+
+        return fmbody;
     }
 
     public static AccessToken getDataToken(String url) {

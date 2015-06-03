@@ -2,6 +2,7 @@ package com.hkm.dis;
 
 import android.os.Bundle;
 
+import com.hkm.disqus.api.ApiConfig;
 import com.hkm.disqus.api.model.oauth2.AccessToken;
 import com.hkm.disqus.application.AuthorizeActivity;
 import com.hkm.disqus.application.AuthorizeFragment;
@@ -70,7 +71,15 @@ public class login extends AuthorizeActivity {
             return R.id.disqus_authorize_webview;
         }
 
+        @Override
+        protected String getNativeCallBack() {
+            return applicationbase.redirecturidisqushbcallback;
+        }
 
+        @Override
+        protected ApiConfig getConf() {
+            return ((applicationbase) getActivity().getApplication()).getConf();
+        }
     }
 
 }

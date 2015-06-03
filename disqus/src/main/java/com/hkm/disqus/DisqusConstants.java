@@ -23,6 +23,7 @@ public class DisqusConstants {
      * Params used in Disqus urls
      */
     public static final String PARAM_CLIENT_ID = "client_id";
+    public static final String PARAM_CLIENT_SECRET = "client_secret";
     public static final String PARAM_SCOPE = "scope";
     public static final String PARAM_RESPONSE_TYPE = "response_type";
     public static final String PARAM_REDIRECT_URI = "redirect_uri";
@@ -45,6 +46,10 @@ public class DisqusConstants {
      */
     public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
 
-
+    /**
+     * other configuration value
+     */
+    public static final String auth_code = "authorization_code";
+    public static final String refresh = "refresh_token";
     public static final String authorizeCode = "/?code=";
 }

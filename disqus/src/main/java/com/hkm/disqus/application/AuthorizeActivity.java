@@ -1,6 +1,7 @@
 package com.hkm.disqus.application;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
@@ -24,6 +25,7 @@ public abstract class AuthorizeActivity extends AppCompatActivity implements Aut
      * Extras that are passed in the result
      */
     public static final String EXTRA_ACCESS_TOKEN = "access_token";
+    public static final String EXTRA_SECRET = "secret";
 
     protected abstract int authorize_layout();
 
@@ -38,9 +40,6 @@ public abstract class AuthorizeActivity extends AppCompatActivity implements Aut
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             // Get extras
-            String apiKey = extras.getString(EXTRA_API_KEY);
-            String[] scopes = extras.getStringArray(EXTRA_SCOPES);
-            String redirectUri = extras.getString(EXTRA_REDIRECT_URI);
             statFragmentLogin(extras);
         } else {
             // Can't do anything without the right extras so finish
@@ -67,5 +66,7 @@ public abstract class AuthorizeActivity extends AppCompatActivity implements Aut
         setResult(RESULT_CANCELED);
         super.onBackPressed();
     }
+
+
 
 }

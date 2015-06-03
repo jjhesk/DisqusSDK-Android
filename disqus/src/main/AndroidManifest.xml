@@ -1,7 +1,19 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.hkm.disqus">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.hkm.disqus">
 
-    <application android:allowBackup="true" android:label="@string/app_name">
+    <application
+        android:allowBackup="true"
+        android:label="@string/app_name">
+        <activity android:name=".application.authorizedcallback">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"></action>
 
+                <category android:name="android.intent.category.DEFAULT"></category>
+                <category android:name="android.intent.category.BROWSABLE"></category>
+
+                <data android:scheme="disqus-hb-cb"></data>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

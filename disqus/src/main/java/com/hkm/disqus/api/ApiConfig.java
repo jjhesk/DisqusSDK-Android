@@ -15,6 +15,8 @@
  */
 package com.hkm.disqus.api;
 
+import com.hkm.disqus.api.exception.Check;
+
 import static retrofit.RestAdapter.LogLevel;
 
 /**
@@ -46,12 +48,20 @@ public class ApiConfig {
      * Retrofit log level
      */
     private LogLevel mLogLevel = LogLevel.NONE;
+    private String mRedirectUri;
 
     /**
      * Empty constructor
      */
     public ApiConfig() {
 
+    }
+
+    public void checkForAuth() {
+        Check.checkNotNull(mApiKey, "A non null public key must be set!");
+        Check.checkNotNull(mApiSecret, "A non null private key must be set!");
+        //   Check.checkNotNull(appContext, "A context must be set!");
+        Check.checkNotNull(mRedirectUri, "A redirect Uri must be set!");
     }
 
     /**
@@ -163,6 +173,17 @@ public class ApiConfig {
     }
 
     /**
+     * set redirect uri
+     *
+     * @param url the url of the return redirect
+     * @return the acutual okject
+     */
+    public ApiConfig setRedirectUri(String url) {
+        this.mRedirectUri = url;
+        return this;
+    }
+
+    /**
      * Get access token
      *
      * @return the self object
@@ -221,5 +242,6 @@ public class ApiConfig {
         mLogLevel = logLevel;
         return this;
     }
+
 
 }

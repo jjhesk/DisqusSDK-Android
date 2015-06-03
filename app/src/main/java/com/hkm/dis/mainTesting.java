@@ -78,7 +78,8 @@ public class mainTesting extends AppCompatActivity {
             tvv.setText(tvv.getText() + "\n" + e.getMessage());
         }
     }
-                                            // "1008680",
+
+    // "1008680",
     private void postPost(String post) {
         try {
             getBase().beginPostTransaction().create(post, new Callback<com.hkm.disqus.api.model.Response<Post>>() {
@@ -113,10 +114,11 @@ public class mainTesting extends AppCompatActivity {
             case R.id.new_game:
                 getPost();
                 return true;
-            case R.id.help:
+            case R.id.login_page:
                 Intent in = new Intent(this, login.class);
                 Bundle b = new Bundle();
                 b.putString(AuthorizeActivity.EXTRA_API_KEY, applicationbase.login_api_key);
+                b.putString(AuthorizeActivity.EXTRA_SECRET, applicationbase.secret);
                 b.putString(AuthorizeActivity.EXTRA_REDIRECT_URI, applicationbase.redirecturi);
                 b.putStringArray(AuthorizeActivity.EXTRA_SCOPES, new String[]{
                         "read",
@@ -124,6 +126,18 @@ public class mainTesting extends AppCompatActivity {
                 });
                 in.putExtras(b);
                 startActivity(in);
+                return true;
+            case R.id.webviewComments:
+                Intent gh = new Intent(this, webviewdisqus.class);
+          /*      Bundle bh = new Bundle();
+                bh.putString(AuthorizeActivity.EXTRA_API_KEY, applicationbase.login_api_key);
+                bh.putString(AuthorizeActivity.EXTRA_REDIRECT_URI, applicationbase.redirecturi);
+                bh.putStringArray(AuthorizeActivity.EXTRA_SCOPES, new String[]{
+                        "read",
+                        "write"
+                });
+                gh.putExtras(bh);*/
+                startActivity(gh);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

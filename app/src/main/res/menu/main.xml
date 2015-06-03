@@ -7,7 +7,11 @@
         android:title="@string/new_game"
         app:showAsAction="never" />
     <item
-        android:id="@+id/help"
+        android:id="@+id/login_page"
         android:title="@string/help"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/webviewComments"
+        android:title="web view implementation"
         app:showAsAction="never" />
 </menu>

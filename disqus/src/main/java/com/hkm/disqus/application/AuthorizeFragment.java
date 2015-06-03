@@ -14,7 +14,13 @@ import android.widget.Toast;
 
 import com.hkm.disqus.DisqusConstants;
 import com.hkm.disqus.R;
+import com.hkm.disqus.api.ApiConfig;
 import com.hkm.disqus.api.model.oauth2.AccessToken;
+
+import org.apache.http.util.EncodingUtils;
+
+import retrofit.http.POST;
+import retrofit.http.Path;
 
 /**
  * Created by hesk on 21/5/15.
@@ -32,6 +38,7 @@ public abstract class AuthorizeFragment extends Fragment {
     protected static final String ARG_API_KEY = "api_key";
     protected static final String ARG_SCOPES = "scope";
     protected static final String ARG_REDIRECT_URI = "redirect_uri";
+    protected static final String ARG_SECRET = "secret";
 
     protected ACTION maction;
 
@@ -68,10 +75,10 @@ public abstract class AuthorizeFragment extends Fragment {
      */
     private WebView mWebView;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments().containsKey(ARG_API_KEY)) {
             mApiKey = getArguments().getString(ARG_API_KEY);
         }
@@ -80,6 +87,9 @@ public abstract class AuthorizeFragment extends Fragment {
         }
         if (getArguments().containsKey(ARG_REDIRECT_URI)) {
             mRedirectUri = getArguments().getString(ARG_REDIRECT_URI);
+        }
+        if (getArguments().containsKey(ARG_SECRET)) {
+            mSecret = getArguments().getString(ARG_SECRET);
         }
     }
 
@@ -104,29 +114,34 @@ public abstract class AuthorizeFragment extends Fragment {
         return inflater.inflate(disqus_fragment_authorize(), container, false);
     }
 
-    private void setup2() {
+    protected abstract String getNativeCallBack();
+
+    protected abstract ApiConfig getConf();
+
+    private void routeAuth() {
 
         // Setup custom client to catch the redirect
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                if (url.startsWith(mRedirectUri + DisqusConstants.authorizeCode)) {
-                    String code = url.substring(mRedirectUri.length(), url.length());
+                final String coderequeststart = mRedirectUri + DisqusConstants.authorizeCode;
+                if (url.startsWith(coderequeststart)) {
+                    String code = url.substring(coderequeststart.length(), url.length());
                     Log.d(TAG, "Acquiring Code: " + code);
+                    mWebView.postUrl(DisqusConstants.AUTHORIZE_ACCESS_TOKEN, EncodingUtils.getBytes(AuthorizeUtils.buildCodeRequestJustBody(code, mApiKey, mSecret, mRedirectUri), "BASE64"));
 
-                    mWebView.loadUrl(AuthorizeUtils.buildCodeUri(code, mApiKey, mSecret, mRedirectUri));
 
-
+                    return true;
                 } else if (url.startsWith(mRedirectUri)) {
                     // Get fragment from url
                     Log.d(TAG, "Acquiring Processing redirect: " + url);
                     mListener.onSuccess(AuthorizeUtils.getDataToken(url));
                     return true;
+
                 }
                 return super.shouldOverrideUrlLoading(view, url);
             }
         });
-
 
         Uri uri = AuthorizeUtils.buildAuthorizeUri(mApiKey, getScopes(), mRedirectUri);
         String fftoken = "Loading authorize url: " + uri.toString();
@@ -140,7 +155,7 @@ public abstract class AuthorizeFragment extends Fragment {
         mWebView = (WebView) view.findViewById(get_web_view_id());
 
 
-        setup2();
+        routeAuth();
     }
 
     /**
@@ -170,5 +185,10 @@ public abstract class AuthorizeFragment extends Fragment {
 
         void onFailure();
     }
+
+   /* public interface DisqusGetAccessTokenFromCode {
+        @POST("https://disqus.com/api/oauth/2.0/access_token/")
+        List<Repo> applyCode(@Path("user") String user);
+    }*/
 
 }

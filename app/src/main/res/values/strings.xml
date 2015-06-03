@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Dis</string>
-    <string name="new_game">new game</string>
-    <string name="help">help</string>
+    <string name="app_name">DisQus Demo</string>
+    <string name="new_game">List current Post</string>
+    <string name="help">Login And Post</string>
 </resources>

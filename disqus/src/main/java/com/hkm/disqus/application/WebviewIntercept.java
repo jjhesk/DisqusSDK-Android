@@ -18,9 +18,10 @@ import java.io.InputStream;
 /**
  * Created by hesk on 3/6/15.
  * WebviewIntercept
- * <p/>
+ * currently we dont use it in the code base
  * App.Compat
  */
+@Deprecated
 public class WebviewIntercept extends WebViewClient {
     private final AppCompatActivity activity;
     public static final String LOG_TAG = "webviewnow";

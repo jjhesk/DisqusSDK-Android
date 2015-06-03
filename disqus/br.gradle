@@ -1,6 +1,5 @@
 apply plugin: 'bintray-release'
 
-
 publish {
     userOrg = project.POM_DEVELOPER_ID
     groupId = project.PUBLISH_GROUP_ID
@@ -18,7 +17,6 @@ publish {
 if (hasProperty('bintrayUser')) {
     publish.bintrayUser = property('bintrayUser')
 }
-
 if (hasProperty('bintrayKey')) {
     publish.bintrayKey = property('bintrayKey')
 }

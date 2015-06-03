@@ -6,8 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 /**
+ * currently we dont use it in the code
+ * This class will be removed in the next version
  * Created by hesk on 2/6/15.
  */
+@Deprecated
 public class authorizedcallback extends AppCompatActivity {
     public static final String CALLBACK_URL = "disqus-hb-cb:///";
     public static final String TAG = "nowdisqus";

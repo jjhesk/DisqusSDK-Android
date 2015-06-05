@@ -3,6 +3,7 @@ package com.hkm.dis;
 import android.os.Bundle;
 
 import com.hkm.disqus.api.ApiConfig;
+import com.hkm.disqus.api.AuthMgr;
 import com.hkm.disqus.api.model.oauth2.AccessToken;
 import com.hkm.disqus.application.AuthorizeActivity;
 import com.hkm.disqus.application.AuthorizeFragment;
@@ -24,14 +25,13 @@ public class login extends AuthorizeActivity {
     }
 
     @Override
-    protected void saveToken(AccessToken accessToken) {
-        applicationbase base = ((applicationbase) getApplication());
-        base.afterLogin(accessToken);
+    public void onFailure() {
+        super.onFailure();
     }
 
     @Override
-    public void onFailure() {
-        super.onFailure();
+    protected AuthMgr getManager() {
+        return ((applicationbase) getApplication()).getManager();
     }
 
 

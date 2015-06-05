@@ -20,6 +20,7 @@ import android.webkit.WebViewClient;
 import com.hkm.disqus.DisqusConstants;
 import com.hkm.disqus.R;
 import com.hkm.disqus.api.ApiConfig;
+import com.hkm.disqus.api.AuthMgr;
 import com.hkm.disqus.api.model.oauth2.AccessToken;
 import com.squareup.okhttp.RequestBody;
 
@@ -74,7 +75,7 @@ public abstract class AuthorizeFragment extends Fragment {
     /**
      * Authorization listener
      */
-    private AuthorizeListener mListener;
+    // private AuthorizeListener mListener;
 
     /**
      * A {@link WebView} to display the Disqus login
@@ -113,11 +114,17 @@ public abstract class AuthorizeFragment extends Fragment {
         }
     }
 
+    //automatically attached;
+    private AuthMgr authentication_manager;
+    private AuthorizeActivity getListenercontext;
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (AuthorizeListener) activity;
+            getListenercontext = (AuthorizeActivity) activity;
+            //  mListener = (AuthorizeListener) activity;
+            authentication_manager = getListenercontext.getManager();
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() + " must implement AuthorizeCallback");
         }
@@ -144,42 +151,42 @@ public abstract class AuthorizeFragment extends Fragment {
                 final String coderequeststart = mRedirectUri + DisqusConstants.authorizeCode;
                 Log.d(TAG, "base change: " + url);
                 if (url.startsWith(coderequeststart)) {
-                    final String code = url.substring(coderequeststart.length(), url.length());
+                    Log.d("", "Got Url " + url);
+                    Uri uri = Uri.parse(url);
+                    final String code = uri.getQueryParameter("code");
                     Log.d(TAG, "Acquiring Code: " + code);
+                    authentication_manager.authorizeAsync(code);
                     /**
                      * using the webview as post
-                     */
-                    if (usewebview) {
-                        mWebView.postUrl(DisqusConstants.AUTHORIZE_ACCESS_TOKEN, EncodingUtils.getBytes(AuthorizeUtils.buildCodeRequestJustBody(code, mApiKey, mSecret, mRedirectUri), "BASE64"));
-                    } else {
-                        RequestBody rb = AuthorizeUtils.buildRequest(code, mApiKey, mSecret, mRedirectUri);
-                        new authorizeAccessToken(getActivity(), rb, new capclient.callback() {
-                            @Override
-                            public void onSuccess(String data) {
-                                Log.d(TAG, "Acquiring Code Success final: " + data);
-                            }
 
-                            @Override
-                            public void onFailure(String message, int code, boolean systematic) {
-                                final String failure = "Acquire token failure:" + message;
-                                final MessageD m = new MessageD(failure);
-                                Log.d(TAG, failure);
-                                m.show(getChildFragmentManager(), "NoticeDialogFragment");
-                            }
-
-                            @Override
-                            public void beforeStart(capclient task) {
-                                Log.d(TAG, "Code request Start: " + code);
-                                dislogProcessNotice();
-                            }
-                        }, new authorizeAccessToken.gsonCallBack() {
-                            @Override
-                            public void gparser(AccessToken data) {
-                                Log.d(TAG, "authorizeAccessToken.gsonCallBack Start token: " + data.accessToken);
-                                mListener.onSuccess(data);
-                            }
-                        }).execute();
+                     if (usewebview) {
+                     mWebView.postUrl(DisqusConstants.AUTHORIZE_ACCESS_TOKEN, EncodingUtils.getBytes(AuthorizeUtils.buildCodeRequestJustBody(code, mApiKey, mSecret, mRedirectUri), "BASE64"));
+                     } else {
+                     RequestBody rb = AuthorizeUtils.buildRequest(code, mApiKey, mSecret, mRedirectUri);
+                     new authorizeAccessToken(getActivity(), rb, new capclient.callback() {
+                    @Override public void onSuccess(String data) {
+                    Log.d(TAG, "Acquiring Code Success final: " + data);
                     }
+
+                    @Override public void onFailure(String message, int code, boolean systematic) {
+                    final String failure = "Acquire token failure:" + message;
+                    final MessageD m = new MessageD(failure);
+                    Log.d(TAG, failure);
+                    m.show(getChildFragmentManager(), "NoticeDialogFragment");
+                    }
+
+                    @Override public void beforeStart(capclient task) {
+                    Log.d(TAG, "Code request Start: " + code);
+                    dislogProcessNotice();
+                    }
+                    }, new authorizeAccessToken.gsonCallBack() {
+                    @Override public void gparser(AccessToken data) {
+                    Log.d(TAG, "authorizeAccessToken.gsonCallBack Start token: " + data.accessToken);
+                    mListener.onSuccess(data);
+                    }
+                    }).execute();
+                     }      */
+
                     return true;
                 } else if (url.startsWith(allowBUttonPressUrl)) {
                     dislogProcessNotice();
@@ -187,7 +194,7 @@ public abstract class AuthorizeFragment extends Fragment {
                 } else if (url.startsWith(mRedirectUri)) {
                     // Get fragment from url
                     Log.d(TAG, "Acquiring Processing redirect: " + url);
-                    mListener.onSuccess(AuthorizeUtils.getDataToken(url));
+                    //  mListener.onSuccess(AuthorizeUtils.getDataToken(url));
                     return true;
                 }
                 return super.shouldOverrideUrlLoading(view, url);
@@ -227,25 +234,5 @@ public abstract class AuthorizeFragment extends Fragment {
         void onFailure();
     }
 
-    @SuppressLint("ValidFragment")
-    public class MessageD extends DialogFragment {
-        private final String m;
 
-        public MessageD(String message) {
-            m = message;
-        }
-
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Use the Builder class for convenient dialog construction
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage(this.m)
-                    .setPositiveButton(R.string.donesuccess, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            mListener.onFailure();
-                        }
-                    });
-            return builder.create();
-        }
-    }
 }

@@ -1,19 +1,26 @@
 package com.hkm.disqus.application;
 
+import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.hkm.disqus.R;
+import com.hkm.disqus.api.AuthMgr;
 import com.hkm.disqus.api.model.oauth2.AccessToken;
 
 /**
  * Created by hesk on 21/5/15.
  */
-public abstract class AuthorizeActivity extends AppCompatActivity implements AuthorizeFragment.AuthorizeListener {
-
+public abstract class AuthorizeActivity extends AppCompatActivity implements AuthorizeFragment.AuthorizeListener, AuthMgr.AuthenticationListener {
+    public static final String TAG = "authorization act";
     /**
      * Extras that should be passed in the {@link Intent}
      */
@@ -31,6 +38,8 @@ public abstract class AuthorizeActivity extends AppCompatActivity implements Aut
 
     protected abstract void statFragmentLogin(Bundle fragmentextras);
 
+    //  private Binder binder;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,18 +54,16 @@ public abstract class AuthorizeActivity extends AppCompatActivity implements Aut
             // TODO Add some sort of error handling?
             finish();
         }
-    }
+        // binder = ((BinderProvider) getParentFragment()).createBinder(this);
 
-    protected abstract void saveToken(AccessToken accessToken);
+    }
 
     @Override
     public void onSuccess(AccessToken accessToken) {
         // Create a result intent
-        // Toast.makeText(this, "login success", Toast.LENGTH_LONG);
         Intent data = new Intent();
         data.putExtra(EXTRA_ACCESS_TOKEN, accessToken);
         setResult(RESULT_OK, data);
-        saveToken(accessToken);
         finish();
     }
 
@@ -73,5 +80,73 @@ public abstract class AuthorizeActivity extends AppCompatActivity implements Aut
         super.onBackPressed();
     }
 
+    protected abstract AuthMgr getManager();
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        getManager().addListener(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        getManager().removeListener(this);
+    }
+
+    @Override
+    public void onLogin(AccessToken accessToken) {
+        //   binder.onUserAuthenticated(true);
+        Intent data = new Intent();
+        data.putExtra(EXTRA_ACCESS_TOKEN, accessToken);
+        setResult(RESULT_OK, data);
+        finish();
+    }
+
+    @Override
+    public void onLoginFailed(String error) {
+        //  binder.onUserAuthenticated(false);
+        final String failure = "Acquire token failure:" + error;
+        final MessageD m = new MessageD(failure);
+        Log.d(TAG, failure);
+        m.show(getFragmentManager(), "NoticeDialogFragment");
+    }
+
+    @Override
+    public void onLogout() {
+        /** Not used**/
+        Log.d(TAG, "onLogout");
+    }
+
+    public interface Binder {
+        void onUserAuthenticated(boolean success); // navigate back to the parent fragment once the user is authenticated
+    }
+
+  /*  public interface BinderProvider {
+        Binder createBinder(LoginFragment fragment);
+    }*/
+
+
+    @SuppressLint("ValidFragment")
+    public class MessageD extends DialogFragment {
+        private final String m;
+
+        public MessageD(String message) {
+            m = message;
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the Builder class for convenient dialog construction
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage(this.m)
+                    .setPositiveButton(R.string.donesuccess, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            onFailure();
+                            onLoginFailed(m);
+                        }
+                    });
+            return builder.create();
+        }
+    }
 }

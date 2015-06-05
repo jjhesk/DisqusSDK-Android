@@ -10,7 +10,7 @@ public class DisqusConstants {
      */
     public static final String AUTHORIZE_URL = "https://disqus.com/api/oauth/2.0/authorize/";
     public static final String AUTHORIZE_ACCESS_TOKEN = "https://disqus.com/api/oauth/2.0/access_token/";
-
+    public static final String ACTION_REFRESH_TOKEN = "com.hkm.disqus.refresh_token";
     /**
      * Currently available scopes
      */

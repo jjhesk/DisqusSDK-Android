@@ -44,9 +44,7 @@
                 <data android:scheme="disqus-hb-cb"></data>
             </intent-filter>
         </activity>
-        <activity
-            android:name=".webviewdisqus"
-            android:configChanges="orientation|screenSize|fontScale|keyboard|keyboardHidden" />
+
     </application>
 
 

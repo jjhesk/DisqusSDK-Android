@@ -1,17 +1,15 @@
 package com.hkm.dis;
 
 import android.app.Application;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.hkm.disqus.api.ApiClient;
 import com.hkm.disqus.api.ApiConfig;
+import com.hkm.disqus.api.AuthMgr;
 import com.hkm.disqus.api.exception.ApiException;
 import com.hkm.disqus.api.model.Response;
-import com.hkm.disqus.api.model.oauth2.AccessToken;
 import com.hkm.disqus.api.model.posts.Post;
 import com.hkm.disqus.api.resources.Posts;
-import com.hkm.disqus.api.resources.Threads;
 
 import java.util.List;
 
@@ -37,42 +35,28 @@ public class applicationbase extends Application {
     public final static String redirecturi = "http://hypebeast.com";
     public final static String redirecturidisqushbcallback = "disqus-hb-cb://hypebeast.com";
     public static ApiConfig conf;
+    public static AuthMgr authmanager;
 
     @Override
     public void onCreate() {
-        initConfig();
+        conf = new ApiConfig(applicationKey, default_access, RestAdapter.LogLevel.BASIC);
+        conf.setApiSecret(secret);
+        conf.setRedirectUri(redirecturi);
         setup = new ApiClient(conf);
+        authmanager = setup.createAuthenticationManager(this);
     }
 
-    private void initConfig() {
-        ApiConfig apiConfig = new ApiConfig(applicationKey, default_access, RestAdapter.LogLevel.BASIC);
-        apiConfig.setApiSecret(secret);
-        apiConfig.setRedirectUri(redirecturi);
-        conf = apiConfig;
-
+    public AuthMgr getManager() {
+        return authmanager;
     }
 
     public ApiConfig getConf() {
         return conf;
     }
 
-    public void afterLogin(AccessToken token) {
-        ApiConfig apiConfig = new ApiConfig(
-                applicationKey,
-                token.accessToken,
-                RestAdapter.LogLevel.BASIC);
-        apiConfig.setApiSecret(secret);
-        apiConfig.setRedirectUri(redirecturi);
-        setup = new ApiClient(apiConfig);
-    }
-
     public void getComments(String comment_id, Callback<Response<List<Post
             >>> cb) throws ApiException {
         setup.createThreads().listPostByIDAsync(comment_id, "hypebeast", cb);
-    }
-
-    public ApiClient getsetup() {
-        return setup;
     }
 
     public Posts beginPostTransaction() {
@@ -86,4 +70,5 @@ public class applicationbase extends Application {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG);
         }
     }
+
 }

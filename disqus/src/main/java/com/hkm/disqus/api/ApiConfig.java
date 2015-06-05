@@ -15,7 +15,10 @@
  */
 package com.hkm.disqus.api;
 
+import android.os.Bundle;
+
 import com.hkm.disqus.api.exception.Check;
+import com.hkm.disqus.application.AuthorizeActivity;
 
 import static retrofit.RestAdapter.LogLevel;
 
@@ -184,6 +187,14 @@ public class ApiConfig {
     }
 
     /**
+     * get the uri from the web redirect call back from the official server
+     * @return  get the redirect uri from the after thing was working.
+     */
+    public String getRedirectURI() {
+        return mRedirectUri;
+    }
+
+    /**
      * Get access token
      *
      * @return the self object
@@ -243,5 +254,20 @@ public class ApiConfig {
         return this;
     }
 
-
+    /**
+     * retrieve the bundle data for the intent
+     *
+     * @return the Bundle object
+     */
+    public Bundle getLogInBundle() {
+        Bundle b = new Bundle();
+        b.putString(AuthorizeActivity.EXTRA_API_KEY, mApiKey);
+        b.putString(AuthorizeActivity.EXTRA_SECRET, mApiSecret);
+        b.putString(AuthorizeActivity.EXTRA_REDIRECT_URI, mRedirectUri);
+        b.putStringArray(AuthorizeActivity.EXTRA_SCOPES, new String[]{
+                "read",
+                "write"
+        });
+        return b;
+    }
 }

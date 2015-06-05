@@ -15,18 +15,22 @@
  */
 package com.hkm.disqus.api;
 
+import android.content.Context;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.hkm.disqus.DisqusConstants;
 import com.hkm.disqus.api.exception.ApiException;
 import com.hkm.disqus.api.exception.BadRequestException;
 import com.hkm.disqus.api.exception.ForbiddenException;
+import com.hkm.disqus.api.exception.NotFoundException;
 import com.hkm.disqus.api.gson.ApplicationsUsageDeserializer;
 import com.hkm.disqus.api.gson.BlacklistsEntryTypeAdapterFactory;
 import com.hkm.disqus.api.gson.PostTypeAdapterFactory;
 import com.hkm.disqus.api.gson.ThreadTypeAdapterFactory;
 import com.hkm.disqus.api.model.applications.Usage;
 import com.hkm.disqus.api.model.posts.Media;
+import com.hkm.disqus.api.resources.AccessTokenService;
 import com.hkm.disqus.api.resources.Applications;
 import com.hkm.disqus.api.resources.Blacklists;
 import com.hkm.disqus.api.resources.Categories;
@@ -39,6 +43,9 @@ import com.hkm.disqus.api.resources.Posts;
 import com.hkm.disqus.api.resources.Threads;
 import com.hkm.disqus.api.resources.Users;
 import com.hkm.disqus.api.resources.notes.Templates;
+import com.squareup.picasso.LruCache;
+import com.squareup.picasso.OkHttpDownloader;
+import com.squareup.picasso.Picasso;
 
 import retrofit.ErrorHandler;
 import retrofit.RequestInterceptor;
@@ -56,6 +63,7 @@ public class ApiClient {
      * Base URL for all Disqus endpoints
      */
     private static final String BASE_URL = "https://disqus.com/api/3.0";
+    private static final String BASE_LOGIN = "https://disqus.com/api";
 
     /**
      * User agent
@@ -66,6 +74,16 @@ public class ApiClient {
      * Rest adapter
      */
     private RestAdapter mAdapter;
+    /**
+     * login adapter
+     */
+    private RestAdapter mLoginAdapter;
+    /**
+     * the API configurations
+     */
+    private final ApiConfig _config;
+    private final Gson gsonsetup;
+    private final ErrorHandler handlerError;
 
     /**
      * Set config and set up the {@link RestAdapter}
@@ -74,33 +92,35 @@ public class ApiClient {
      */
     public ApiClient(final ApiConfig config) {
         // Build Gson with Disqus date format and type adapters
-        Gson gson = new GsonBuilder()
+        gsonsetup = new GsonBuilder()
                 .setDateFormat(DisqusConstants.DATE_FORMAT)
                 .registerTypeAdapter(Usage.class, new ApplicationsUsageDeserializer())
                 .registerTypeAdapterFactory(new BlacklistsEntryTypeAdapterFactory())
                 .registerTypeAdapterFactory(new PostTypeAdapterFactory())
                 .registerTypeAdapterFactory(new ThreadTypeAdapterFactory())
                 .create();
-
-        // Build RestAdapter
+        handlerError = new ErrorHandler() {
+            @Override
+            public Throwable handleError(RetrofitError cause) {
+                Response response = cause.getResponse();
+                if (response != null) {
+                    switch (response.getStatus()) {
+                        case 400:
+                            return new BadRequestException(cause);
+                        case 401:
+                            return new ForbiddenException(cause);
+                        case 404:
+                            return new NotFoundException(cause);
+                    }
+                }
+                return new ApiException(cause);
+            }
+        };
+        // Build RestAdapter for after login
         mAdapter = new RestAdapter.Builder()
                 .setEndpoint(BASE_URL)
                 .setLogLevel(config != null ? config.getLogLevel() : RestAdapter.LogLevel.NONE)
-                .setErrorHandler(new ErrorHandler() {
-                    @Override
-                    public Throwable handleError(RetrofitError cause) {
-                        Response response = cause.getResponse();
-                        if (response != null) {
-                            switch (response.getStatus()) {
-                                case 400:
-                                    return new BadRequestException(cause);
-                                case 401:
-                                    return new ForbiddenException(cause);
-                            }
-                        }
-                        return new ApiException(cause);
-                    }
-                })
+                .setErrorHandler(handlerError)
                 .setRequestInterceptor(new RequestInterceptor() {
                     @Override
                     public void intercept(RequestFacade request) {
@@ -128,8 +148,15 @@ public class ApiClient {
                     }
 
                 })
-                .setConverter(new GsonConverter(gson))
+                .setConverter(new GsonConverter(gsonsetup))
                 .build();
+
+        mLoginAdapter = new RestAdapter.Builder()
+                .setEndpoint(BASE_LOGIN)
+                .setLogLevel(config != null ? config.getLogLevel() : RestAdapter.LogLevel.NONE)
+                .setErrorHandler(handlerError)
+                .build();
+        _config = config;
     }
 
     /**
@@ -249,4 +276,16 @@ public class ApiClient {
         return mAdapter.create(Users.class);
     }
 
+    /**
+     * create the OAuth 2.0 mechanism
+     *
+     * @return access token service
+     */
+    public AccessTokenService createTokenService() {
+        return mLoginAdapter.create(AccessTokenService.class);
+    }
+
+    public AuthMgr createAuthenticationManager(Context contex) {
+        return new AuthMgr(contex, createTokenService(), _config);
+    }
 }

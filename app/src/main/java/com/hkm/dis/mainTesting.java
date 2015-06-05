@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hkm.disqus.api.AuthMgr;
 import com.hkm.disqus.api.exception.ApiException;
 import com.hkm.disqus.api.model.oauth2.AccessToken;
 import com.hkm.disqus.api.model.posts.Post;
@@ -37,8 +38,6 @@ public class mainTesting extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         setContentView(R.layout.listlayout);
         final EditText ed = (EditText) findViewById(R.id.contentfield);
         TintImageView tv = (TintImageView) findViewById(R.id.send);
@@ -53,6 +52,10 @@ public class mainTesting extends AppCompatActivity {
 
     private applicationbase getBase() {
         return ((applicationbase) getApplication());
+    }
+
+    private AuthMgr getManager() {
+        return getBase().getManager();
     }
 
     private void getPost() {
@@ -84,19 +87,23 @@ public class mainTesting extends AppCompatActivity {
     //  "1008680 http://hypebeast.com/?p=1008680",
     private void postPost(String postmessage, String thread_id) {
         try {
-            getBase().beginPostTransaction().create(postmessage, thread_id,
-                    new Callback<com.hkm.disqus.api.model.Response<Post>>() {
-                        @Override
-                        public void success(com.hkm.disqus.api.model.Response<Post> postResponse, Response response) {
-                            addLine(response.getBody().toString());
-                        }
+            if (getManager().isAuthenticated()) {
+                getBase().beginPostTransaction().create(postmessage, thread_id,
+                        new Callback<com.hkm.disqus.api.model.Response<Post>>() {
+                            @Override
+                            public void success(com.hkm.disqus.api.model.Response<Post> postResponse, Response response) {
+                                addLine(response.getBody().toString());
+                            }
 
-                        @Override
-                        public void failure(RetrofitError error) {
-                            addLine(error.getUrl().toString() + "\n" + error.getMessage());
-                            addLine("===============================================");
-                        }
-                    });
+                            @Override
+                            public void failure(RetrofitError error) {
+                                addLine(error.getUrl().toString() + "\n" + error.getMessage());
+                                addLine("===============================================");
+                            }
+                        });
+            } else {
+                loginNow();
+            }
         } catch (RetrofitError e) {
             addLine(e.getMessage() + " -- retrofit error");
         } catch (ApiException e) {
@@ -121,12 +128,18 @@ public class mainTesting extends AppCompatActivity {
             }
             if (resultCode == RESULT_OK) {
                 AccessToken token = (AccessToken) data.getExtras().getParcelable(AuthorizeActivity.EXTRA_ACCESS_TOKEN);
-                getBase().afterLogin(token);
                 addLine(token.accessToken);
             }
         }
 
     }
+
+    protected void loginNow() {
+        Intent in = new Intent(this, login.class);
+        in.putExtras(getBase().getConf().getLogInBundle());
+        startActivityForResult(in, Authotization);
+    }
+
 
     protected void addLine(String newline) {
         if (tvv != null) {
@@ -142,19 +155,8 @@ public class mainTesting extends AppCompatActivity {
                 getPost();
                 return true;
             case R.id.login_page:
-                Intent in = new Intent(this, login.class);
-                Bundle b = new Bundle();
-                b.putString(AuthorizeActivity.EXTRA_API_KEY, applicationbase.login_api_key);
-                b.putString(AuthorizeActivity.EXTRA_SECRET, applicationbase.secret);
-                b.putString(AuthorizeActivity.EXTRA_REDIRECT_URI, applicationbase.redirecturi);
-                b.putStringArray(AuthorizeActivity.EXTRA_SCOPES, new String[]{
-                        "read",
-                        "write"
-                });
-                in.putExtras(b);
-                startActivityForResult(in, Authotization);
+                loginNow();
                 return true;
-
             default:
                 return super.onOptionsItemSelected(item);
         }

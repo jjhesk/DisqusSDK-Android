@@ -26,7 +26,7 @@ public class authorizeAccessToken extends capclient {
     private final RequestBody _requestBody;
     private final gsonCallBack mgsonCallBack;
 
-    interface gsonCallBack {
+    public interface gsonCallBack {
         void gparser(AccessToken data);
     }
 

@@ -155,37 +155,13 @@ public abstract class AuthorizeFragment extends Fragment {
                     Uri uri = Uri.parse(url);
                     final String code = uri.getQueryParameter("code");
                     Log.d(TAG, "Acquiring Code: " + code);
+
+
                     authentication_manager.authorizeAsync(code);
-                    /**
-                     * using the webview as post
 
-                     if (usewebview) {
-                     mWebView.postUrl(DisqusConstants.AUTHORIZE_ACCESS_TOKEN, EncodingUtils.getBytes(AuthorizeUtils.buildCodeRequestJustBody(code, mApiKey, mSecret, mRedirectUri), "BASE64"));
-                     } else {
-                     RequestBody rb = AuthorizeUtils.buildRequest(code, mApiKey, mSecret, mRedirectUri);
-                     new authorizeAccessToken(getActivity(), rb, new capclient.callback() {
-                    @Override public void onSuccess(String data) {
-                    Log.d(TAG, "Acquiring Code Success final: " + data);
-                    }
 
-                    @Override public void onFailure(String message, int code, boolean systematic) {
-                    final String failure = "Acquire token failure:" + message;
-                    final MessageD m = new MessageD(failure);
-                    Log.d(TAG, failure);
-                    m.show(getChildFragmentManager(), "NoticeDialogFragment");
-                    }
+                   // mWebView.postUrl(DisqusConstants.AUTHORIZE_ACCESS_TOKEN, EncodingUtils.getBytes(AuthorizeUtils.buildCodeRequestJustBody(code, mApiKey, mSecret, mRedirectUri), "BASE64"));
 
-                    @Override public void beforeStart(capclient task) {
-                    Log.d(TAG, "Code request Start: " + code);
-                    dislogProcessNotice();
-                    }
-                    }, new authorizeAccessToken.gsonCallBack() {
-                    @Override public void gparser(AccessToken data) {
-                    Log.d(TAG, "authorizeAccessToken.gsonCallBack Start token: " + data.accessToken);
-                    mListener.onSuccess(data);
-                    }
-                    }).execute();
-                     }      */
 
                     return true;
                 } else if (url.startsWith(allowBUttonPressUrl)) {

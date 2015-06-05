@@ -27,7 +27,7 @@ dependencies {
     compile project(':disqus')
     //compile 'DisqusSDK-Android:disqus:0.1.2@aar'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.2.0'
-    compile 'com.squareup.retrofit:retrofit:1.7.1'
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'com.squareup.picasso:picasso:2.5.0'
     compile 'io.realm:realm-android:0.80.0'
 }

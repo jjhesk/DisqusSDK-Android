@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DisQus Demo</string>
+    <string name="app_name">disqus SDK Demo HKM</string>
     <string name="new_game">List current Post</string>
     <string name="loginintent">Login And Post</string>
 

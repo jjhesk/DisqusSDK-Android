@@ -4,7 +4,7 @@ package com.hkm.disqus;
  * Created by hesk on 21/5/15.
  */
 public class DisqusConstants {
-
+    public static final int apiVersion = 2;
     /**
      * Authorize URL
      */

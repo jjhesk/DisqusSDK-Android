@@ -20,12 +20,14 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.hkm.disqus.DisqusConstants;
+import com.hkm.disqus.api.exception.APIIncorrectException;
 import com.hkm.disqus.api.exception.ApiException;
 import com.hkm.disqus.api.exception.BadRequestException;
 import com.hkm.disqus.api.exception.ForbiddenException;
 import com.hkm.disqus.api.exception.NotFoundException;
 import com.hkm.disqus.api.gson.ApplicationsUsageDeserializer;
 import com.hkm.disqus.api.gson.BlacklistsEntryTypeAdapterFactory;
+import com.hkm.disqus.api.gson.GsonFactory;
 import com.hkm.disqus.api.gson.PostTypeAdapterFactory;
 import com.hkm.disqus.api.gson.ThreadTypeAdapterFactory;
 import com.hkm.disqus.api.model.applications.Usage;
@@ -151,11 +153,32 @@ public class ApiClient {
                 .setConverter(new GsonConverter(gsonsetup))
                 .build();
 
-        mLoginAdapter = new RestAdapter.Builder()
-                .setEndpoint(BASE_LOGIN)
+        mLoginAdapter = new RestAdapter
+                .Builder()
                 .setLogLevel(config != null ? config.getLogLevel() : RestAdapter.LogLevel.NONE)
-                .setErrorHandler(handlerError)
+                .setEndpoint(BASE_LOGIN)
+                .setConverter(new GsonConverter(GsonFactory.newGsonInstance()))
+                .setRequestInterceptor(new com.hkm.disqus.api.retrofitworker.RequestInterceptor(config))
+
+                .setErrorHandler(new ErrorHandler() {
+                    @Override
+                    public Throwable handleError(RetrofitError cause) {
+                        Response response = cause.getResponse();
+                        if (response != null) {
+                            switch (response.getStatus()) {
+                                case 400:
+                                    return new APIIncorrectException(cause);
+                                case 401:
+                                    return new ForbiddenException(cause);
+                                case 404:
+                                    return new NotFoundException(cause);
+                            }
+                        }
+                        return new ApiException(cause);
+                    }
+                })
                 .build();
+
         _config = config;
     }
 
@@ -281,7 +304,7 @@ public class ApiClient {
      *
      * @return access token service
      */
-    public AccessTokenService createTokenService() {
+    private AccessTokenService createTokenService() {
         return mLoginAdapter.create(AccessTokenService.class);
     }
 

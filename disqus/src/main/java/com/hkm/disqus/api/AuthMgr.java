@@ -5,10 +5,16 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.hkm.disqus.DisqusConstants;
 import com.hkm.disqus.api.model.oauth2.AccessToken;
 import com.hkm.disqus.api.resources.AccessTokenService;
+import com.hkm.disqus.application.AuthorizeActivity;
+import com.hkm.disqus.application.AuthorizeUtils;
+import com.hkm.disqus.application.authorizeAccessToken;
+import com.hkm.disqus.application.capclient;
+import com.squareup.okhttp.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +36,8 @@ public class AuthMgr {
     private AccessTokenService accessTokenService;
     private ApiConfig config;
 
+    public final static String TAG = "AUTH";
+
     private List<AuthenticationListener> listeners = new ArrayList<>();
 
     public void addListener(AuthenticationListener listener) {
@@ -47,9 +55,51 @@ public class AuthMgr {
         accessTokenService = accesstokenservice;
     }
 
-    public void authorizeAsync(String code) {
+    public void authorizeAsync(final String code) {
         if (code != null) {
-            accessTokenService.PostToken("authorization_code", config.getApiKey(), config.getApiSecret(), config.getRedirectURI(), code, new AccessTokenRequestCallBack(true));
+            if (DisqusConstants.apiVersion == 1) {
+
+                RequestBody rb = AuthorizeUtils.buildRequest(code, config.getApiKey(), config.getApiSecret(), config.getRedirectURI());
+
+                new authorizeAccessToken(appContext, rb, new capclient.callback() {
+                    @Override
+                    public void onSuccess(String data) {
+                        Log.d(TAG, "Acquiring Code Success final: " + data);
+                    }
+
+                    @Override
+                    public void onFailure(String message, int code, boolean systematic) {
+                        final String failure = "Acquire token failure:" + message;
+
+                        for (AuthenticationListener listener : listeners) {
+                            listener.onLoginFailed(failure);
+                        }
+
+
+                    }
+
+                    @Override
+                    public void beforeStart(capclient task) {
+                        Log.d(TAG, "Code request Start: " + code);
+
+                    }
+                }, new authorizeAccessToken.gsonCallBack() {
+                    @Override
+                    public void gparser(AccessToken data) {
+                        Log.d(TAG, "authorizeAccessToken.gsonCallBack Start token: " + data.accessToken);
+
+                        for (AuthenticationListener listener : listeners) {
+                            listener.onLogin(data);
+                        }
+
+
+                    }
+                }).execute();
+
+
+            } else if (DisqusConstants.apiVersion == 2) {
+                accessTokenService.PostToken("authorization_code", config.getApiKey(), config.getApiSecret(), config.getRedirectURI(), code, new AccessTokenRequestCallBack(true));
+            }
         } else {
             throw new NullPointerException("Code must be a non-null string!");
         }
@@ -133,7 +183,7 @@ public class AuthMgr {
         public void failure(RetrofitError error) {
             if (isLogin) {
                 for (AuthenticationListener listener : listeners) {
-                    listener.onLoginFailed("code: " + error.getResponse().getStatus());
+                    listener.onLoginFailed("code: " + error.getResponse().getStatus() + "\n" + error.getBody().toString() + "\n" + error.getUrl().toString());
                 }
             } else { // token refresh failed. logout.
                 logout();

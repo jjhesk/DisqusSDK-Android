@@ -95,7 +95,6 @@ public interface Posts {
      * @param cbpost   the call back data type
      * @throws ApiException the error from transactions
      */
-
     @POST("/posts/create.json")
     void create(
             @Query("message") String messagek,

@@ -16,10 +16,7 @@
             </intent-filter>
         </activity>
 
-        <service
-            android:name=".application.MyIntentService"
-            android:exported="false" >
-        </service>
+
     </application>
 
 </manifest>

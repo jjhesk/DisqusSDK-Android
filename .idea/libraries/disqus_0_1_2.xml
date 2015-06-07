@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="disqus-0.1.2">
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/DisqusSDK-Android/disqus/0.1.2/res" />
       <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/DisqusSDK-Android/disqus/0.1.2/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/DisqusSDK-Android/disqus/0.1.2/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

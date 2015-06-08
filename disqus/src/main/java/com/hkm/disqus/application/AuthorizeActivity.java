@@ -13,6 +13,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.hkm.disqus.R;
+import com.hkm.disqus.api.ApiConfig;
 import com.hkm.disqus.api.AuthMgr;
 import com.hkm.disqus.api.model.oauth2.AccessToken;
 
@@ -82,6 +83,8 @@ public abstract class AuthorizeActivity extends AppCompatActivity implements Aut
 
     protected abstract AuthMgr getManager();
 
+    protected abstract ApiConfig getConfiguration();
+
     @Override
     public void onStart() {
         super.onStart();
@@ -100,6 +103,7 @@ public abstract class AuthorizeActivity extends AppCompatActivity implements Aut
         Intent data = new Intent();
         data.putExtra(EXTRA_ACCESS_TOKEN, accessToken);
         setResult(RESULT_OK, data);
+        getConfiguration().setAccessToken(accessToken.accessToken);
         finish();
     }
 

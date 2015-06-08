@@ -14,15 +14,28 @@ public class DisqusClient extends ApiClient {
     private Context mcontent;
 
     /**
-     * Set config and set up the {@link RestAdapter}
+     * Set config and set up the @link restafapter
      *
      * @param config the collection of configuration
+     */
+
+
+    /**
+     * THe content
+     *
+     * @param config  the collection of configuration
+     * @param context the context uneeded for your dailt vntry
      */
     public DisqusClient(ApiConfig config, Context context) {
         super(config);
         mcontent = context;
     }
 
+    /**
+     * create and return picasso
+     *
+     * @return the te ciea
+     */
     public Picasso providesPicasso() {
         return new Picasso.Builder(mcontent)
                 .downloader(new OkHttpDownloader(mcontent))

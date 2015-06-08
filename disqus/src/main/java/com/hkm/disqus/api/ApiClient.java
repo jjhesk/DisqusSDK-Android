@@ -45,6 +45,7 @@ import com.hkm.disqus.api.resources.Posts;
 import com.hkm.disqus.api.resources.Threads;
 import com.hkm.disqus.api.resources.Users;
 import com.hkm.disqus.api.resources.notes.Templates;
+import com.hkm.disqus.api.retrofitworker.Interceptor;
 import com.squareup.picasso.LruCache;
 import com.squareup.picasso.OkHttpDownloader;
 import com.squareup.picasso.Picasso;
@@ -118,6 +119,7 @@ public class ApiClient {
                 return new ApiException(cause);
             }
         };
+
         // Build RestAdapter for after login
         mAdapter = new RestAdapter.Builder()
                 .setEndpoint(BASE_URL)
@@ -158,8 +160,7 @@ public class ApiClient {
                 .setLogLevel(config != null ? config.getLogLevel() : RestAdapter.LogLevel.NONE)
                 .setEndpoint(BASE_LOGIN)
                 .setConverter(new GsonConverter(GsonFactory.newGsonInstance()))
-                .setRequestInterceptor(new com.hkm.disqus.api.retrofitworker.RequestInterceptor(config))
-
+                .setRequestInterceptor(new Interceptor(config))
                 .setErrorHandler(new ErrorHandler() {
                     @Override
                     public Throwable handleError(RetrofitError cause) {

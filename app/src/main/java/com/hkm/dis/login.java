@@ -34,6 +34,11 @@ public class login extends AuthorizeActivity {
         return ((applicationbase) getApplication()).getManager();
     }
 
+    @Override
+    protected ApiConfig getConfiguration() {
+        return ((applicationbase) getApplication()).getConf();
+    }
+
 
     public static class loginInstance extends AuthorizeFragment {
 

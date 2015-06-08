@@ -103,6 +103,9 @@ public abstract class capclient extends AsyncTask<Void, Void, String> {
      * Note there is a bug in GSON 2.3.1 that can cause it to StackOverflow when working with RealmObjects.
      * To work around this, use the ExclusionStrategy below or downgrade to 1.7.1
      * See more here: https://code.google.com/p/google-gson/issues/detail?id=440
+     *
+     * @param b gs builder body
+     * @return the gbuilder
      */
     protected GsonBuilder configBuilder(GsonBuilder b) {
 
@@ -120,6 +123,13 @@ public abstract class capclient extends AsyncTask<Void, Void, String> {
         return b;
     }
 
+    /**
+     * the string
+     *
+     * @param e url
+     * @return the client
+     * @throws Exception error from accidents
+     */
     public capclient setURL(String e) throws Exception {
         if (e == null) return this;
         url = e;
@@ -132,6 +142,11 @@ public abstract class capclient extends AsyncTask<Void, Void, String> {
         errorMessage = e;
     }
 
+    /**
+     * develop and setting the errors
+     *
+     * @param e the string in the error message
+     */
     protected void setError(String e) {
         isError = true;
         isSystemicError = false;

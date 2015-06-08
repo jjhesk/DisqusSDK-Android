@@ -17,8 +17,8 @@ public class Interceptor implements retrofit.RequestInterceptor {
     public void intercept(RequestFacade request) {
         request.addQueryParam(PARAM_API_KEY, confg.getApiKey());
         // add the authenticated user to the request if available
-        if (confg.getAccessToken() != null) {
-            request.addQueryParam(PARAM_ACCESS_TOKEN, confg.getAccessToken());
-        }
+        // if (confg.getAccessToken() != null) {
+        // request.addQueryParam(PARAM_ACCESS_TOKEN, confg.getAccessToken());
+        // }
     }
 }

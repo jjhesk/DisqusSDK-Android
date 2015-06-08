@@ -53,6 +53,11 @@ public class AuthMgr {
         appContext = context;
         config = configurations;
         accessTokenService = accesstokenservice;
+        if (isAuthenticated()) {
+            if (configurations.getAccessToken() == null) {
+                configurations.setAccessToken(getSharedPreferences().getString(PREF_TOKEN, ""));
+            }
+        }
     }
 
     public void authorizeAsync(final String code) {

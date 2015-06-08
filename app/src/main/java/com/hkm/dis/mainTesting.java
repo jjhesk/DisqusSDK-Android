@@ -131,6 +131,14 @@ public class mainTesting extends AppCompatActivity {
     protected void addLine(String newline) {
         if (tvv != null) {
             tvv.setText(tvv.getText() + "\n" + newline);
+            //scroll to bottom
+            final int scrollAmount = tvv.getLayout().getLineTop(tvv.getLineCount()) - tvv.getHeight();
+            // if there is no need to scroll, scrollAmount will be <=0
+            if (scrollAmount > 0)
+                tvv.scrollTo(0, scrollAmount);
+            else
+                tvv.scrollTo(0, 0);
+
         }
     }
 

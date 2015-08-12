@@ -1,3 +1,5 @@
+[![Android Gems](http://www.android-gems.com/badge/jjhesk/DisqusSDK-Android.svg?branch=master)](http://www.android-gems.com/lib/jjhesk/DisqusSDK-Android)
+
 # DisqusSDK-Android
 This is the simple library for https://disqus.com/ developed on Android.
 

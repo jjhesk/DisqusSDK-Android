@@ -84,7 +84,7 @@ public class ApiClient {
     /**
      * the API configurations
      */
-    private final ApiConfig _config;
+    protected final ApiConfig _config;
     private final Gson gsonsetup;
     private final ErrorHandler handlerError;
 
@@ -312,4 +312,9 @@ public class ApiClient {
     public AuthMgr createAuthenticationManager(Context contex) {
         return new AuthMgr(contex, createTokenService(), _config);
     }
+
+    public ApiConfig getConfiguration() {
+        return _config;
+    }
+
 }

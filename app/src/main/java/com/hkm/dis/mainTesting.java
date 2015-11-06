@@ -13,7 +13,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hkm.disqus.api.ApiConfig;
 import com.hkm.disqus.api.AuthMgr;
+import com.hkm.disqus.api.DisqusClient;
 import com.hkm.disqus.api.exception.ApiException;
 import com.hkm.disqus.api.model.oauth2.AccessToken;
 import com.hkm.disqus.api.model.posts.Post;
@@ -23,6 +25,7 @@ import com.hkm.disqus.application.AuthorizeActivity.*;
 import java.util.List;
 
 import retrofit.Callback;
+import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
@@ -33,7 +36,6 @@ public class mainTesting extends AppCompatActivity {
 
     public static String TAG = "gamestarthere";
     private TextView tvv;
-    public static final int Authotization = 992;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,13 +52,17 @@ public class mainTesting extends AppCompatActivity {
         });
     }
 
-    private applicationbase getBase() {
-        return ((applicationbase) getApplication());
+    @Override
+    protected DisqusClient getClient() {
+        ApiConfig conf = new ApiConfig(
+                BuildConfig.DISQUS_API_KEY,
+                BuildConfig.DISQUS_DEFAULT_ACCESS,
+                RestAdapter.LogLevel.BASIC);
+        conf.setApiSecret(BuildConfig.DISQUS_SECRET);
+        conf.setRedirectUri(BuildConfig.DISQUS_REDIRECT_URI);
+        return DisqusClient.getInstance(this, conf);
     }
 
-    private AuthMgr getManager() {
-        return getBase().getManager();
-    }
 
     private void getPost() {
         try {
@@ -102,7 +108,7 @@ public class mainTesting extends AppCompatActivity {
                             }
                         });
             } else {
-                loginNow();
+                getClient().loginNow(login.class, this);
             }
         } catch (RetrofitError e) {
             addLine(e.getMessage() + " -- retrofit error");
@@ -121,7 +127,7 @@ public class mainTesting extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
-        if (requestCode == Authotization) {
+        if (requestCode == DisqusClient.authorization_intent_id) {
             // Make sure the request was successful
             if (resultCode == RESULT_CANCELED) {
                 Toast.makeText(this, getResources().getString(com.hkm.disqus.R.string.failurelogin), Toast.LENGTH_LONG);
@@ -132,12 +138,6 @@ public class mainTesting extends AppCompatActivity {
             }
         }
 
-    }
-
-    protected void loginNow() {
-        Intent in = new Intent(this, login.class);
-        in.putExtras(getBase().getConf().getLogInBundle());
-        startActivityForResult(in, Authotization);
     }
 
 
@@ -155,7 +155,7 @@ public class mainTesting extends AppCompatActivity {
                 getPost();
                 return true;
             case R.id.login_page:
-                loginNow();
+                getClient().loginNow(login.class, this);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

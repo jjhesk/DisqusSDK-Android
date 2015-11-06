@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import com.hkm.disqus.R;
 import com.hkm.disqus.api.ApiConfig;
 import com.hkm.disqus.api.AuthMgr;
+import com.hkm.disqus.api.DisqusClient;
 import com.hkm.disqus.api.model.oauth2.AccessToken;
 
 /**
@@ -35,7 +37,13 @@ public abstract class AuthorizeActivity extends AppCompatActivity implements Aut
     public static final String EXTRA_ACCESS_TOKEN = "access_token";
     public static final String EXTRA_SECRET = "secret";
 
-    protected abstract int authorize_layout();
+    @LayoutRes
+    protected int authorize_layout() {
+        return R.layout.login;
+    }
+
+    protected abstract DisqusClient getClient();
+
 
     protected abstract void statFragmentLogin(Bundle fragmentextras);
 
@@ -45,7 +53,6 @@ public abstract class AuthorizeActivity extends AppCompatActivity implements Aut
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(authorize_layout());
-
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             // Get extras
@@ -56,7 +63,6 @@ public abstract class AuthorizeActivity extends AppCompatActivity implements Aut
             finish();
         }
         // binder = ((BinderProvider) getParentFragment()).createBinder(this);
-
     }
 
     @Override
@@ -81,20 +87,17 @@ public abstract class AuthorizeActivity extends AppCompatActivity implements Aut
         super.onBackPressed();
     }
 
-    protected abstract AuthMgr getManager();
-
-    protected abstract ApiConfig getConfiguration();
 
     @Override
     public void onStart() {
         super.onStart();
-        getManager().addListener(this);
+        getClient().getAuthManager().addListener(this);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        getManager().removeListener(this);
+        getClient().getAuthManager().removeListener(this);
     }
 
     @Override
@@ -103,7 +106,7 @@ public abstract class AuthorizeActivity extends AppCompatActivity implements Aut
         Intent data = new Intent();
         data.putExtra(EXTRA_ACCESS_TOKEN, accessToken);
         setResult(RESULT_OK, data);
-        getConfiguration().setAccessToken(accessToken.accessToken);
+        getClient().getConfiguration().setAccessToken(accessToken.accessToken);
         finish();
     }
 
@@ -121,15 +124,6 @@ public abstract class AuthorizeActivity extends AppCompatActivity implements Aut
         /** Not used**/
         Log.d(TAG, "onLogout");
     }
-
-    public interface Binder {
-        void onUserAuthenticated(boolean success); // navigate back to the parent fragment once the user is authenticated
-    }
-
-  /*  public interface BinderProvider {
-        Binder createBinder(LoginFragment fragment);
-    }*/
-
 
     @SuppressLint("ValidFragment")
     public class MessageD extends DialogFragment {

@@ -16,9 +16,6 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
 import org.json.JSONException;
 
 import java.io.IOException;
@@ -36,7 +33,7 @@ public abstract class capclient extends AsyncTask<Void, Void, String> {
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     protected static String TAG = "call.api";
     protected Context ctx;
-    protected HttpParams httpParams;
+
     private final OkHttpClient client = new OkHttpClient();
     protected callback mcallback;
     protected status _mstatus;
@@ -84,9 +81,7 @@ public abstract class capclient extends AsyncTask<Void, Void, String> {
     }*/
 
     public capclient(Context ccc, callback cb) {
-        httpParams = new BasicHttpParams();
-        HttpConnectionParams.setConnectionTimeout(httpParams, 3000);
-        HttpConnectionParams.setSoTimeout(httpParams, 5000);
+
         ctx = ccc;
         mcallback = cb;
         _mstatus = status.IDEL;

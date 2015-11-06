@@ -22,9 +22,7 @@ import com.hkm.disqus.R;
 import com.hkm.disqus.api.ApiConfig;
 import com.hkm.disqus.api.AuthMgr;
 import com.hkm.disqus.api.model.oauth2.AccessToken;
-import com.squareup.okhttp.RequestBody;
 
-import org.apache.http.util.EncodingUtils;
 
 /**
  * Created by hesk on 21/5/15.

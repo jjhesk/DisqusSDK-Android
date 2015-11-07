@@ -15,7 +15,7 @@ This library implements the Disqus API for use in Android applications. This lib
 - [x] enable extending from fragment. PostCommentFragment
 - [x] setup the activity for login
 - [x] construct the configuration object
- - 
+
 ### Gradle settings
 ```gradle
 repositories {maven { url 'https://dl.bintray.com/jjhesk/maven' }}

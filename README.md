@@ -1,7 +1,8 @@
 # DisqusSDK-Android
-This is the simple library for https://disqus.com/ developed on Android.
-
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-DisqusSDK--Android-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/1855) [![Download](https://api.bintray.com/packages/jjhesk/maven/disqus/images/download.svg) ](https://bintray.com/jjhesk/maven/disqus/_latestVersion)
+
+
+This is the simple library for https://disqus.com/ developed on Android.
 
 ## About
 This library implements the Disqus API for use in Android applications. This librar is ongoing

@@ -1,37 +1,32 @@
 # DisqusSDK-Android
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-DisqusSDK--Android-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/1855) [![Download](https://api.bintray.com/packages/jjhesk/maven/disqus/images/download.svg) ](https://bintray.com/jjhesk/maven/disqus/_latestVersion)
+
+
 This is the simple library for https://disqus.com/ developed on Android.
 
-[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-DisqusSDK--Android-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/1855)
 ## About
 This library implements the Disqus API for use in Android applications. This librar is ongoing
-
-## Download
 
 ## API RoadMap Support
 - [x] Post comments
 - [x] Post Comments more flexible
 - [x] Updated authentication OAuth2.0 standard
 - [x] Additional support for the CacheUrl mechanism
-
-### Gradle
-
-Add the following to your `build.gradle`:
-[ ![Download](https://api.bintray.com/packages/jjhesk/maven/disqus/images/download.svg) ](https://bintray.com/jjhesk/maven/disqus/_latestVersion)
+- [x] enable extending from fragment. PostCommentFragment
+- [x] setup the activity for login
+- [x] construct the configuration object
+ - 
+### Gradle settings
 ```gradle
-repositories {
-    maven { url 'https://dl.bintray.com/jjhesk/maven' }
-}
-dependencies {
- compile 'DisqusSDK-Android:disqus:0.1.2'
- compile 'com.squareup.retrofit:retrofit:1.7.1'
- compile 'com.squareup.okhttp:okhttp-urlconnection:2.2.0'
- compile 'com.squareup.picasso:picasso:2.5.0'
- compile 'io.realm:realm-android:0.80.0'
-}
+repositories {maven { url 'https://dl.bintray.com/jjhesk/maven' }}
+dependencies {compile 'DisqusSDK-Android:disqus:0.2.2'}
 ```
 
-## Authentication
-
+## Installation
+ - [x] enable extending from fragment. PostCommentFragment
+ - [x] setup the activity for login
+ - [x] construct the configuration object
+ 
 ### Using AuthorizeActivity
 
 1. Use `AuthorizeUtils.createIntent` to create a new `Intent` with your application settings.
@@ -48,6 +43,20 @@ dependencies {
             }
             super.onActivityResult(requestCode, resultCode, data);
         }
+```
+4. ApiConfiguration Object Sample:
+```java
+public class DqUtil {
+    public static ApiConfig genConfig() {
+        ApiConfig conf = new ApiConfig(
+                BuildConfig.DISQUS_API_KEY,
+                BuildConfig.DISQUS_DEFAULT_ACCESS,
+                RestAdapter.LogLevel.BASIC);
+        conf.setApiSecret(BuildConfig.DISQUS_SECRET);
+        conf.setRedirectUri(BuildConfig.DISQUS_REDIRECT_URI);
+        return conf;
+    }
+}
 ```
 ### Using AuthorizeFragment
 

@@ -4,23 +4,26 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
+import android.support.v4.view.ViewCompat;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.WebView;
 
+import com.hkm.disqus.DisqusClient;
 import com.hkm.disqus.DisqusConstants;
-import com.hkm.disqus.api.DisqusClient;
+import com.hkm.disqus.api.ApiConfig;
 import com.hkm.ezwebview.Util.Fx9C;
 import com.hkm.ezwebview.app.BasicWebViewNormal;
 import com.hkm.ezwebview.webviewclients.PaymentClient;
+
+import retrofit.RestAdapter;
 
 /**
  * Created by hesk on 6/11/15.
  */
 public class AuthorizationFragment extends BasicWebViewNormal {
+
+
     public static AuthorizationFragment B(final Bundle b) {
         final AuthorizationFragment t = new AuthorizationFragment();
         t.setArguments(b);
@@ -32,11 +35,33 @@ public class AuthorizationFragment extends BasicWebViewNormal {
                                      @Nullable String redirect_uri,
                                      @Nullable String secret) {
         final Bundle n = new Bundle();
-        n.putString(ARG_API_KEY, apikey);
-        n.putString(ARG_SCOPES, scope);
-        n.putString(ARG_REDIRECT_URI, redirect_uri);
-        n.putString(ARG_SECRET, secret);
+        n.putString(AuthorizeActivity.EXTRA_API_KEY, apikey);
+        n.putString(AuthorizeActivity.EXTRA_SCOPES, scope);
+        n.putString(AuthorizeActivity.EXTRA_REDIRECT_URI, redirect_uri);
+        n.putString(AuthorizeActivity.EXTRA_SECRET, secret);
         return n;
+    }
+
+    public static Bundle bundleConfig(@Nullable String apikey,
+                                      @Nullable String access_default,
+                                      @Nullable String redirect_uri,
+                                      @Nullable String secret) {
+        final Bundle n = new Bundle();
+        n.putString(AuthorizeActivity.EXTRA_API_KEY, apikey);
+        n.putString(AuthorizeActivity.EXTRA_DEFAULT_ACCESS, access_default);
+        n.putString(AuthorizeActivity.EXTRA_REDIRECT_URI, redirect_uri);
+        n.putString(AuthorizeActivity.EXTRA_SECRET, secret);
+        return n;
+    }
+
+    public static ApiConfig genConfig(Bundle bundle) {
+        ApiConfig conf = new ApiConfig(
+                bundle.getString(AuthorizeActivity.EXTRA_API_KEY),
+                bundle.getString(AuthorizeActivity.EXTRA_DEFAULT_ACCESS),
+                RestAdapter.LogLevel.BASIC);
+        conf.setApiSecret(bundle.getString(AuthorizeActivity.EXTRA_SECRET));
+        conf.setRedirectUri(bundle.getString(AuthorizeActivity.EXTRA_REDIRECT_URI));
+        return conf;
     }
 
     /**
@@ -46,15 +71,8 @@ public class AuthorizationFragment extends BasicWebViewNormal {
     /**
      * Logging tag
      */
-    protected static final String TAG = AuthorizeFragment.class.getName();
+    protected static final String TAG = "AuthorizLog";
 
-    /**
-     * Arguments
-     */
-    protected static final String ARG_API_KEY = "api_key";
-    protected static final String ARG_SCOPES = "scope";
-    protected static final String ARG_REDIRECT_URI = "redirect_uri";
-    protected static final String ARG_SECRET = "secret";
 
     protected ACTION maction;
 
@@ -83,7 +101,7 @@ public class AuthorizationFragment extends BasicWebViewNormal {
     // private AuthorizeListener mListener;
 
     /**
-     * A {@link WebView} to display the Disqus login
+     * A {@link WebView} to display the Disqus disqusloginactivityframelayout
      */
     private WebView mWebView;
     private boolean isDialogShown = false;
@@ -93,17 +111,17 @@ public class AuthorizationFragment extends BasicWebViewNormal {
     }
 
     protected void LoadConfig() {
-        if (getArguments().containsKey(ARG_API_KEY)) {
-            mApiKey = getArguments().getString(ARG_API_KEY);
+        if (getArguments().containsKey(AuthorizeActivity.EXTRA_API_KEY)) {
+            mApiKey = getArguments().getString(AuthorizeActivity.EXTRA_API_KEY);
         }
-        if (getArguments().containsKey(ARG_SCOPES)) {
-            mScopes = getArguments().getStringArray(ARG_SCOPES);
+        if (getArguments().containsKey(AuthorizeActivity.EXTRA_SCOPES)) {
+            mScopes = getArguments().getStringArray(AuthorizeActivity.EXTRA_SCOPES);
         }
-        if (getArguments().containsKey(ARG_REDIRECT_URI)) {
-            mRedirectUri = getArguments().getString(ARG_REDIRECT_URI);
+        if (getArguments().containsKey(AuthorizeActivity.EXTRA_REDIRECT_URI)) {
+            mRedirectUri = getArguments().getString(AuthorizeActivity.EXTRA_REDIRECT_URI);
         }
-        if (getArguments().containsKey(ARG_SECRET)) {
-            mSecret = getArguments().getString(ARG_SECRET);
+        if (getArguments().containsKey(AuthorizeActivity.EXTRA_SECRET)) {
+            mSecret = getArguments().getString(AuthorizeActivity.EXTRA_SECRET);
         }
     }
 
@@ -127,17 +145,12 @@ public class AuthorizationFragment extends BasicWebViewNormal {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         LoadConfig();
-        setup_token_view(new AuthorizationClient(getActivity(), block, mRedirectUri));
-    }
-
-
-    protected <T extends PaymentClient> void setup_token_view(T clientLogic) {
-
         Uri request_access_token_path_final = AuthorizeUtils.buildAuthorizeUri(mApiKey, getScopes(), mRedirectUri);
         String msg = "Loading authorize url: " + request_access_token_path_final.toString();
         Log.d(TAG, msg);
+        final AuthorizationClient mAth = new AuthorizationClient(getActivity(), block);
         Fx9C.setup_payment_gateway(
-                clientLogic,
+                mAth,
                 framer,
                 block,
                 betterCircleBar,
@@ -146,65 +159,52 @@ public class AuthorizationFragment extends BasicWebViewNormal {
                 1600);
     }
 
-    private static class AuthorizationClient extends PaymentClient {
+    protected void load() {
+        if (betterCircleBar == null) return;
+        betterCircleBar.setVisibility(View.INVISIBLE);
+        ViewCompat.animate(betterCircleBar).alpha(1.0F);
+    }
 
-        private String redirect;
-
-        public static AuthorizationClient with(Activity context, WebView mview, String redirect) {
-            final AuthorizationClient pay = new AuthorizationClient(context, mview, redirect);
-            return pay;
-        }
+    private class AuthorizationClient extends PaymentClient {
 
         @Override
         protected void triggerNative(Uri trigger_url) {
-            super.triggerNative(trigger_url);
+            try {
+                DisqusClient.getInstance().getAuthManager().authorizeAsync(trigger_url.getQueryParameter("code"));
+            } catch (NullPointerException e) {
+
+            }
         }
 
         @Override
         protected boolean interceptUrl(WebView view, String url) {
-            final String coderequeststart = redirect + DisqusConstants.authorizeCode;
             Log.d(TAG, "base change: " + url);
+            Uri uri = Uri.parse(url);
+            try {
+                if (!uri.getQueryParameter("code").equalsIgnoreCase("")) {
+                    triggerNative(Uri.parse(url));
+                    return true;
+                }
 
-            if (url.startsWith(coderequeststart)) {
-                Log.d("", "Got Url " + url);
-                Uri uri = Uri.parse(url);
-                final String code = uri.getQueryParameter("code");
-                Log.d(TAG, "Acquiring Code: " + code);
-
-            //    DisqusClient
-                authentication_manager.authorizeAsync(code);
-
-
-                // mWebView.postUrl(DisqusConstants.AUTHORIZE_ACCESS_TOKEN, EncodingUtils.getBytes(AuthorizeUtils.buildCodeRequestJustBody(code, mApiKey, mSecret, mRedirectUri), "BASE64"));
-
-
-                return true;
-            } else if (url.startsWith(allowBUttonPressUrl)) {
-                dislogProcessNotice();
-                //continue
-            } else if (url.startsWith(mRedirectUri)) {
-                // Get fragment from url
-                Log.d(TAG, "Acquiring Processing redirect: " + url);
-                //  mListener.onSuccess(AuthorizeUtils.getDataToken(url));
-                return true;
+                if (url.startsWith(authURI)) {
+                    load();
+                    return false;
+                }
+            } catch (NullPointerException e) {
+                Log.d(TAG, "no key is found change: " + url);
+                return false;
+            } catch (UnsupportedOperationException e) {
+                Log.d(TAG, "UnsupportedOperationException change: " + url);
+                return false;
+            } catch (Exception e) {
+                Log.d(TAG, "Other things change: " + url);
+                return false;
             }
             return false;
         }
 
-        public AuthorizationClient(Activity context, WebView fmWebView, String redirect) {
+        public AuthorizationClient(Activity context, WebView fmWebView) {
             super(context, fmWebView);
-            this.redirect = redirect;
-            allow = new String[]{
-                    authURI,
-
-            };
-            // nativefunctions = new String[]{
-            //start native app
-            //        domain_start,
-            //         domain_start_insecure
-
-            // };
-
         }
 
 

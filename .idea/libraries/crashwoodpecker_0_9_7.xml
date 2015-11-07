@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="crashwoodpecker-0.9.7">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/me.drakeet.library/crashwoodpecker/0.9.7/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/me.drakeet.library/crashwoodpecker/0.9.7/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

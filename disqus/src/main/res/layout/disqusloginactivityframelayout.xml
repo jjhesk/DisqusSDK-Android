@@ -4,13 +4,13 @@
     android:layout_height="match_parent">
 
     <View
-        android:id="@+id/status_bar_login_disqus"
+        android:id="@id/disqus_status_bar_login"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize" />
+        android:layout_height="25dp" />
 
-    <fragment
-        android:id="@+id/fragment_id_authorize"
+    <FrameLayout
+        android:id="@id/disqus_fragment_id_authorize"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/status_bar_login_disqus" />
+        android:layout_below="@id/disqus_status_bar_login" />
 </RelativeLayout>

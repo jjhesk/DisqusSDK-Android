@@ -9,7 +9,7 @@ import android.content.Intent;
 public class RefreshTokenBroadcastReceiver extends BroadcastReceiver {
 
 
-  private   AuthMgr authManager;
+  private AuthTokenServiceManager authManager;
 
     public RefreshTokenBroadcastReceiver() {
         //DisqusSdkProvider.getInstance().getObjectGraph().inject(this);

@@ -1,12 +1,13 @@
 <component name="libraryTable">
   <library name="materialloadingprogressbar-0.5.3-RELEASE">
+    <ANNOTATIONS>
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.lsjwzh/materialloadingprogressbar/0.5.3-RELEASE/annotations.zip!/" />
+    </ANNOTATIONS>
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.lsjwzh/materialloadingprogressbar/0.5.3-RELEASE/jars/classes.jar!/" />
       <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.lsjwzh/materialloadingprogressbar/0.5.3-RELEASE/res" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES>
-      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.lsjwzh/materialloadingprogressbar/0.5.3-RELEASE/a336ef974bd7de0ad8e5d07ea0ec76042f59ae97/materialloadingprogressbar-0.5.3-RELEASE-sources.jar!/" />
-    </SOURCES>
+    <SOURCES />
   </library>
 </component>

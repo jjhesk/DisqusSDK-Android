@@ -1,16 +1,18 @@
-package com.hkm.disqus.api;
+package com.hkm.disqus;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 
+import com.hkm.disqus.api.ApiClient;
+import com.hkm.disqus.api.ApiConfig;
+import com.hkm.disqus.api.AuthTokenServiceManager;
 import com.hkm.disqus.api.exception.ApiException;
 import com.hkm.disqus.api.model.Response;
 import com.hkm.disqus.api.model.posts.Post;
+import com.hkm.disqus.api.resources.AccessTokenService;
 import com.hkm.disqus.application.AuthorizeActivity;
-import com.squareup.picasso.LruCache;
-import com.squareup.picasso.OkHttpDownloader;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -22,8 +24,7 @@ import retrofit.Callback;
 public class DisqusClient extends ApiClient {
     public static final int authorization_intent_id = 9392;
     private Context mcontent;
-    private static AuthMgr instance_auth;
-
+    private static AuthTokenServiceManager instance_am;
     private static DisqusClient main_instance;
 
     /**
@@ -39,6 +40,10 @@ public class DisqusClient extends ApiClient {
         return main_instance;
     }
 
+    public static DisqusClient getInstance() throws NullPointerException {
+        return main_instance;
+    }
+
     /**
      * THe content
      *
@@ -48,13 +53,13 @@ public class DisqusClient extends ApiClient {
     public DisqusClient(ApiConfig config, Context context) {
         super(config);
         mcontent = context;
-        if (instance_auth == null) {
-            instance_auth = createAuthenticationManager(context);
+        if (instance_am == null) {
+            instance_am = createAuthenticationManager(context);
         }
     }
 
-    public AuthMgr getAuthManager() {
-        return instance_auth;
+    public AuthTokenServiceManager getAuthManager() {
+        return instance_am;
     }
 
     public void getComments(String comment_id, Callback<Response<List<Post
@@ -70,21 +75,9 @@ public class DisqusClient extends ApiClient {
         }
     }
 
-    public  <T extends AuthorizeActivity> void loginNow(final Class<T> login_class, AppCompatActivity activity) {
-        Intent in = new Intent(activity, login_class);
+    public void loginNow(Activity activity) {
+        Intent in = new Intent(activity, AuthorizeActivity.class);
         in.putExtras(getConfiguration().getLogInBundle());
         activity.startActivityForResult(in, authorization_intent_id);
-    }
-
-    /**
-     * create and return picasso
-     *
-     * @return the te ciea
-     */
-    public Picasso providesPicasso() {
-        return new Picasso.Builder(mcontent)
-                .downloader(new OkHttpDownloader(mcontent))
-                .memoryCache(new LruCache(mcontent))
-                .build();
     }
 }

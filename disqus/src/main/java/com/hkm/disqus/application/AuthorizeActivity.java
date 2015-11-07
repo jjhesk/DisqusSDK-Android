@@ -5,24 +5,21 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.hkm.disqus.R;
-import com.hkm.disqus.api.ApiConfig;
-import com.hkm.disqus.api.AuthMgr;
-import com.hkm.disqus.api.DisqusClient;
+import com.hkm.disqus.api.AuthTokenServiceManager;
+import com.hkm.disqus.DisqusClient;
 import com.hkm.disqus.api.model.oauth2.AccessToken;
 
 /**
  * Created by hesk on 21/5/15.
  */
-public abstract class AuthorizeActivity extends AppCompatActivity implements AuthorizeFragment.AuthorizeListener, AuthMgr.AuthenticationListener {
+public class AuthorizeActivity extends AppCompatActivity implements AuthTokenServiceManager.AuthenticationListener {
     public static final String TAG = "authorization act";
     /**
      * Extras that should be passed in the {@link Intent}
@@ -36,19 +33,27 @@ public abstract class AuthorizeActivity extends AppCompatActivity implements Aut
      */
     public static final String EXTRA_ACCESS_TOKEN = "access_token";
     public static final String EXTRA_SECRET = "secret";
+    public static final String EXTRA_DEFAULT_ACCESS = "default";
+
 
     @LayoutRes
     protected int authorize_layout() {
-        return R.layout.login;
+        int e =  R.layout.disqusloginactivityframelayout;
+        return e;
     }
 
-    protected abstract DisqusClient getClient();
+    protected DisqusClient getClient() {
+        return DisqusClient.getInstance(this, AuthorizationFragment.genConfig(getIntent().getExtras()));
+    }
 
-
-    protected abstract void statFragmentLogin(Bundle fragmentextras);
+    protected void statFragmentLogin(Bundle fragmentextras) {
+        getFragmentManager().beginTransaction().add(
+                R.id.disqus_fragment_id_authorize,
+                AuthorizationFragment.B(fragmentextras)
+        ).commit();
+    }
 
     //  private Binder binder;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,28 +70,27 @@ public abstract class AuthorizeActivity extends AppCompatActivity implements Aut
         // binder = ((BinderProvider) getParentFragment()).createBinder(this);
     }
 
-    @Override
-    public void onSuccess(AccessToken accessToken) {
-        // Create a result intent
-        Intent data = new Intent();
-        data.putExtra(EXTRA_ACCESS_TOKEN, accessToken);
-        setResult(RESULT_OK, data);
-        finish();
-    }
+    /*  @Override
+      public void onSuccess(AccessToken accessToken) {
+          // Create a result intent
+          Intent data = new Intent();
+          data.putExtra(EXTRA_ACCESS_TOKEN, accessToken);
+          setResult(RESULT_OK, data);
+          finish();
+      }
 
-    @Override
-    public void onFailure() {
-        Toast.makeText(this, getResources().getString(R.string.failurelogin), Toast.LENGTH_LONG);
-        setResult(RESULT_CANCELED);
-        finish();
-    }
-
+      @Override
+      public void onFailure() {
+          Toast.makeText(this, getResources().getString(R.string.failurelogin), Toast.LENGTH_LONG);
+          setResult(RESULT_CANCELED);
+          finish();
+      }
+  */
     @Override
     public void onBackPressed() {
         setResult(RESULT_CANCELED);
         super.onBackPressed();
     }
-
 
     @Override
     public void onStart() {
@@ -140,7 +144,7 @@ public abstract class AuthorizeActivity extends AppCompatActivity implements Aut
             builder.setMessage(this.m)
                     .setPositiveButton(R.string.donesuccess, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            onFailure();
+                            //    onFailure();
                             onLoginFailed(m);
                         }
                     });

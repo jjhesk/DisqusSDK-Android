@@ -46,9 +46,6 @@ import com.hkm.disqus.api.resources.Threads;
 import com.hkm.disqus.api.resources.Users;
 import com.hkm.disqus.api.resources.notes.Templates;
 import com.hkm.disqus.api.retrofitworker.Interceptor;
-import com.squareup.picasso.LruCache;
-import com.squareup.picasso.OkHttpDownloader;
-import com.squareup.picasso.Picasso;
 
 import retrofit.ErrorHandler;
 import retrofit.RequestInterceptor;
@@ -71,14 +68,14 @@ public class ApiClient {
     /**
      * User agent
      */
-    private static final String USER_AGENT = "Disqus Android/0.1";
+    private static final String USER_AGENT = "Disqus Android/1.1";
 
     /**
      * Rest adapter
      */
     private RestAdapter mAdapter;
     /**
-     * login adapter
+     * disqusloginactivityframelayout adapter
      */
     private RestAdapter mLoginAdapter;
     /**
@@ -120,7 +117,7 @@ public class ApiClient {
             }
         };
 
-        // Build RestAdapter for after login
+        // Build RestAdapter for after disqusloginactivityframelayout
         mAdapter = new RestAdapter.Builder()
                 .setEndpoint(BASE_URL)
                 .setLogLevel(config != null ? config.getLogLevel() : RestAdapter.LogLevel.NONE)
@@ -309,8 +306,8 @@ public class ApiClient {
         return mLoginAdapter.create(AccessTokenService.class);
     }
 
-    public AuthMgr createAuthenticationManager(Context contex) {
-        return new AuthMgr(contex, createTokenService(), _config);
+    public AuthTokenServiceManager createAuthenticationManager(Context contex) {
+        return new AuthTokenServiceManager(contex, createTokenService(), _config);
     }
 
     public ApiConfig getConfiguration() {

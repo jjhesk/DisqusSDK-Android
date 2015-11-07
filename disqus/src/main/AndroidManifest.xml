@@ -4,18 +4,9 @@
 
     <application
         android:allowBackup="true"
+        android:configChanges="orientation|screenSize|fontScale|keyboard|keyboardHidden"
         android:label="@string/app_name">
-        <activity android:name=".application.authorizedcallback">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="disqus-hb-cb" />
-            </intent-filter>
-        </activity>
-
+        <activity android:name="com.hkm.disqus.application.AuthorizeActivity"/>
         <receiver android:name=".api.RefreshTokenBroadcastReceiver">
             <intent-filter>
                 <action android:name="com.hkm.disqus.refresh_token" />

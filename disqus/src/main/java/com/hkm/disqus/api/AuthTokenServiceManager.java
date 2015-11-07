@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.hkm.disqus.DisqusConstants;
@@ -26,7 +27,7 @@ import retrofit.client.Response;
 /**
  * Created by hesk on 5/6/15.
  */
-public class AuthMgr {
+public class AuthTokenServiceManager {
     private static final String PREF_AUTH = "AuthManager.Preferences";
     private static final String PREF_TOKEN = ".access_token";
     private static final String PREF_EXPIRE = ".expires_in";
@@ -49,7 +50,7 @@ public class AuthMgr {
     }
 
 
-    public AuthMgr(Context context, AccessTokenService accesstokenservice, ApiConfig configurations) {
+    public AuthTokenServiceManager(Context context, AccessTokenService accesstokenservice, ApiConfig configurations) {
         appContext = context;
         config = configurations;
         accessTokenService = accesstokenservice;
@@ -60,7 +61,7 @@ public class AuthMgr {
         }
     }
 
-    public void authorizeAsync(final String code) {
+    public void authorizeAsync(@Nullable final String code) throws NullPointerException{
         if (code != null) {
             if (DisqusConstants.apiVersion == 1) {
 
@@ -165,7 +166,7 @@ public class AuthMgr {
 
                 if (isLogin) {
                     for (AuthenticationListener listener : listeners) {
-                        listener.onLogin(accessToken); // notify listeners about login.
+                        listener.onLogin(accessToken); // notify listeners about disqusloginactivityframelayout.
                         //currentUserManager.getCurrentUser(null, true);
                         // force a network call to get current user and add to memory.
                     }

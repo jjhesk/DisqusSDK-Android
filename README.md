@@ -15,7 +15,7 @@ This library implements the Disqus API for use in Android applications. This lib
 - [x] enable extending from fragment. PostCommentFragment
 - [x] setup the activity for login
 - [x] construct the configuration object
- - 
+
 ### Gradle settings
 ```gradle
 repositories {maven { url 'https://dl.bintray.com/jjhesk/maven' }}
@@ -33,16 +33,31 @@ dependencies {compile 'DisqusSDK-Android:disqus:0.2.2'}
 2. Start the activity with `startActivityForResult`.
 3. Implement 'onActivityResult' to get the access token object:
 ```java
-        @Override
-        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-            if (resultCode == RESULT_OK) {
-                // Auth completed, get the access token
-                AccessToken accessToken = data.getParcelableExtra(AuthorizeActivity.EXTRA_ACCESS_TOKEN);
-            } else {
-                // Auth failed
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == DisqusClient.authorization_intent_id) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_CANCELED) {
+                Toast.makeText(this, getResources().getString(com.hkm.disqus.R.string.failurelogin), Toast.LENGTH_LONG);
             }
-            super.onActivityResult(requestCode, resultCode, data);
+            if (resultCode == RESULT_OK) {
+                AccessToken token = (AccessToken) data.getExtras().getParcelable(AuthorizeActivity.EXTRA_ACCESS_TOKEN);
+                addLine(token.accessToken);
+                release_pending_content();
+            }
         }
+    }
+
+
+    protect void release_pending_content(){
+    if (appending_post_content != null) {
+                        postPost(appending_post_content, post_post_id);
+                        appending_post_content = null;
+                    }
+    }
+
 ```
 4. ApiConfiguration Object Sample:
 ```java
@@ -58,35 +73,8 @@ public class DqUtil {
     }
 }
 ```
-### Using AuthorizeFragment
 
-1. Add the fragment to your activity via `AuthorizeFragment.newInstance`.
-
-2. Your activity should implement the `AuthorizeFragment.AuthorizeListener` callback.
-
-3. You may need to handle failures/cancellations within your activity, e.g. if back is pressed as
-    currently the cancel button on the Disqus auth page doesn't seem to work.
-
-### Google, Facebook, Twitter
-
-Third party logins are not supported at this time.
-
-## Basic usage
-
-### Create configuration
-
-Use the `ApiConfig` class to set your app configuration
-```java
-    ApiConfig apiConfig = new ApiConfig("__API_KEY__", "__AccessToken__", LogLevel.BASIC);
-```
-Use the `ApiConfig` class to setup your configuration with api secret
-```java
-    ApiConfig apiConfig = new ApiConfig("__API_KEY__", RestAdapter.LogLevel.BASIC);
-    apiConfig.setApiSecret("__API_SECRET__");
-    ApiClient setup = new ApiClient(apiConfig);
-```
 #### Standard options
-
 * API key - mandatory for all requests.
 * Access token - required for requests that require authentication.
 * Referrer - required for some requests that perform domain checks, should match a domain in your
@@ -101,7 +89,7 @@ not recommended.
 
 ### Create client
 
-As of version 0.0.5 the library is using [Retrofit](http://square.github.io/retrofit/) for requests.
+As of version 0.9.0 the library is using [Retrofit](http://square.github.io/retrofit/) for requests.
 
 The `ApiClient` can be used to create Disqus resource objects based on the Retrofit interfaces
 defined in the `me.philio.disqus.api.resources` package. It works as a wrapper to the Retrofit
@@ -117,12 +105,10 @@ defined in the `me.philio.disqus.api.resources` package. It works as a wrapper t
 All resources and requests match the naming conventions defined in the Disqus API documentation, but
 often method signatures are kept as simple as possible.
 
-
+### Advance Sample Code
 ```java
   setup.createThreads().listPostByIDAsync(comment_id, "hypebeast", cb);
-  
-  
-  
+
     private void getPost() {
         try {
             base.getComments("1008680 http://hypebeast.com/?p=1008680", new Callback<com.hkm.disqus.api.model.Response<List<Post>>>() {
@@ -169,3 +155,4 @@ disregarded.
 
 1. The cancel button for the authorisation page doesn't work.
 2. Related param has no effect when used with `Blacklists.list()` method.
+3. update after post thread doesnt work.

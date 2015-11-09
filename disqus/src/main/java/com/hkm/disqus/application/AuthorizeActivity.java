@@ -5,12 +5,15 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 
+import com.hkm.disqus.BuildConfig;
 import com.hkm.disqus.R;
 import com.hkm.disqus.api.AuthTokenServiceManager;
 import com.hkm.disqus.DisqusClient;
@@ -34,12 +37,13 @@ public class AuthorizeActivity extends AppCompatActivity implements AuthTokenSer
     public static final String EXTRA_ACCESS_TOKEN = "access_token";
     public static final String EXTRA_SECRET = "secret";
     public static final String EXTRA_DEFAULT_ACCESS = "default";
+    public static final String EXTRA_FORUM_NAME = ".forumname";
+    public static final String EXTRA_STATUS_BAR_TOP = ".top_bar";
 
 
     @LayoutRes
     protected int authorize_layout() {
-        int e =  R.layout.disqusloginactivityframelayout;
-        return e;
+        return R.layout.disqusloginactivityframelayout;
     }
 
     protected DisqusClient getClient() {
@@ -53,11 +57,23 @@ public class AuthorizeActivity extends AppCompatActivity implements AuthTokenSer
         ).commit();
     }
 
+    protected void check_status_bar_height() {
+        if (!getIntent().getExtras().getBoolean(EXTRA_STATUS_BAR_TOP, true)) {
+            View statusbar = (View) findViewById(R.id.disqus_status_bar_login);
+            statusbar.setVisibility(View.GONE);
+        }
+    }
+
     //  private Binder binder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(authorize_layout());
+       /* if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            View statusbar = (View) findViewById(R.id.disqus_status_bar_login);
+            statusbar.setVisibility(View.GONE);
+        }*/
+        check_status_bar_height();
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             // Get extras

@@ -44,7 +44,7 @@ dependencies {
     compile 'com.android.support:support-annotations:23.0.0'
     compile 'com.android.support:appcompat-v7:23.0.0'
     compile 'com.android.support:support-v13:23.0.0'
-    compile 'DisqusSDK-Android:disqus:0.2.2@aar'
+    //  compile 'DisqusSDK-Android:disqus:0.2.5'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.2.0'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'com.squareup.picasso:picasso:2.5.0'
@@ -52,5 +52,5 @@ dependencies {
 
     debugCompile 'me.drakeet.library:crashwoodpecker:0.9.7'
     releaseCompile 'me.drakeet.library:crashwoodpecker-do-nothing:0.9.7'
-    //compile project(':disqus')
+    compile project(':disqus')
 }

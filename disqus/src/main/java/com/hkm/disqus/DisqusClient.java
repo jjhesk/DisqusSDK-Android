@@ -3,6 +3,7 @@ package com.hkm.disqus;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.hkm.disqus.api.ApiClient;
@@ -64,7 +65,7 @@ public class DisqusClient extends ApiClient {
 
     public void getComments(String comment_id, Callback<Response<List<Post
             >>> cb) throws ApiException {
-        createThreads().listPostByIDAsync(comment_id, "hypebeast", cb);
+        createThreads().listPostByIDAsync(comment_id, getConfiguration().getForumName(), cb);
     }
 
     public void postPost(String text, String thread_id, Callback<Response<Post>> cbpost) {
@@ -77,7 +78,9 @@ public class DisqusClient extends ApiClient {
 
     public void loginNow(Activity activity) {
         Intent in = new Intent(activity, AuthorizeActivity.class);
-        in.putExtras(getConfiguration().getLogInBundle());
+        Bundle h = getConfiguration().getLogInBundle();
+        h.putBoolean(AuthorizeActivity.EXTRA_STATUS_BAR_TOP, false);
+        in.putExtras(h);
         activity.startActivityForResult(in, authorization_intent_id);
     }
 }

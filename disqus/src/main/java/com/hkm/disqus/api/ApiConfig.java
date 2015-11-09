@@ -54,6 +54,11 @@ public class ApiConfig {
     private String mRedirectUri;
 
     /**
+     * disqus hosted forum name
+     */
+    private String mDisqusHostedForumName;
+
+    /**
      * Empty constructor
      */
     public ApiConfig() {
@@ -65,6 +70,7 @@ public class ApiConfig {
         Check.checkNotNull(mApiSecret, "A non null private key must be set!");
         //   Check.checkNotNull(appContext, "A context must be set!");
         Check.checkNotNull(mRedirectUri, "A redirect Uri must be set!");
+        Check.checkNotNull(mDisqusHostedForumName, "The forum name is outstanding!");
     }
 
     /**
@@ -255,6 +261,15 @@ public class ApiConfig {
         return this;
     }
 
+    public ApiConfig setForumName(final String forumName) {
+        mDisqusHostedForumName = forumName;
+        return this;
+    }
+
+    public String getForumName() {
+        return mDisqusHostedForumName;
+    }
+
     /**
      * retrieve the bundle data for the intent
      *
@@ -263,6 +278,7 @@ public class ApiConfig {
     public Bundle getLogInBundle() {
         final Bundle b = new Bundle();
         b.putString(AuthorizeActivity.EXTRA_API_KEY, mApiKey);
+        b.putString(AuthorizeActivity.EXTRA_FORUM_NAME, mDisqusHostedForumName);
         b.putString(AuthorizeActivity.EXTRA_SECRET, mApiSecret);
         b.putString(AuthorizeActivity.EXTRA_REDIRECT_URI, mRedirectUri);
         b.putStringArray(AuthorizeActivity.EXTRA_SCOPES, new String[]{

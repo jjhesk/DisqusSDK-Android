@@ -34,18 +34,31 @@ public abstract class PostCommentFragment extends Fragment {
 
     }
 
+    protected void getPostCommentsSuccess(com.hkm.disqus.api.model.Response<List<Post>> post) {
+    }
+
+    protected void postPostSuccess(com.hkm.disqus.api.model.Response<Post> newItemPost) {
+
+    }
+
+    protected void failureConnection(RetrofitError e) {
+
+    }
+
     private Callback<Response<List<Post>>> response_cb = new Callback<com.hkm.disqus.api.model.Response<List<Post>>>() {
         @Override
         public void success(com.hkm.disqus.api.model.Response<List<Post>> posts, retrofit.client.Response response) {
             com.hkm.disqus.api.model.Response<List<Post>> d = posts;
             Log.d(TAG, "now its working now");
             addLine(response.getBody() + " and the " + d.data.size() + " items were found");
+            getPostCommentsSuccess(posts);
         }
 
         @Override
         public void failure(RetrofitError error) {
             Log.d(TAG, error.getMessage());
             addLine(error.getBody().toString());
+            failureConnection(error);
         }
     };
 
@@ -53,12 +66,14 @@ public abstract class PostCommentFragment extends Fragment {
         @Override
         public void success(com.hkm.disqus.api.model.Response<Post> postResponse, retrofit.client.Response response) {
             addLine(response.getBody().toString());
+            postPostSuccess(postResponse);
         }
 
         @Override
         public void failure(RetrofitError error) {
             addLine(error.getUrl().toString() + "\n" + error.getMessage());
             addLine("===============================================");
+            failureConnection(error);
         }
     };
 

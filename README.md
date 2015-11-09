@@ -60,6 +60,10 @@ dependencies {compile 'DisqusSDK-Android:disqus:0.2.2'}
 
 ```
 4. ApiConfiguration Object Sample:
+The ```forum name``` will be used as the following reference:
+
+"https://disqus.com/api/3.0/threads/set.json?forum=\(forumShortName)&api_key=\(apiKey)&thread=ident:\(postID)%20\(domain)/?p=\(postID)"
+
 ```java
 public class DqUtil {
     public static ApiConfig genConfig() {
@@ -67,8 +71,13 @@ public class DqUtil {
                 BuildConfig.DISQUS_API_KEY,
                 BuildConfig.DISQUS_DEFAULT_ACCESS,
                 RestAdapter.LogLevel.BASIC);
-        conf.setApiSecret(BuildConfig.DISQUS_SECRET);
-        conf.setRedirectUri(BuildConfig.DISQUS_REDIRECT_URI);
+
+        conf
+         .setForumName("__forum_name__")
+         .setApiSecret(BuildConfig.DISQUS_SECRET)
+         .setRedirectUri(BuildConfig.DISQUS_REDIRECT_URI);
+
+
         return conf;
     }
 }

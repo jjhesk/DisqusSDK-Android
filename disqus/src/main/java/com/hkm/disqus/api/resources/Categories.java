@@ -49,8 +49,8 @@ public interface Categories {
      */
     @FormUrlEncoded
     @POST("/categories/create.json")
-    public Response<Category> create(@Field("forum") String forum,
-                                     @Field("title") String title) throws ApiException;
+    Response<Category> create(@Field("forum") String forum,
+                              @Field("title") String title) throws ApiException;
 
     /**
      * Creates a new category
@@ -64,9 +64,9 @@ public interface Categories {
      */
     @FormUrlEncoded
     @POST("/categories/create.json")
-    public Response<Category> create(@Field("forum") String forum,
-                                     @Field("title") String title,
-                                     @Field("default") int isDefault) throws ApiException;
+    Response<Category> create(@Field("forum") String forum,
+                              @Field("title") String title,
+                              @Field("default") int isDefault) throws ApiException;
 
     /**
      * Returns category details
@@ -77,7 +77,7 @@ public interface Categories {
      * @see <a href="https://disqus.com/api/docs/categories/details/">Documentation</a>
      */
     @GET("/categories/details.json")
-    public Response<Category> details(@Query("category") long category) throws ApiException;
+    Response<Category> details(@Query("category") long category) throws ApiException;
 
     /**
      * Returns a list of categories within a forum
@@ -88,7 +88,7 @@ public interface Categories {
      * @see <a href="https://disqus.com/api/docs/categories/list/">Documentation</a>
      */
     @GET("/categories/list.json")
-    public Response<List<Category>> list(@Query("forum") String forum) throws ApiException;
+    Response<List<Category>> list(@Query("forum") String forum) throws ApiException;
 
     /**
      * Returns a list of categories within a forum
@@ -100,8 +100,8 @@ public interface Categories {
      * @see <a href="https://disqus.com/api/docs/categories/list/">Documentation</a>
      */
     @GET("/categories/list.json")
-    public Response<List<Category>> list(@Query("forum") String forum,
-                                         @QueryMap Map<String, String> optionalParams)
+    Response<List<Category>> list(@Query("forum") String forum,
+                                  @QueryMap Map<String, String> optionalParams)
             throws ApiException;
 
     /**
@@ -113,7 +113,7 @@ public interface Categories {
      * @see <a href="https://disqus.com/api/docs/categories/list/">Documentation</a>
      */
     @GET("/categories/list.json")
-    public Response<List<Category>> list(@Query("forum") String[] forums)
+    Response<List<Category>> list(@Query("forum") String[] forums)
             throws ApiException;
 
     /**
@@ -126,8 +126,8 @@ public interface Categories {
      * @see <a href="https://disqus.com/api/docs/categories/list/">Documentation</a>
      */
     @GET("/categories/list.json")
-    public Response<List<Category>> list(@Query("forum") String[] forums,
-                                         @QueryMap Map<String, String> optionalParams)
+    Response<List<Category>> list(@Query("forum") String[] forums,
+                                  @QueryMap Map<String, String> optionalParams)
             throws ApiException;
 
     /**
@@ -139,7 +139,7 @@ public interface Categories {
      * @see <a href="https://disqus.com/api/docs/categories/listPosts/">Documentation</a>
      */
     @GET("/categories/listPosts.json")
-    public Response<List<Post>> listPosts(@Query("category") long category) throws ApiException;
+    Response<List<Post>> listPosts(@Query("category") long category) throws ApiException;
 
     /**
      * Returns a list of posts within a category
@@ -151,8 +151,8 @@ public interface Categories {
      * @see <a href="https://disqus.com/api/docs/categories/listPosts/">Documentation</a>
      */
     @GET("/categories/listPosts.json")
-    public Response<List<Post>> listPosts(@Query("category") long category,
-                                          @QueryMap Map<String, String> optionalParams)
+    Response<List<Post>> listPosts(@Query("category") long category,
+                                   @QueryMap Map<String, String> optionalParams)
             throws ApiException;
 
     /**
@@ -168,10 +168,10 @@ public interface Categories {
      * @see <a href="https://disqus.com/api/docs/categories/listPosts/">Documentation</a>
      */
     @GET("/categories/listPosts.json")
-    public Response<List<Post>> listPosts(@Query("category") long category,
-                                          @Query("related") String[] related,
-                                          @Query("include") String[] include,
-                                          @QueryMap Map<String, String> optionalParams)
+    Response<List<Post>> listPosts(@Query("category") long category,
+                                   @Query("related") String[] related,
+                                   @Query("include") String[] include,
+                                   @QueryMap Map<String, String> optionalParams)
             throws ApiException;
 
     /**
@@ -183,7 +183,7 @@ public interface Categories {
      * @see <a href="https://disqus.com/api/docs/categories/listThreads/">Documentation</a>
      */
     @GET("/categories/listThreads.json")
-    public Response<List<Thread>> listThreads(@Query("category") long category)
+    Response<List<Thread>> listThreads(@Query("category") long category)
             throws ApiException;
 
     /**
@@ -196,8 +196,8 @@ public interface Categories {
      * @see <a href="https://disqus.com/api/docs/categories/listThreads/">Documentation</a>
      */
     @GET("/categories/listThreads.json")
-    public Response<List<Thread>> listThreads(@Query("category") long category,
-                                              @QueryMap Map<String, String> optionalParams)
+    Response<List<Thread>> listThreads(@Query("category") long category,
+                                       @QueryMap Map<String, String> optionalParams)
             throws ApiException;
 
     /**
@@ -211,9 +211,9 @@ public interface Categories {
      * @see <a href="https://disqus.com/api/docs/categories/listThreads/">Documentation</a>
      */
     @GET("/categories/listThreads.json")
-    public Response<List<Thread>> listThreads(@Query("category") long category,
-                                              @Query("related") String[] related,
-                                              @QueryMap Map<String, String> optionalParams)
+    Response<List<Thread>> listThreads(@Query("category") long category,
+                                       @Query("related") String[] related,
+                                       @QueryMap Map<String, String> optionalParams)
             throws ApiException;
 
 }

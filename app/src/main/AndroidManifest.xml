@@ -31,18 +31,6 @@
             </intent-filter>
 
         </activity>
-        <activity
-            android:name="com.hkm.disqus.application.AuthorizeActivity"
-            android:configChanges="orientation|screenSize|fontScale|keyboard|keyboardHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"></action>
-
-                <category android:name="android.intent.category.DEFAULT"></category>
-                <category android:name="android.intent.category.BROWSABLE"></category>
-
-                <data android:scheme="disqus-hb-cb"></data>
-            </intent-filter>
-        </activity>
 
     </application>
 

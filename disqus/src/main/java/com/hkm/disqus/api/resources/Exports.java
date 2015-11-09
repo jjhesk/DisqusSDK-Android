@@ -41,6 +41,6 @@ public interface Exports {
      */
     @FormUrlEncoded
     @POST("/exports/exportForum.json")
-    public Response<Object> exportForum(@Field("forum") String forum) throws ApiException;
+    Response<Object> exportForum(@Field("forum") String forum) throws ApiException;
 
 }

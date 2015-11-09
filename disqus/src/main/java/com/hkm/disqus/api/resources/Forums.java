@@ -52,7 +52,7 @@ public interface Forums {
      */
     @FormUrlEncoded
     @POST("/forums/addModerator.json")
-    public Response<Moderator> addModerator(@Field("user") long user, @Query("forum") String forum)
+    Response<Moderator> addModerator(@Field("user") long user, @Query("forum") String forum)
             throws ApiException;
 
     /**
@@ -67,9 +67,9 @@ public interface Forums {
      */
     @FormUrlEncoded
     @POST("/forums/create.json")
-    public Response<Forum> create(@Field("website") String website,
-                                  @Field("name") String name,
-                                  @Field("short_name") String shortName) throws ApiException;
+    Response<Forum> create(@Field("website") String website,
+                           @Field("name") String name,
+                           @Field("short_name") String shortName) throws ApiException;
 
     /**
      * Creates a new forum
@@ -84,10 +84,10 @@ public interface Forums {
      */
     @FormUrlEncoded
     @POST("/forums/create.json")
-    public Response<Forum> create(@Field("website") String website,
-                                  @Field("name") String name,
-                                  @Field("short_name") String shortName,
-                                  @Field("guidelines") String guidelines) throws ApiException;
+    Response<Forum> create(@Field("website") String website,
+                           @Field("name") String name,
+                           @Field("short_name") String shortName,
+                           @Field("guidelines") String guidelines) throws ApiException;
 
     /**
      * Returns forum details
@@ -98,7 +98,7 @@ public interface Forums {
      * @see <a href="https://disqus.com/api/docs/forums/details/">Documentation</a>
      */
     @GET("/forums/details.json")
-    public Response<Forum> details(@Query("forum") String forum) throws ApiException;
+    Response<Forum> details(@Query("forum") String forum) throws ApiException;
 
     /**
      * Returns forum details
@@ -110,8 +110,8 @@ public interface Forums {
      * @see <a href="https://disqus.com/api/docs/forums/details/">Documentation</a>
      */
     @GET("/forums/details.json")
-    public Response<Forum> details(@Query("forum") String forum,
-                                   @Query("related") String[] related) throws ApiException;
+    Response<Forum> details(@Query("forum") String forum,
+                            @Query("related") String[] related) throws ApiException;
 
     /**
      * Follow a forum
@@ -123,7 +123,7 @@ public interface Forums {
      */
     @FormUrlEncoded
     @POST("/forums/follow.json")
-    public Response<List<Object>> follow(@Field("target") String target) throws ApiException;
+    Response<List<Object>> follow(@Field("target") String target) throws ApiException;
 
     /**
      * Returns a list of categories within a forum
@@ -134,7 +134,7 @@ public interface Forums {
      * @see <a href="https://disqus.com/api/docs/forums/listCategories/">Documentation</a>
      */
     @GET("/forums/listCategories.json")
-    public Response<List<Category>> listCategories(@Query("forum") String forum)
+    Response<List<Category>> listCategories(@Query("forum") String forum)
             throws ApiException;
 
     /**
@@ -147,8 +147,8 @@ public interface Forums {
      * @see <a href="https://disqus.com/api/docs/forums/listCategories/">Documentation</a>
      */
     @GET("/forums/listCategories.json")
-    public Response<List<Category>> listCategories(@Query("forum") String forum,
-                                                   @QueryMap Map<String, String> optionalParams)
+    Response<List<Category>> listCategories(@Query("forum") String forum,
+                                            @QueryMap Map<String, String> optionalParams)
             throws ApiException;
 
     /**
@@ -160,7 +160,7 @@ public interface Forums {
      * @see <a href="https://disqus.com/api/docs/forums/listFollowers/">Documentation</a>
      */
     @GET("/forums/listFollowers.json")
-    public Response<List<User>> listFollowers(@Query("forum") String forum)
+    Response<List<User>> listFollowers(@Query("forum") String forum)
             throws ApiException;
 
     /**
@@ -173,8 +173,8 @@ public interface Forums {
      * @see <a href="https://disqus.com/api/docs/forums/listFollowers/">Documentation</a>
      */
     @GET("/forums/listFollowers.json")
-    public Response<List<User>> listFollowers(@Query("forum") String forum,
-                                              @QueryMap Map<String, String> optionalParams)
+    Response<List<User>> listFollowers(@Query("forum") String forum,
+                                       @QueryMap Map<String, String> optionalParams)
             throws ApiException;
 
     /**
@@ -186,7 +186,7 @@ public interface Forums {
      * @see <a href="https://disqus.com/api/docs/forums/listModerators/">Documentation</a>
      */
     @GET("/forums/listModerators.json")
-    public Response<List<Moderator>> listModerators(@Query("forum") String forum)
+    Response<List<Moderator>> listModerators(@Query("forum") String forum)
             throws ApiException;
 
     /**
@@ -198,7 +198,7 @@ public interface Forums {
      * @see <a href="https://disqus.com/api/docs/forums/listMostActiveUsers/">Documentation</a>
      */
     @GET("/forums/listMostActiveUsers.json")
-    public Response<List<User>> listMostActiveUsers(@Query("forum") String forum)
+    Response<List<User>> listMostActiveUsers(@Query("forum") String forum)
             throws ApiException;
 
     /**
@@ -211,8 +211,8 @@ public interface Forums {
      * @see <a href="https://disqus.com/api/docs/forums/listMostActiveUsers/">Documentation</a>
      */
     @GET("/forums/listMostActiveUsers.json")
-    public Response<List<User>> listMostActiveUsers(@Query("forum") String forum,
-                                                    @QueryMap Map<String, String> optionalParams)
+    Response<List<User>> listMostActiveUsers(@Query("forum") String forum,
+                                             @QueryMap Map<String, String> optionalParams)
             throws ApiException;
 
     /**
@@ -224,7 +224,7 @@ public interface Forums {
      * @see <a href="https://disqus.com/api/docs/forums/listMostLikedUsers/">Documentation</a>
      */
     @GET("/forums/listMostLikedUsers.json")
-    public Response<List<User>> listMostLikedUsers(@Query("forum") String forum)
+    Response<List<User>> listMostLikedUsers(@Query("forum") String forum)
             throws ApiException;
 
     /**
@@ -237,8 +237,8 @@ public interface Forums {
      * @see <a href="https://disqus.com/api/docs/forums/listMostLikedUsers/">Documentation</a>
      */
     @GET("/forums/listMostLikedUsers.json")
-    public Response<List<User>> listMostLikedUsers(@Query("forum") String forum,
-                                                   @QueryMap Map<String, String> optionalParams)
+    Response<List<User>> listMostLikedUsers(@Query("forum") String forum,
+                                            @QueryMap Map<String, String> optionalParams)
             throws ApiException;
 
     /**
@@ -250,7 +250,7 @@ public interface Forums {
      * @see <a href="https://disqus.com/api/docs/forums/listPosts/">Documentation</a>
      */
     @GET("/forums/listPosts.json")
-    public Response<List<Post>> listPosts(@Query("forum") String forum) throws ApiException;
+    Response<List<Post>> listPosts(@Query("forum") String forum) throws ApiException;
 
     /**
      * Returns a list of posts within a forum
@@ -262,8 +262,8 @@ public interface Forums {
      * @see <a href="https://disqus.com/api/docs/forums/listPosts/">Documentation</a>
      */
     @GET("/forums/listPosts.json")
-    public Response<List<Post>> listPosts(@Query("forum") String forum,
-                                          @QueryMap Map<String, String> optionalParams)
+    Response<List<Post>> listPosts(@Query("forum") String forum,
+                                   @QueryMap Map<String, String> optionalParams)
             throws ApiException;
 
     /**
@@ -279,10 +279,10 @@ public interface Forums {
      * @see <a href="https://disqus.com/api/docs/forums/listPosts/">Documentation</a>
      */
     @GET("/forums/listPosts.json")
-    public Response<List<Post>> listPosts(@Query("forum") String forum,
-                                          @Query("related") String[] related,
-                                          @Query("include") String[] include,
-                                          @QueryMap Map<String, String> optionalParams)
+    Response<List<Post>> listPosts(@Query("forum") String forum,
+                                   @Query("related") String[] related,
+                                   @Query("include") String[] include,
+                                   @QueryMap Map<String, String> optionalParams)
             throws ApiException;
 
     /**
@@ -294,7 +294,7 @@ public interface Forums {
      * @see <a href="https://disqus.com/api/docs/forums/listThreads/">Documentation</a>
      */
     @GET("/forums/listThreads.json")
-    public Response<List<Thread>> listThreads(@Query("forum") String forum) throws ApiException;
+    Response<List<Thread>> listThreads(@Query("forum") String forum) throws ApiException;
 
     /**
      * Returns a list of threads within a forum sorted by the date created
@@ -306,8 +306,8 @@ public interface Forums {
      * @see <a href="https://disqus.com/api/docs/forums/listThreads/">Documentation</a>
      */
     @GET("/forums/listThreads.json")
-    public Response<List<Thread>> listThreads(@Query("forum") String forum,
-                                              @QueryMap Map<String, String> optionalParams)
+    Response<List<Thread>> listThreads(@Query("forum") String forum,
+                                       @QueryMap Map<String, String> optionalParams)
             throws ApiException;
 
     /**
@@ -322,10 +322,10 @@ public interface Forums {
      * @see <a href="https://disqus.com/api/docs/forums/listThreads/">Documentation</a>
      */
     @GET("/forums/listThreads.json")
-    public Response<List<Thread>> listThreads(@Query("forum") String forum,
-                                              @Query("related") String[] related,
-                                              @Query("include") String[] include,
-                                              @QueryMap Map<String, String> optionalParams)
+    Response<List<Thread>> listThreads(@Query("forum") String forum,
+                                       @Query("related") String[] related,
+                                       @Query("include") String[] include,
+                                       @QueryMap Map<String, String> optionalParams)
             throws ApiException;
 
     /**
@@ -337,7 +337,7 @@ public interface Forums {
      * @see <a href="https://disqus.com/api/docs/forums/listUsers/">Documentation</a>
      */
     @GET("/forums/listUsers.json")
-    public Response<List<User>> listUsers(@Query("forum") String forum) throws ApiException;
+    Response<List<User>> listUsers(@Query("forum") String forum) throws ApiException;
 
     /**
      * Returns a list of users active within a forum
@@ -349,8 +349,8 @@ public interface Forums {
      * @see <a href="https://disqus.com/api/docs/forums/listUsers/">Documentation</a>
      */
     @GET("/forums/listUsers.json")
-    public Response<List<User>> listUsers(@Query("forum") String forum,
-                                          @QueryMap Map<String, String> optionalParams)
+    Response<List<User>> listUsers(@Query("forum") String forum,
+                                   @QueryMap Map<String, String> optionalParams)
             throws ApiException;
 
     /**
@@ -363,7 +363,7 @@ public interface Forums {
      */
     @FormUrlEncoded
     @POST("/forums/removeModerator.json")
-    public Response<Moderator> removeModerator(@Field("moderator") long moderator)
+    Response<Moderator> removeModerator(@Field("moderator") long moderator)
             throws ApiException;
 
     /**
@@ -376,7 +376,7 @@ public interface Forums {
      */
     @FormUrlEncoded
     @POST("/forums/unfollow.json")
-    public Response<List<Object>> unfollow(@Field("target") String target) throws ApiException;
+    Response<List<Object>> unfollow(@Field("target") String target) throws ApiException;
 
     /**
      * Updates forum details
@@ -391,9 +391,9 @@ public interface Forums {
      */
     @FormUrlEncoded
     @POST("/forums/update.json")
-    public Response<Forum> update(@Field("forum") String forum,
-                                  @Field("website") String website,
-                                  @Field("name") String name,
-                                  @Field("guidelines") String guidelines) throws ApiException;
+    Response<Forum> update(@Field("forum") String forum,
+                           @Field("website") String website,
+                           @Field("name") String name,
+                           @Field("guidelines") String guidelines) throws ApiException;
 
 }

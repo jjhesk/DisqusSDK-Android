@@ -38,7 +38,7 @@ public interface Applications {
      * @see <a href="https://disqus.com/api/docs/applications/listUsage/">Documentation</a>
      */
     @GET("/applications/listUsage.json")
-    public Response<Usage> listUsage() throws ApiException;
+    Response<Usage> listUsage() throws ApiException;
 
     /**
      * Returns the API usage per day for this application
@@ -48,7 +48,7 @@ public interface Applications {
      * @see <a href="https://disqus.com/api/docs/applications/listUsage/">Documentation</a>
      */
     @GET("/applications/listUsage.json")
-    public void listUsage(Callback<Response<Usage>> callback) throws ApiException;
+    void listUsage(Callback<Response<Usage>> callback) throws ApiException;
 
     /**
      * Returns the API usage per day for this application
@@ -59,7 +59,7 @@ public interface Applications {
      * @see <a href="https://disqus.com/api/docs/applications/listUsage/">Documentation</a>
      */
     @GET("/applications/listUsage.json")
-    public Response<Usage> listUsage(@Query("days") int days) throws ApiException;
+    Response<Usage> listUsage(@Query("days") int days) throws ApiException;
 
     /**
      * Returns the API usage per day for this application
@@ -70,8 +70,8 @@ public interface Applications {
      * @see <a href="https://disqus.com/api/docs/applications/listUsage/">Documentation</a>
      */
     @GET("/applications/listUsage.json")
-    public void listUsage(@Query("days") int days,
-                          Callback<Response<Usage>> callback) throws ApiException;
+    void listUsage(@Query("days") int days,
+                   Callback<Response<Usage>> callback) throws ApiException;
 
     /**
      * Returns the API usage per day for this application
@@ -83,8 +83,8 @@ public interface Applications {
      * @see <a href="https://disqus.com/api/docs/applications/listUsage/">Documentation</a>
      */
     @GET("/applications/listUsage.json")
-    public Response<Usage> listUsage(@Query("application") int application,
-                                     @Query("days") Integer days) throws ApiException;
+    Response<Usage> listUsage(@Query("application") int application,
+                              @Query("days") Integer days) throws ApiException;
 
     /**
      * Returns the API usage per day for this application
@@ -96,8 +96,8 @@ public interface Applications {
      * @see <a href="https://disqus.com/api/docs/applications/listUsage/">Documentation</a>
      */
     @GET("/applications/listUsage.json")
-    public void listUsage(@Query("application") int application,
-                          @Query("days") Integer days,
-                          Callback<Response<Usage>> callback) throws ApiException;
+    void listUsage(@Query("application") int application,
+                   @Query("days") Integer days,
+                   Callback<Response<Usage>> callback) throws ApiException;
 
 }

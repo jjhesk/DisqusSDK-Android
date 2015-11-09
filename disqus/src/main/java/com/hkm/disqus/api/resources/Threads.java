@@ -45,7 +45,7 @@ public interface Threads {
      * @see <a href="https://disqus.com/api/docs/threads/close/">Documentation</a>
      */
     @POST("/threads/close.json")
-    public Response<List<Thread>> close(@Query("thread") long thread) throws ApiException;
+    Response<List<Thread>> close(@Query("thread") long thread) throws ApiException;
 
     /**
      * Closes a thread
@@ -56,7 +56,7 @@ public interface Threads {
      * @see <a href="https://disqus.com/api/docs/threads/close/">Documentation</a>
      */
     @POST("/threads/close.json")
-    public Response<List<Thread>> close(@Query("thread") long[] thread) throws ApiException;
+    Response<List<Thread>> close(@Query("thread") long[] thread) throws ApiException;
 
     /**
      * Creates a new thread
@@ -68,8 +68,8 @@ public interface Threads {
      * @see <a href="https://disqus.com/api/docs/threads/create/">Documentation</a>
      */
     @POST("/threads/create.json")
-    public Response<Thread> create(@Query("forum") String forum,
-                                   @Query("title") String title) throws ApiException;
+    Response<Thread> create(@Query("forum") String forum,
+                            @Query("title") String title) throws ApiException;
 
     /**
      * Creates a new thread
@@ -82,9 +82,9 @@ public interface Threads {
      * @see <a href="https://disqus.com/api/docs/threads/create/">Documentation</a>
      */
     @POST("/threads/create.json")
-    public Response<Thread> create(@Query("forum") String forum,
-                                   @Query("title") String title,
-                                   @QueryMap Map<String, String> optionalParams) throws ApiException;
+    Response<Thread> create(@Query("forum") String forum,
+                            @Query("title") String title,
+                            @QueryMap Map<String, String> optionalParams) throws ApiException;
 
     /**
      * Returns thread details
@@ -95,7 +95,7 @@ public interface Threads {
      * @see <a href="https://disqus.com/api/docs/threads/details/">Documentation</a>
      */
     @GET("/threads/details.json")
-    public Response<Thread> details(@Query("thread") long thread) throws ApiException;
+    Response<Thread> details(@Query("thread") long thread) throws ApiException;
 
     /**
      * Returns thread details
@@ -107,8 +107,8 @@ public interface Threads {
      * @see <a href="https://disqus.com/api/docs/threads/details/">Documentation</a>
      */
     @GET("/threads/details.json")
-    public Response<Thread> details(@Query("thread") long thread,
-                                    @Query("forum") String forum) throws ApiException;
+    Response<Thread> details(@Query("thread") long thread,
+                             @Query("forum") String forum) throws ApiException;
 
     /**
      * Returns thread details
@@ -121,9 +121,9 @@ public interface Threads {
      * @see <a href="https://disqus.com/api/docs/threads/details/">Documentation</a>
      */
     @GET("/threads/details.json")
-    public Response<Thread> details(@Query("thread") long thread,
-                                    @Query("forum") String forum,
-                                    @Query("related") String[] related) throws ApiException;
+    Response<Thread> details(@Query("thread") long thread,
+                             @Query("forum") String forum,
+                             @Query("related") String[] related) throws ApiException;
 
 
     /**
@@ -138,7 +138,7 @@ public interface Threads {
      * @throws ApiException any errors
      */
     @GET("/threads/listPosts.json")
-    public Response<List<Post>> listPostByID(@Query("thread:ident") String identifer, @Query("forum") String forum_name) throws ApiException;
+    Response<List<Post>> listPostByID(@Query("thread:ident") String identifer, @Query("forum") String forum_name) throws ApiException;
 
     /**
      * @param identifer  the id in string
@@ -147,7 +147,7 @@ public interface Threads {
      * @throws ApiException any errors
      */
     @GET("/threads/listPosts.json")
-    public void listPostByIDAsync(
+    void listPostByIDAsync(
             @Query("thread:ident") String identifer,
             @Query("forum") String forum_name,
             Callback<Response<List<Post>>> cb

@@ -31,9 +31,9 @@ import retrofit.http.Query;
 public interface Users {
 
     @POST("/users/checkUsername.json")
-    public Response<String> checkUsername(@Query("username") String username);
+    Response<String> checkUsername(@Query("username") String username);
 
     @GET("/users/details.json")
-    public Response<User> details(@Query("user") Long user);
+    Response<User> details(@Query("user") Long user);
 
 }

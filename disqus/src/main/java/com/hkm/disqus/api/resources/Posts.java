@@ -153,7 +153,7 @@ public interface Posts {
      * @see <a href="https://disqus.com/api/docs/posts/details/">Documentation</a>
      */
     @GET("/posts/details.json")
-    public Response<Post> details(
+    Response<Post> details(
             @Query("post") long post,
             @Query("related") String[] related)
             throws ApiException;

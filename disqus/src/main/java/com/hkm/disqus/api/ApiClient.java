@@ -129,21 +129,29 @@ public class ApiClient {
                         if (config != null) {
                             // Public/secret key query params
                             if (config.getApiSecret() != null) {
-                                request.addQueryParam("api_secret", config.getApiSecret());
+                                if (!config.getApiSecret().equalsIgnoreCase("null")) {
+                                    request.addQueryParam("api_secret", config.getApiSecret());
+                                }
                             } else if (config.getApiKey() != null) {
-                                request.addQueryParam("api_key", config.getApiKey());
+                                if (!config.getApiKey().equalsIgnoreCase("null")) {
+                                    request.addQueryParam("api_key", config.getApiKey());
+                                }
                             } else {
 
                             }
 
                             // Access token query param
                             if (config.getAccessToken() != null) {
-                                request.addQueryParam("access_token", config.getAccessToken());
+                                if (!config.getAccessToken().equalsIgnoreCase("null")) {
+                                    request.addQueryParam("access_token", config.getAccessToken());
+                                }
                             }
 
                             // Referrer
                             if (config.getReferrer() != null) {
-                                request.addHeader("Referer", config.getReferrer());
+                                if (!config.getReferrer().equalsIgnoreCase("null")) {
+                                    request.addHeader("Referer", config.getReferrer());
+                                }
                             }
                         }
                     }

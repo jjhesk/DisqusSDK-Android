@@ -7,6 +7,16 @@ This is the simple library for https://disqus.com/ developed on Android.
 ## About
 This library implements the Disqus API for use in Android applications. This librar is ongoing
 
+### Gradle settings
+```gradle
+repositories {
+   maven { url 'https://dl.bintray.com/jjhesk/maven' }
+}
+dependencies {
+   compile 'DisqusSDK-Android:disqus:0.2.7'
+}
+```
+
 ## API RoadMap Support
 - [x] Post comments
 - [x] Post Comments more flexible
@@ -15,12 +25,6 @@ This library implements the Disqus API for use in Android applications. This lib
 - [x] enable extending from fragment. PostCommentFragment
 - [x] setup the activity for login
 - [x] construct the configuration object
-
-### Gradle settings
-```gradle
-repositories {maven { url 'https://dl.bintray.com/jjhesk/maven' }}
-dependencies {compile 'DisqusSDK-Android:disqus:0.2.2'}
-```
 
 ## Installation
  - [x] enable extending from fragment. PostCommentFragment

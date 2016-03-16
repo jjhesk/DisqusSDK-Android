@@ -23,7 +23,7 @@
             android:layout_alignWithParentIfMissing="false"
             android:layout_toLeftOf="@+id/send" />
 
-        <android.support.v7.internal.widget.TintImageView
+        <ImageButton
             android:id="@+id/send"
             android:layout_width="50dp"
             android:layout_height="match_parent"

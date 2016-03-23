@@ -107,8 +107,39 @@ public interface Threads {
      * @see <a href="https://disqus.com/api/docs/threads/details/">Documentation</a>
      */
     @GET("/threads/details.json")
-    Response<Thread> details(@Query("thread") long thread,
-                             @Query("forum") String forum) throws ApiException;
+    Response<Thread> details(
+            @Query("thread") long thread,
+            @Query("forum") String forum) throws ApiException;
+
+    /**
+     * Returns thread details
+     *
+     * @param thread as 1194797 http://hypebeast.com/?p=1194797 in format
+     * @param forum  as is
+     * @return as is
+     * @throws ApiException any errors
+     * @see <a href="https://disqus.com/api/docs/threads/details/">Documentation</a>
+     */
+    @GET("/threads/details.json")
+    Response<Thread> details(
+            @Query("thread:ident") String thread,
+            @Query("forum") String forum) throws ApiException;
+
+
+    /**
+     * Returns thread details
+     *
+     * @param thread as 1194797 http://hypebeast.com/?p=1194797 in format
+     * @param forum  as is
+     * @throws ApiException any errors
+     * @see <a href="https://disqus.com/api/docs/threads/details/">Documentation</a>
+     */
+    @GET("/threads/details.json")
+    void details(
+            @Query("thread:ident") String thread,
+            @Query("forum") String forum,
+            Callback<Response<Thread>> cb
+    ) throws ApiException;
 
     /**
      * Returns thread details

@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+
 android {
     def configConstants = new Properties()
     def Props = file("auth.properties")
@@ -8,16 +9,17 @@ android {
         }
     }
 
-    compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    compileSdkVersion project.ANDROID_BUILD_SDK_VERSION as int
+    buildToolsVersion project.ANDROID_BUILD_TOOLS_VERSION
 
     defaultConfig {
         applicationId "com.hkm.dis"
-        minSdkVersion 17
-        targetSdkVersion 22
+        minSdkVersion project.ANDROID_BUILD_MIN_SDK_VERSION
+        targetSdkVersion project.ANDROID_BUILD_TARGET_SDK_VERSION
         versionCode 4
         versionName "1.3"
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -41,9 +43,11 @@ repositories {
 }
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:support-annotations:23.1.1'
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:support-v13:23.1.1'
+
+    compile supportDependencies.annotation
+    compile supportDependencies.appCompat
+    compile supportDependencies.support
+
     //  compile 'DisqusSDK-Android:disqus:0.2.5'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.2.0'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
